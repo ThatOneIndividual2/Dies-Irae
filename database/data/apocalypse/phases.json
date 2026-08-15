@@ -1,0 +1,269 @@
+{
+  "meter_keys": [
+    "global_corruption",
+    "plague_severity",
+    "demonic_manifestation",
+    "institutional_collapse",
+    "famine_pressure",
+    "despair",
+    "church_cohesion",
+    "political_fragmentation"
+  ],
+  "starting_meters": {
+    "global_corruption": 2,
+    "plague_severity": 0,
+    "demonic_manifestation": 0,
+    "institutional_collapse": 1,
+    "famine_pressure": 3,
+    "despair": 4,
+    "church_cohesion": 82,
+    "political_fragmentation": 6
+  },
+  "starting_phase": "ordinary",
+  "phases": [
+    {
+      "key": "ordinary",
+      "ordinal": 1,
+      "name": "Ordinary World",
+      "summary": "Recognizable medieval order. The veil holds. Harvest, travel, and office still mean what they meant last year.",
+      "resistance_efficiency": 1.0,
+      "church_cohesion_ceiling": 100,
+      "sanctuary_allowance": 40,
+      "meter_floors": {},
+      "ambient_drift": {},
+      "unlocked_event_types": [],
+      "broken_assumptions": [],
+      "advance_to": "portents",
+      "advance_when": {
+        "min_pressure": 8,
+        "any_of": [
+          { "min_meters": { "global_corruption": 6 } },
+          { "min_signal_counts": { "mass_sin": 2 } },
+          { "min_signal_counts": { "desecration": 1 } }
+        ]
+      }
+    },
+    {
+      "key": "portents",
+      "ordinal": 2,
+      "name": "Portents",
+      "summary": "Omens, failed harvests, and uneasy clergy. The world is still itself, but it is watching the sky.",
+      "resistance_efficiency": 0.9,
+      "church_cohesion_ceiling": 92,
+      "sanctuary_allowance": 35,
+      "meter_floors": {
+        "global_corruption": 4,
+        "despair": 5
+      },
+      "ambient_drift": {
+        "global_corruption": 0.08,
+        "despair": 0.05
+      },
+      "unlocked_event_types": ["territory_despair_tick"],
+      "broken_assumptions": [],
+      "advance_to": "great_pestilence",
+      "advance_when": {
+        "min_pressure": 16,
+        "min_meters": { "plague_severity": 18 },
+        "min_signal_counts": { "plague_mortality": 1 }
+      }
+    },
+    {
+      "key": "great_pestilence",
+      "ordinal": 3,
+      "name": "Great Pestilence",
+      "summary": "The mortality is no longer rumor. Parishes empty. The opening catastrophe is demographic, then spiritual.",
+      "resistance_efficiency": 0.75,
+      "church_cohesion_ceiling": 80,
+      "sanctuary_allowance": 30,
+      "meter_floors": {
+        "plague_severity": 12,
+        "despair": 10,
+        "global_corruption": 8
+      },
+      "ambient_drift": {
+        "despair": 0.12,
+        "famine_pressure": 0.08,
+        "church_cohesion": -0.06
+      },
+      "unlocked_event_types": ["territory_despair_tick", "territory_plague_tick", "territory_famine_tick"],
+      "broken_assumptions": ["safe_travel"],
+      "advance_to": "spiritual_fracture",
+      "advance_when": {
+        "min_pressure": 26,
+        "any_of": [
+          { "max_meters": { "church_cohesion": 58 } },
+          { "min_signal_counts": { "heresy": 2 } },
+          { "min_signal_counts": { "murdered_clergy": 1, "failed_exorcism": 1 } }
+        ]
+      }
+    },
+    {
+      "key": "spiritual_fracture",
+      "ordinal": 4,
+      "name": "Spiritual Fracture",
+      "summary": "Doctrine splinters. Cults find hearers. Sees go vacant faster than they can be filled.",
+      "resistance_efficiency": 0.6,
+      "church_cohesion_ceiling": 70,
+      "sanctuary_allowance": 24,
+      "meter_floors": {
+        "global_corruption": 14,
+        "institutional_collapse": 10,
+        "despair": 16
+      },
+      "ambient_drift": {
+        "global_corruption": 0.1,
+        "institutional_collapse": 0.08,
+        "political_fragmentation": 0.06,
+        "church_cohesion": -0.08
+      },
+      "unlocked_event_types": ["territory_despair_tick", "territory_plague_tick", "territory_famine_tick"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life"],
+      "advance_to": "manifestations",
+      "advance_when": {
+        "min_pressure": 36,
+        "min_meters": { "demonic_manifestation": 18 },
+        "any_of": [
+          { "min_signal_counts": { "successful_cult": 1 } },
+          { "min_signal_counts": { "failed_exorcism": 2 } },
+          { "require_milestones": ["veil_thinned"] }
+        ]
+      }
+    },
+    {
+      "key": "manifestations",
+      "ordinal": 5,
+      "name": "Manifestations",
+      "summary": "The unseen becomes local and named. Possession, apparitions, and wounded ground are no longer private sins.",
+      "resistance_efficiency": 0.45,
+      "church_cohesion_ceiling": 62,
+      "sanctuary_allowance": 20,
+      "meter_floors": {
+        "demonic_manifestation": 12,
+        "global_corruption": 18,
+        "despair": 20
+      },
+      "ambient_drift": {
+        "demonic_manifestation": 0.1,
+        "despair": 0.1,
+        "church_cohesion": -0.08
+      },
+      "unlocked_event_types": ["territory_despair_tick", "territory_plague_tick", "hell_incursion_pulse"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life", "ordinary_night"],
+      "advance_to": "open_incursions",
+      "advance_when": {
+        "min_pressure": 46,
+        "min_meters": { "demonic_manifestation": 36 },
+        "require_milestones": ["first_manifestation"]
+      }
+    },
+    {
+      "key": "open_incursions",
+      "ordinal": 6,
+      "name": "Open Incursions",
+      "summary": "Hell takes territory. Legal title can persist over a wound. Fronts exist that no king declared.",
+      "resistance_efficiency": 0.32,
+      "church_cohesion_ceiling": 52,
+      "sanctuary_allowance": 16,
+      "meter_floors": {
+        "demonic_manifestation": 28,
+        "global_corruption": 24,
+        "institutional_collapse": 18
+      },
+      "ambient_drift": {
+        "demonic_manifestation": 0.12,
+        "institutional_collapse": 0.1,
+        "political_fragmentation": 0.1,
+        "church_cohesion": -0.1
+      },
+      "unlocked_event_types": ["territory_despair_tick", "hell_incursion_pulse", "territory_famine_tick"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life", "ordinary_night", "guaranteed_harvest"],
+      "advance_to": "collapse_of_kingdoms",
+      "advance_when": {
+        "min_pressure": 56,
+        "min_meters": {
+          "political_fragmentation": 38,
+          "institutional_collapse": 32
+        }
+      }
+    },
+    {
+      "key": "collapse_of_kingdoms",
+      "ordinal": 7,
+      "name": "Collapse of Kingdoms",
+      "summary": "Offices outlive their holders. Succession fails. Realms persist as memory more than command.",
+      "resistance_efficiency": 0.22,
+      "church_cohesion_ceiling": 44,
+      "sanctuary_allowance": 12,
+      "meter_floors": {
+        "political_fragmentation": 30,
+        "institutional_collapse": 28,
+        "demonic_manifestation": 34,
+        "despair": 28
+      },
+      "ambient_drift": {
+        "political_fragmentation": 0.12,
+        "institutional_collapse": 0.12,
+        "famine_pressure": 0.1,
+        "church_cohesion": -0.1
+      },
+      "unlocked_event_types": ["territory_despair_tick", "hell_incursion_pulse", "territory_famine_tick", "population_census"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life", "ordinary_night", "guaranteed_harvest", "guaranteed_succession"],
+      "advance_to": "infernal_dominion",
+      "advance_when": {
+        "min_pressure": 68,
+        "min_meters": { "demonic_manifestation": 52 },
+        "require_milestones": ["first_kingdom_fallen"]
+      }
+    },
+    {
+      "key": "infernal_dominion",
+      "ordinal": 8,
+      "name": "Infernal Dominion",
+      "summary": "Hell is a geography. The map has a second owner. Resistance is local, costly, and cannot restore the old age.",
+      "resistance_efficiency": 0.14,
+      "church_cohesion_ceiling": 36,
+      "sanctuary_allowance": 8,
+      "meter_floors": {
+        "demonic_manifestation": 48,
+        "global_corruption": 36,
+        "institutional_collapse": 36,
+        "political_fragmentation": 38
+      },
+      "ambient_drift": {
+        "demonic_manifestation": 0.1,
+        "despair": 0.12,
+        "church_cohesion": -0.08
+      },
+      "unlocked_event_types": ["hell_incursion_pulse", "territory_despair_tick", "territory_famine_tick"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life", "ordinary_night", "guaranteed_harvest", "guaranteed_succession", "guaranteed_papal_succession"],
+      "advance_to": "final_resistance",
+      "advance_when": {
+        "min_pressure": 80,
+        "require_milestones": ["infernal_dominion_declared"]
+      }
+    },
+    {
+      "key": "final_resistance",
+      "ordinal": 9,
+      "name": "Final Resistance",
+      "summary": "The end of the age. Survival of a people, a faith, or a bloodline is the remaining grammar. The old world does not return.",
+      "resistance_efficiency": 0.18,
+      "church_cohesion_ceiling": 40,
+      "sanctuary_allowance": 14,
+      "meter_floors": {
+        "demonic_manifestation": 55,
+        "global_corruption": 40,
+        "institutional_collapse": 40,
+        "despair": 32
+      },
+      "ambient_drift": {
+        "despair": 0.08
+      },
+      "unlocked_event_types": ["hell_incursion_pulse", "territory_despair_tick"],
+      "broken_assumptions": ["safe_travel", "stable_parish_life", "ordinary_night", "guaranteed_harvest", "guaranteed_succession", "guaranteed_papal_succession", "restorable_age"],
+      "advance_to": null,
+      "advance_when": null
+    }
+  ]
+}

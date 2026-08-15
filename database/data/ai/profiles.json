@@ -1,0 +1,535 @@
+{
+  "king": {
+    "grain": "character",
+    "label": "King",
+    "risk_tolerance": 0.48,
+    "concern_weights": {
+      "survival": 0.7,
+      "dynasty": 1.15,
+      "legitimacy": 1.1,
+      "faith": 0.45,
+      "ambition": 0.7,
+      "wealth": 0.5,
+      "territorial_security": 1.2,
+      "loyalty": 1.0,
+      "fear": 0.35,
+      "corruption": 0.2,
+      "revenge": 0.25,
+      "church_standing": 0.65,
+      "plague_safety": 0.55,
+      "famine": 0.6,
+      "infernal_threat": 0.7
+    },
+    "actions": [
+      "wait", "raise_levy", "call_bannermen", "fortify", "press_claim",
+      "secure_succession", "pacify_vassals", "treat_with_papacy",
+      "military_cleansing", "quarantine", "seize_grain", "arrange_heir_marriage"
+    ],
+    "forbidden_actions": [
+      "exorcism", "consecrate_land", "authorize_exorcists", "issue_bull",
+      "conceal_cell", "accelerate_rite", "expand_breach", "corrupt_garrison",
+      "harvest_fear", "preach_against_church"
+    ]
+  },
+  "duke": {
+    "grain": "character",
+    "label": "Duke",
+    "risk_tolerance": 0.42,
+    "concern_weights": {
+      "survival": 0.75,
+      "dynasty": 1.05,
+      "legitimacy": 0.9,
+      "faith": 0.4,
+      "ambition": 0.8,
+      "wealth": 0.55,
+      "territorial_security": 1.15,
+      "loyalty": 0.95,
+      "fear": 0.4,
+      "corruption": 0.2,
+      "revenge": 0.3,
+      "church_standing": 0.5,
+      "plague_safety": 0.5,
+      "famine": 0.55,
+      "infernal_threat": 0.65
+    },
+    "actions": [
+      "wait", "raise_levy", "fortify", "press_claim", "secure_succession",
+      "petition_liege", "treat_with_papacy", "military_cleansing",
+      "quarantine", "arrange_heir_marriage"
+    ],
+    "forbidden_actions": [
+      "call_bannermen", "exorcism", "issue_bull", "expand_breach",
+      "conceal_cell", "authorize_exorcists"
+    ]
+  },
+  "count": {
+    "grain": "character",
+    "label": "Count",
+    "risk_tolerance": 0.35,
+    "concern_weights": {
+      "survival": 0.9,
+      "dynasty": 0.85,
+      "legitimacy": 0.7,
+      "faith": 0.4,
+      "ambition": 0.55,
+      "wealth": 0.5,
+      "territorial_security": 1.1,
+      "loyalty": 0.8,
+      "fear": 0.55,
+      "corruption": 0.25,
+      "revenge": 0.2,
+      "church_standing": 0.4,
+      "plague_safety": 0.75,
+      "famine": 0.7,
+      "infernal_threat": 0.7
+    },
+    "actions": [
+      "wait", "raise_levy", "fortify", "petition_liege", "petition_pope",
+      "quarantine", "open_granary", "military_cleansing"
+    ],
+    "forbidden_actions": [
+      "call_bannermen", "exorcism", "issue_bull", "expand_breach",
+      "press_claim", "authorize_exorcists"
+    ]
+  },
+  "bishop": {
+    "grain": "character",
+    "label": "Bishop",
+    "risk_tolerance": 0.32,
+    "concern_weights": {
+      "survival": 0.55,
+      "dynasty": 0.05,
+      "legitimacy": 0.6,
+      "faith": 1.25,
+      "ambition": 0.35,
+      "wealth": 0.25,
+      "territorial_security": 0.35,
+      "loyalty": 0.4,
+      "fear": 0.4,
+      "corruption": 0.45,
+      "revenge": 0.15,
+      "church_standing": 1.2,
+      "plague_safety": 0.5,
+      "famine": 0.45,
+      "infernal_threat": 1.15
+    },
+    "actions": [
+      "wait", "exorcism", "consecrate_land", "call_for_relic", "preach",
+      "investigate_heresy", "expose_cult", "petition_pope", "shelter_refugees",
+      "quarantine"
+    ],
+    "forbidden_actions": [
+      "raise_levy", "call_bannermen", "press_claim", "arrange_heir_marriage",
+      "seize_grain", "expand_breach", "conceal_cell", "military_cleansing"
+    ]
+  },
+  "pope": {
+    "grain": "character",
+    "label": "Pope",
+    "risk_tolerance": 0.38,
+    "concern_weights": {
+      "survival": 0.5,
+      "dynasty": 0.0,
+      "legitimacy": 1.1,
+      "faith": 1.3,
+      "ambition": 0.4,
+      "wealth": 0.2,
+      "territorial_security": 0.25,
+      "loyalty": 0.35,
+      "fear": 0.3,
+      "corruption": 0.5,
+      "revenge": 0.2,
+      "church_standing": 1.35,
+      "plague_safety": 0.45,
+      "famine": 0.4,
+      "infernal_threat": 1.2
+    },
+    "actions": [
+      "wait", "authorize_exorcists", "issue_bull", "excommunicate_rival",
+      "preach", "call_for_relic", "investigate_heresy"
+    ],
+    "forbidden_actions": [
+      "raise_levy", "press_claim", "arrange_heir_marriage", "secure_succession",
+      "call_bannermen", "seize_grain", "expand_breach", "conceal_cell",
+      "relocate_goods"
+    ]
+  },
+  "abbot": {
+    "grain": "character",
+    "label": "Abbot",
+    "risk_tolerance": 0.22,
+    "concern_weights": {
+      "survival": 0.6,
+      "dynasty": 0.0,
+      "legitimacy": 0.35,
+      "faith": 1.2,
+      "ambition": 0.15,
+      "wealth": 0.2,
+      "territorial_security": 0.25,
+      "loyalty": 0.3,
+      "fear": 0.45,
+      "corruption": 0.4,
+      "revenge": 0.05,
+      "church_standing": 0.9,
+      "plague_safety": 0.7,
+      "famine": 0.85,
+      "infernal_threat": 0.8
+    },
+    "actions": [
+      "wait", "shelter_refugees", "open_granary", "preach", "call_for_relic",
+      "consecrate_land", "quarantine"
+    ],
+    "forbidden_actions": [
+      "raise_levy", "press_claim", "military_cleansing", "issue_bull",
+      "arrange_heir_marriage", "expand_breach"
+    ]
+  },
+  "holy_order_leader": {
+    "grain": "character",
+    "label": "Holy order leader",
+    "risk_tolerance": 0.58,
+    "concern_weights": {
+      "survival": 0.5,
+      "dynasty": 0.0,
+      "legitimacy": 0.45,
+      "faith": 1.1,
+      "ambition": 0.35,
+      "wealth": 0.15,
+      "territorial_security": 0.8,
+      "loyalty": 0.4,
+      "fear": 0.25,
+      "corruption": 0.35,
+      "revenge": 0.15,
+      "church_standing": 1.0,
+      "plague_safety": 0.3,
+      "famine": 0.25,
+      "infernal_threat": 1.3
+    },
+    "actions": [
+      "wait", "march_on_breach", "military_cleansing", "hold_the_line",
+      "seek_papal_sanction", "fortify"
+    ],
+    "forbidden_actions": [
+      "press_claim", "arrange_heir_marriage", "conceal_cell", "seize_grain",
+      "expand_breach"
+    ]
+  },
+  "military_commander": {
+    "grain": "character",
+    "label": "Military commander",
+    "risk_tolerance": 0.52,
+    "concern_weights": {
+      "survival": 0.8,
+      "dynasty": 0.15,
+      "legitimacy": 0.3,
+      "faith": 0.25,
+      "ambition": 0.45,
+      "wealth": 0.2,
+      "territorial_security": 1.25,
+      "loyalty": 0.7,
+      "fear": 0.5,
+      "corruption": 0.2,
+      "revenge": 0.25,
+      "church_standing": 0.2,
+      "plague_safety": 0.55,
+      "famine": 0.35,
+      "infernal_threat": 0.75
+    },
+    "actions": [
+      "wait", "hold_the_line", "withdraw_army", "fortify", "military_cleansing",
+      "raise_levy"
+    ],
+    "forbidden_actions": [
+      "exorcism", "issue_bull", "press_claim", "arrange_heir_marriage",
+      "expand_breach", "preach"
+    ]
+  },
+  "claimant": {
+    "grain": "character",
+    "label": "Claimant",
+    "risk_tolerance": 0.62,
+    "concern_weights": {
+      "survival": 0.55,
+      "dynasty": 1.2,
+      "legitimacy": 1.15,
+      "faith": 0.25,
+      "ambition": 1.3,
+      "wealth": 0.4,
+      "territorial_security": 0.45,
+      "loyalty": 0.35,
+      "fear": 0.25,
+      "corruption": 0.15,
+      "revenge": 0.55,
+      "church_standing": 0.35,
+      "plague_safety": 0.25,
+      "famine": 0.2,
+      "infernal_threat": 0.2
+    },
+    "actions": [
+      "wait", "press_claim", "secure_succession", "petition_liege",
+      "treat_with_papacy", "arrange_heir_marriage"
+    ],
+    "forbidden_actions": [
+      "call_bannermen", "issue_bull", "exorcism", "expand_breach",
+      "authorize_exorcists"
+    ]
+  },
+  "merchant": {
+    "grain": "character",
+    "label": "Merchant",
+    "risk_tolerance": 0.28,
+    "concern_weights": {
+      "survival": 0.85,
+      "dynasty": 0.25,
+      "legitimacy": 0.15,
+      "faith": 0.2,
+      "ambition": 0.4,
+      "wealth": 1.4,
+      "territorial_security": 0.35,
+      "loyalty": 0.2,
+      "fear": 0.55,
+      "corruption": 0.2,
+      "revenge": 0.1,
+      "church_standing": 0.15,
+      "plague_safety": 0.9,
+      "famine": 0.5,
+      "infernal_threat": 0.45
+    },
+    "actions": [
+      "wait", "relocate_goods", "close_market", "quarantine", "petition_liege"
+    ],
+    "forbidden_actions": [
+      "raise_levy", "exorcism", "press_claim", "issue_bull", "military_cleansing",
+      "expand_breach", "march_on_breach"
+    ]
+  },
+  "heretic_leader": {
+    "grain": "character",
+    "label": "Heretic leader",
+    "risk_tolerance": 0.55,
+    "concern_weights": {
+      "survival": 0.7,
+      "dynasty": 0.1,
+      "legitimacy": 0.7,
+      "faith": 0.6,
+      "ambition": 0.7,
+      "wealth": 0.2,
+      "territorial_security": 0.25,
+      "loyalty": 0.45,
+      "fear": 0.4,
+      "corruption": 0.15,
+      "revenge": 0.45,
+      "church_standing": -0.3,
+      "plague_safety": 0.35,
+      "famine": 0.35,
+      "infernal_threat": 0.25
+    },
+    "actions": [
+      "wait", "preach_against_church", "shelter_heretics", "preach", "conceal_cell"
+    ],
+    "forbidden_actions": [
+      "investigate_heresy", "issue_bull", "exorcism", "authorize_exorcists",
+      "expand_breach", "call_bannermen"
+    ]
+  },
+  "cult_leader": {
+    "grain": "character",
+    "label": "Cult leader",
+    "risk_tolerance": 0.5,
+    "concern_weights": {
+      "survival": 0.8,
+      "dynasty": 0.05,
+      "legitimacy": 0.2,
+      "faith": -0.2,
+      "ambition": 0.65,
+      "wealth": 0.25,
+      "territorial_security": 0.2,
+      "loyalty": 0.3,
+      "fear": 0.45,
+      "corruption": 1.2,
+      "revenge": 0.35,
+      "church_standing": -0.5,
+      "plague_safety": 0.2,
+      "famine": 0.2,
+      "infernal_threat": 0.7
+    },
+    "actions": [
+      "wait", "conceal_cell", "accelerate_rite", "corrupt_garrison", "harvest_fear"
+    ],
+    "forbidden_actions": [
+      "exorcism", "petition_pope", "investigate_heresy", "issue_bull",
+      "preach", "raise_levy", "march_on_breach"
+    ]
+  },
+  "demon_commander": {
+    "grain": "character",
+    "label": "Demon commander",
+    "risk_tolerance": 0.7,
+    "concern_weights": {
+      "survival": 0.4,
+      "dynasty": 0.0,
+      "legitimacy": 0.15,
+      "faith": -0.6,
+      "ambition": 0.85,
+      "wealth": 0.1,
+      "territorial_security": 0.5,
+      "loyalty": 0.2,
+      "fear": 0.9,
+      "corruption": 1.1,
+      "revenge": 0.5,
+      "church_standing": -0.8,
+      "plague_safety": 0.1,
+      "famine": 0.15,
+      "infernal_threat": 1.4
+    },
+    "actions": [
+      "wait", "expand_breach", "corrupt_garrison", "harvest_fear", "accelerate_rite"
+    ],
+    "forbidden_actions": [
+      "exorcism", "petition_pope", "preach", "raise_levy", "arrange_heir_marriage",
+      "issue_bull", "quarantine", "open_granary"
+    ]
+  },
+  "realm": {
+    "grain": "organization",
+    "label": "Realm",
+    "risk_tolerance": 0.4,
+    "concern_weights": {
+      "survival": 0.7,
+      "dynasty": 0.4,
+      "legitimacy": 0.9,
+      "faith": 0.3,
+      "ambition": 0.45,
+      "wealth": 0.7,
+      "territorial_security": 1.2,
+      "loyalty": 1.0,
+      "fear": 0.35,
+      "corruption": 0.2,
+      "revenge": 0.1,
+      "church_standing": 0.4,
+      "plague_safety": 0.65,
+      "famine": 0.7,
+      "infernal_threat": 0.65
+    },
+    "actions": [
+      "wait", "close_borders", "levy_from_vassals", "fortify", "quarantine", "seize_grain"
+    ],
+    "forbidden_actions": [
+      "exorcism", "preach", "press_claim", "expand_breach", "conceal_cell"
+    ]
+  },
+  "monastery": {
+    "grain": "organization",
+    "label": "Monastery",
+    "risk_tolerance": 0.18,
+    "concern_weights": {
+      "survival": 0.55,
+      "dynasty": 0.0,
+      "legitimacy": 0.2,
+      "faith": 1.15,
+      "ambition": 0.05,
+      "wealth": 0.25,
+      "territorial_security": 0.2,
+      "loyalty": 0.25,
+      "fear": 0.4,
+      "corruption": 0.35,
+      "revenge": 0.0,
+      "church_standing": 0.8,
+      "plague_safety": 0.7,
+      "famine": 1.1,
+      "infernal_threat": 0.7
+    },
+    "actions": [
+      "wait", "open_granary", "shelter_refugees", "copy_chronicle", "quarantine"
+    ],
+    "forbidden_actions": [
+      "levy_from_vassals", "seize_grain", "military_cleansing", "close_borders",
+      "expand_breach"
+    ]
+  },
+  "holy_order": {
+    "grain": "organization",
+    "label": "Holy order",
+    "risk_tolerance": 0.6,
+    "concern_weights": {
+      "survival": 0.45,
+      "dynasty": 0.0,
+      "legitimacy": 0.4,
+      "faith": 1.05,
+      "ambition": 0.3,
+      "wealth": 0.15,
+      "territorial_security": 0.85,
+      "loyalty": 0.35,
+      "fear": 0.2,
+      "corruption": 0.3,
+      "revenge": 0.1,
+      "church_standing": 0.95,
+      "plague_safety": 0.25,
+      "famine": 0.2,
+      "infernal_threat": 1.25
+    },
+    "actions": [
+      "wait", "deploy_commandery", "march_on_breach", "military_cleansing",
+      "seek_papal_sanction", "fortify"
+    ],
+    "forbidden_actions": [
+      "open_granary", "seize_grain", "conceal_cell", "expand_breach"
+    ]
+  },
+  "cult": {
+    "grain": "organization",
+    "label": "Cult",
+    "risk_tolerance": 0.48,
+    "concern_weights": {
+      "survival": 0.85,
+      "dynasty": 0.0,
+      "legitimacy": 0.15,
+      "faith": -0.25,
+      "ambition": 0.55,
+      "wealth": 0.2,
+      "territorial_security": 0.15,
+      "loyalty": 0.35,
+      "fear": 0.4,
+      "corruption": 1.15,
+      "revenge": 0.3,
+      "church_standing": -0.45,
+      "plague_safety": 0.15,
+      "famine": 0.15,
+      "infernal_threat": 0.75
+    },
+    "actions": [
+      "wait", "conceal_cell", "accelerate_rite"
+    ],
+    "forbidden_actions": [
+      "exorcism", "open_granary", "levy_from_vassals", "issue_bull"
+    ]
+  },
+  "papacy": {
+    "grain": "organization",
+    "label": "Papacy",
+    "risk_tolerance": 0.33,
+    "concern_weights": {
+      "survival": 0.45,
+      "dynasty": 0.0,
+      "legitimacy": 1.2,
+      "faith": 1.25,
+      "ambition": 0.25,
+      "wealth": 0.2,
+      "territorial_security": 0.2,
+      "loyalty": 0.3,
+      "fear": 0.25,
+      "corruption": 0.45,
+      "revenge": 0.1,
+      "church_standing": 1.3,
+      "plague_safety": 0.4,
+      "famine": 0.35,
+      "infernal_threat": 1.15
+    },
+    "actions": [
+      "wait", "issue_bull", "authorize_exorcists"
+    ],
+    "forbidden_actions": [
+      "raise_levy", "press_claim", "seize_grain", "expand_breach", "close_borders"
+    ]
+  }
+}

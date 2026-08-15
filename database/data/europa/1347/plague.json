@@ -1,0 +1,19 @@
+{
+  "wave": {
+    "key": "great-mortality-1347",
+    "name": "The Great Mortality",
+    "status": "active",
+    "started_date": "1346-01-01",
+    "strain_key": "yersinia-game",
+    "infectiousness": 55,
+    "mortality": 45,
+    "origin": "caffa"
+  },
+  "infections": [
+    {"territory": "caffa", "intensity": 8, "arrived": "1346-06-01", "note": "Siege of Caffa. Conventional western entry story."},
+    {"territory": "constantinople", "intensity": 5, "arrived": "1347-05-01", "note": "Reached the City in spring/summer 1347."},
+    {"territory": "messina", "intensity": 6, "arrived": "1347-10-01", "note": "Genoese galleys; traditional Italian landfall."}
+  ],
+  "threatened_routes": ["genoa", "marseille", "venice", "naples", "palermo"],
+  "must_remain_clear": ["london", "paris", "cologne", "prague", "krakow", "buda", "toledo", "copenhagen", "edinburgh"]
+}

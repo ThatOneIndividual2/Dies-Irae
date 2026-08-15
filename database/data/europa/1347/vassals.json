@@ -1,0 +1,10 @@
+[
+  {"liege": "edward-iii", "vassal": "black-prince", "title": "d-cornwall", "realm": "realm-england"},
+  {"liege": "edward-iii", "vassal": "henry-grosmont", "title": "d-lancaster", "realm": "realm-england"},
+  {"liege": "edward-iii", "vassal": "maurice-kildare", "title": "c-kildare", "realm": "realm-england"},
+  {"liege": "philippe-vi", "vassal": "jean-normandy", "title": "d-normandy", "realm": "realm-france"},
+  {"liege": "philippe-vi", "vassal": "odo-iv", "title": "d-burgundy", "realm": "realm-france"},
+  {"liege": "philippe-vi", "vassal": "louis-male", "title": "d-flanders", "realm": "realm-france"},
+  {"liege": "david-ii", "vassal": "robert-stewart", "title": "d-steward", "realm": "realm-scotland"},
+  {"liege": "louis-iv", "vassal": "albert-ii-austria", "title": "d-austria", "realm": "realm-hre"}
+]

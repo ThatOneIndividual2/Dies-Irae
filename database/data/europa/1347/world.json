@@ -1,0 +1,16 @@
+{
+  "slug": "europa-1347",
+  "name": "Europa 1347",
+  "start_date": "1347-10-01",
+  "game_date": "1347-10-01",
+  "simulation_seed": "dies-irae-1347-v1",
+  "faiths": [
+    {"key": "latin-rite", "name": "Latin Church", "rite": "roman", "primary": true},
+    {"key": "greek-rite", "name": "Church of Constantinople", "rite": "byzantine", "primary": false},
+    {"key": "sunni-nasrid", "name": "Islam of Granada", "rite": "maliki", "primary": false}
+  ],
+  "succession_laws": [
+    {"key": "agnatic_primogeniture", "name": "Agnatic Primogeniture", "description": "Eldest legitimate son inherits."},
+    {"key": "elective_monarchy", "name": "Princely Election", "description": "Used as an abstraction for the imperial election and some communes."}
+  ]
+}

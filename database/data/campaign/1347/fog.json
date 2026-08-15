@@ -1,0 +1,46 @@
+{
+  "bands": [
+    {
+      "key": "ordinary_season",
+      "max_pressure": 8,
+      "max_plague": 5,
+      "max_manifestation": 0,
+      "headline": "The year keeps its shape",
+      "body": "Parish bells ring as they did last year. Stewards argue over tithes. The war with England is the trouble men name."
+    },
+    {
+      "key": "hard_season",
+      "max_pressure": 18,
+      "max_plague": 20,
+      "max_manifestation": 4,
+      "headline": "A hard season, variously explained",
+      "body": "Chroniclers note empty houses in the ports. Physicians speak of bad air. Preachers speak of sin. No one account has won the chancery."
+    },
+    {
+      "key": "great_dying",
+      "max_pressure": 40,
+      "max_plague": 55,
+      "max_manifestation": 15,
+      "headline": "The mortality is no longer a rumor",
+      "body": "The burying grounds overflow. Trade falters. Learned men still dispute whether this is a punishment, a poison, or a fever that will pass."
+    },
+    {
+      "key": "broken_ordinary",
+      "max_pressure": 100,
+      "max_plague": 100,
+      "max_manifestation": 100,
+      "headline": "The ordinary explanations fail",
+      "body": "Witnesses describe what the old books did not budget for. Clergy and captains argue over which office should answer first."
+    }
+  ],
+  "hidden_from_player": [
+    "pressure",
+    "phase_key",
+    "phase_ordinal",
+    "global_corruption",
+    "demonic_manifestation",
+    "institutional_collapse",
+    "meter_floors",
+    "tick_count"
+  ]
+}

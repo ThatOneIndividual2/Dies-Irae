@@ -1,0 +1,176 @@
+{
+  "order": [
+    "dormant",
+    "tempted",
+    "corrupted",
+    "manifested",
+    "breached",
+    "overrun",
+    "infernal_stronghold"
+  ],
+  "effects": {
+    "dormant": {
+      "event_weight": 0,
+      "population_delta": 0,
+      "morale_delta": 0,
+      "despair_delta": 0,
+      "corruption_delta": 0,
+      "plague_amp": 0.0,
+      "production_mult": 1.0,
+      "travel_open": true,
+      "neighbor_leak": 0,
+      "clergy_pressure": 0,
+      "ruler_temptation": 0,
+      "army_corruption": 0,
+      "settlement_corrupted": false
+    },
+    "tempted": {
+      "event_weight": 1,
+      "population_delta": 0,
+      "morale_delta": -1,
+      "despair_delta": 2,
+      "corruption_delta": 1,
+      "plague_amp": 0.05,
+      "production_mult": 0.97,
+      "travel_open": true,
+      "neighbor_leak": 1,
+      "clergy_pressure": 4,
+      "ruler_temptation": 8,
+      "army_corruption": 2,
+      "settlement_corrupted": false
+    },
+    "corrupted": {
+      "event_weight": 2,
+      "population_delta": -1,
+      "morale_delta": -3,
+      "despair_delta": 4,
+      "corruption_delta": 2,
+      "plague_amp": 0.12,
+      "production_mult": 0.85,
+      "travel_open": true,
+      "neighbor_leak": 3,
+      "clergy_pressure": 12,
+      "ruler_temptation": 18,
+      "army_corruption": 8,
+      "settlement_corrupted": true
+    },
+    "manifested": {
+      "event_weight": 4,
+      "population_delta": -3,
+      "morale_delta": -6,
+      "despair_delta": 6,
+      "corruption_delta": 3,
+      "plague_amp": 0.22,
+      "production_mult": 0.7,
+      "travel_open": true,
+      "neighbor_leak": 6,
+      "clergy_pressure": 22,
+      "ruler_temptation": 28,
+      "army_corruption": 16,
+      "settlement_corrupted": true
+    },
+    "breached": {
+      "event_weight": 6,
+      "population_delta": -8,
+      "morale_delta": -10,
+      "despair_delta": 8,
+      "corruption_delta": 4,
+      "plague_amp": 0.35,
+      "production_mult": 0.45,
+      "travel_open": false,
+      "neighbor_leak": 10,
+      "clergy_pressure": 40,
+      "ruler_temptation": 40,
+      "army_corruption": 28,
+      "settlement_corrupted": true
+    },
+    "overrun": {
+      "event_weight": 8,
+      "population_delta": -15,
+      "morale_delta": -14,
+      "despair_delta": 10,
+      "corruption_delta": 5,
+      "plague_amp": 0.5,
+      "production_mult": 0.2,
+      "travel_open": false,
+      "neighbor_leak": 16,
+      "clergy_pressure": 70,
+      "ruler_temptation": 55,
+      "army_corruption": 50,
+      "settlement_corrupted": true
+    },
+    "infernal_stronghold": {
+      "event_weight": 10,
+      "population_delta": -20,
+      "morale_delta": -18,
+      "despair_delta": 12,
+      "corruption_delta": 6,
+      "plague_amp": 0.7,
+      "production_mult": 0.05,
+      "travel_open": false,
+      "neighbor_leak": 24,
+      "clergy_pressure": 90,
+      "ruler_temptation": 70,
+      "army_corruption": 80,
+      "settlement_corrupted": true
+    }
+  },
+  "advance": {
+    "dormant_to_tempted": {
+      "from": "dormant",
+      "to": "tempted",
+      "min_apocalypse": 0,
+      "any_thresholds": {
+        "corruption": 20,
+        "cult_activity": 15,
+        "despair": 25
+      }
+    },
+    "tempted_to_corrupted": {
+      "from": "tempted",
+      "to": "corrupted",
+      "min_apocalypse": 8,
+      "all_thresholds": {
+        "corruption": 40
+      },
+      "any_thresholds": {
+        "cult_activity": 30,
+        "despair": 40
+      }
+    },
+    "corrupted_to_manifested": {
+      "from": "corrupted",
+      "to": "manifested",
+      "min_apocalypse": 22,
+      "any_flags": ["named_demon_present", "local_manifestation_high"],
+      "any_thresholds": {
+        "local_manifestation": 35
+      }
+    },
+    "manifested_to_breached": {
+      "from": "manifested",
+      "to": "breached",
+      "min_apocalypse": 40,
+      "any_flags": ["breach_open"],
+      "all_thresholds": {
+        "local_manifestation": 55
+      }
+    },
+    "breached_to_overrun": {
+      "from": "breached",
+      "to": "overrun",
+      "min_apocalypse": 52,
+      "any_flags": ["host_present", "army_corrupted"],
+      "any_thresholds": {
+        "morale": 25
+      },
+      "morale_at_most": 30
+    },
+    "overrun_to_infernal_stronghold": {
+      "from": "overrun",
+      "to": "infernal_stronghold",
+      "min_apocalypse": 68,
+      "all_flags": ["breach_open", "prince_or_named_present"]
+    }
+  }
+}

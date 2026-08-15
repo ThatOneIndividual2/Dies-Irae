@@ -1,0 +1,51 @@
+{
+  "plague": {
+    "wave_key": "great_mortality_1347",
+    "name": "The Great Mortality",
+    "strain": "black_death",
+    "entry": "messina",
+    "starting_intensity": 1,
+    "note": "Genoese galleys from Caffa made Messina in October 1347. Inland Christendom has not yet counted the dead."
+  },
+  "trade_routes": [
+    {"key": "messina_genoa", "from": "messina", "to": "genoa", "goods": "grain_and_spices", "volume": 70},
+    {"key": "genoa_marseille", "from": "genoa", "to": "marseille", "goods": "cloth_and_salt", "volume": 65},
+    {"key": "marseille_avignon", "from": "marseille", "to": "avignon", "goods": "wine", "volume": 50},
+    {"key": "venice_naples", "from": "venice", "to": "naples", "goods": "glass_and_grain", "volume": 55},
+    {"key": "london_calais", "from": "london", "to": "calais", "goods": "wool", "volume": 80},
+    {"key": "bordeaux_london", "from": "bordeaux", "to": "london", "goods": "wine", "volume": 60},
+    {"key": "barcelona_marseille", "from": "barcelona", "to": "marseille", "goods": "oil", "volume": 45},
+    {"key": "rhodes_messina", "from": "rhodes", "to": "messina", "goods": "pilgrim_passage", "volume": 30}
+  ],
+  "local_wars": [
+    {
+      "key": "hundred_years_war",
+      "name": "The war with England",
+      "attacker_realm": "realm_england",
+      "defender_realm": "realm_france",
+      "theater": "calais",
+      "status": "active"
+    }
+  ],
+  "armies": [
+    {"name": "Garrison of Calais", "kind": "hostile", "owner": "edward_iii", "territory": "calais", "strength": 140},
+    {"name": "Host of Artois", "kind": "hostile", "owner": "philip_vi", "territory": "artois", "strength": 110}
+  ],
+  "cults": [
+    {"key": "brothers_open_grave", "name": "Brothers of the Open Grave", "territory": "messina", "faction": "open_grave", "revealed": false, "strength": 3, "activity": 2},
+    {"key": "avignon_cell", "name": "The Quiet Chapter", "territory": "avignon", "faction": "open_grave", "revealed": false, "strength": 2, "activity": 1}
+  ],
+  "factions": [
+    {"key": "open_grave", "name": "Court of the Open Grave", "agenda": "Thin the veil through plague-graves and stolen rites", "status": "dormant"}
+  ],
+  "threats": [
+    {"key": "messina_whisper", "name": "The Messina Whisper", "faction": "open_grave", "territory": "messina", "status": "dormant", "intensity": 1}
+  ],
+  "corruption": [
+    {"territory": "messina", "intensity": 3, "source": "unburied_from_the_galleys"},
+    {"territory": "avignon", "intensity": 1, "source": "court_luxury"}
+  ],
+  "heresies": [
+    {"key": "flagellants", "name": "Flagellant preaching"}
+  ]
+}

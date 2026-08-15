@@ -1,0 +1,237 @@
+{
+  "signals": [
+    {
+      "key": "mass_sin",
+      "polarity": "escalation",
+      "name": "Mass sin",
+      "meter_deltas": {
+        "global_corruption": 1.2,
+        "despair": 0.4,
+        "church_cohesion": -0.3
+      }
+    },
+    {
+      "key": "heresy",
+      "polarity": "escalation",
+      "name": "Heresy",
+      "meter_deltas": {
+        "global_corruption": 0.6,
+        "institutional_collapse": 0.5,
+        "church_cohesion": -0.9,
+        "political_fragmentation": 0.3
+      }
+    },
+    {
+      "key": "desecration",
+      "polarity": "escalation",
+      "name": "Desecration",
+      "meter_deltas": {
+        "global_corruption": 1.0,
+        "demonic_manifestation": 0.4,
+        "church_cohesion": -0.6,
+        "despair": 0.5
+      }
+    },
+    {
+      "key": "plague_mortality",
+      "polarity": "escalation",
+      "name": "Plague mortality",
+      "meter_deltas": {
+        "plague_severity": 1.4,
+        "despair": 0.8,
+        "famine_pressure": 0.4,
+        "church_cohesion": -0.2
+      }
+    },
+    {
+      "key": "destroyed_monastery",
+      "polarity": "escalation",
+      "name": "Destroyed monastery",
+      "meter_deltas": {
+        "church_cohesion": -1.1,
+        "despair": 0.7,
+        "institutional_collapse": 0.6,
+        "global_corruption": 0.5
+      },
+      "local_deltas": {
+        "local_corruption": 8,
+        "local_despair": 10,
+        "local_sanctity": -12
+      }
+    },
+    {
+      "key": "murdered_clergy",
+      "polarity": "escalation",
+      "name": "Murdered clergy",
+      "meter_deltas": {
+        "church_cohesion": -1.2,
+        "institutional_collapse": 0.7,
+        "despair": 0.6,
+        "global_corruption": 0.5
+      }
+    },
+    {
+      "key": "broken_sacred_site",
+      "polarity": "escalation",
+      "name": "Broken sacred site",
+      "meter_deltas": {
+        "global_corruption": 0.8,
+        "demonic_manifestation": 0.7,
+        "church_cohesion": -0.8,
+        "despair": 0.5
+      },
+      "local_deltas": {
+        "local_corruption": 10,
+        "local_sanctity": -15
+      }
+    },
+    {
+      "key": "successful_cult",
+      "polarity": "escalation",
+      "name": "Successful cult",
+      "meter_deltas": {
+        "demonic_manifestation": 1.1,
+        "global_corruption": 0.8,
+        "church_cohesion": -0.7,
+        "political_fragmentation": 0.4
+      }
+    },
+    {
+      "key": "failed_exorcism",
+      "polarity": "escalation",
+      "name": "Failed exorcism",
+      "meter_deltas": {
+        "demonic_manifestation": 1.5,
+        "despair": 0.9,
+        "church_cohesion": -0.8
+      },
+      "local_deltas": {
+        "local_manifestation": 12,
+        "local_despair": 8
+      }
+    },
+    {
+      "key": "famine_deaths",
+      "polarity": "escalation",
+      "name": "Famine deaths",
+      "meter_deltas": {
+        "famine_pressure": 1.3,
+        "despair": 0.7,
+        "political_fragmentation": 0.4
+      }
+    },
+    {
+      "key": "realm_collapse",
+      "polarity": "escalation",
+      "name": "Realm collapse",
+      "meter_deltas": {
+        "political_fragmentation": 1.6,
+        "institutional_collapse": 1.2,
+        "despair": 0.6
+      }
+    },
+    {
+      "key": "restored_monastery",
+      "polarity": "resistance",
+      "name": "Restored monastery",
+      "meter_deltas": {
+        "church_cohesion": 1.0,
+        "despair": -0.7,
+        "global_corruption": -0.5,
+        "institutional_collapse": -0.3
+      },
+      "local_deltas": {
+        "local_corruption": -10,
+        "local_despair": -12,
+        "local_sanctity": 14
+      }
+    },
+    {
+      "key": "relic_recovery",
+      "polarity": "resistance",
+      "name": "Relic recovery",
+      "meter_deltas": {
+        "church_cohesion": 0.9,
+        "despair": -0.6,
+        "demonic_manifestation": -0.4,
+        "global_corruption": -0.3
+      },
+      "local_deltas": {
+        "local_sanctity": 12,
+        "local_manifestation": -6
+      }
+    },
+    {
+      "key": "saint",
+      "polarity": "resistance",
+      "name": "Saint",
+      "meter_deltas": {
+        "church_cohesion": 1.4,
+        "despair": -1.0,
+        "global_corruption": -0.6,
+        "demonic_manifestation": -0.5
+      }
+    },
+    {
+      "key": "pilgrimage",
+      "polarity": "resistance",
+      "name": "Pilgrimage",
+      "meter_deltas": {
+        "church_cohesion": 0.5,
+        "despair": -0.5,
+        "global_corruption": -0.2
+      },
+      "local_deltas": {
+        "local_despair": -6,
+        "local_sanctity": 6
+      }
+    },
+    {
+      "key": "holy_victory",
+      "polarity": "resistance",
+      "name": "Holy victory",
+      "meter_deltas": {
+        "demonic_manifestation": -0.8,
+        "despair": -0.6,
+        "church_cohesion": 0.6,
+        "political_fragmentation": -0.3
+      }
+    },
+    {
+      "key": "repentance",
+      "polarity": "resistance",
+      "name": "Repentance",
+      "meter_deltas": {
+        "global_corruption": -0.8,
+        "church_cohesion": 0.7,
+        "despair": -0.4
+      }
+    },
+    {
+      "key": "cult_destroyed",
+      "polarity": "resistance",
+      "name": "Cult destroyed",
+      "meter_deltas": {
+        "demonic_manifestation": -0.7,
+        "global_corruption": -0.5,
+        "church_cohesion": 0.5,
+        "political_fragmentation": -0.2
+      }
+    },
+    {
+      "key": "breach_closed",
+      "polarity": "resistance",
+      "name": "Breach closed",
+      "meter_deltas": {
+        "demonic_manifestation": -1.1,
+        "despair": -0.5,
+        "global_corruption": -0.4
+      },
+      "local_deltas": {
+        "local_manifestation": -16,
+        "local_corruption": -8,
+        "local_sanctity": 8
+      }
+    }
+  ]
+}

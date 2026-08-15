@@ -1,0 +1,225 @@
+{
+  "events": [
+    {
+      "key": "plague_omen_in_the_parish",
+      "title": "An omen in the parish",
+      "body": "The sexton buried too many this week for the season. A child swears the bells rang with no ringer. The priest wants a procession. The steward wants the roads left open.",
+      "category": "supernatural_omen",
+      "scope": "territory",
+      "visibility": "player",
+      "weight": 22,
+      "weight_modifiers": [
+        { "when": { "plague_active": true }, "add": 30 },
+        { "when": { "min_apocalypse_phase_ordinal": 2 }, "add": 12 }
+      ],
+      "cooldown_days": 25,
+      "exclusivity": "omen_watch",
+      "trigger": {
+        "any_of": [
+          { "plague_active": true },
+          { "min_apocalypse_meters": { "plague_severity": 10 } },
+          { "min_territory": { "despair": 15 } }
+        ]
+      },
+      "choices": [
+        {
+          "key": "procession",
+          "label": "Hold a procession",
+          "ai": { "base": 30, "modifiers": [{ "when": { "min_church_standing": 10 }, "add": 15 }] },
+          "immediate": [
+            { "op": "add_despair", "delta": -4 },
+            { "op": "add_treasury", "delta": -5 }
+          ],
+          "hidden": [
+            { "op": "add_church_standing", "delta": 3 },
+            { "op": "apocalypse_signal", "signal": "pilgrimage", "magnitude": 6 }
+          ]
+        },
+        {
+          "key": "keep_roads",
+          "label": "Keep the roads open",
+          "ai": { "base": 25 },
+          "immediate": [
+            { "op": "add_plague_intensity", "delta": 1 },
+            { "op": "add_despair", "delta": 3 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "court_famine_ration",
+      "title": "The hall eats first",
+      "body": "The cellar is thinner than the steward admitted. Someone at table will go without. The question is who.",
+      "category": "famine",
+      "scope": "territory",
+      "visibility": "player",
+      "weight": 18,
+      "weight_modifiers": [
+        { "when": { "max_territory": { "food_stores": 12 } }, "add": 25 },
+        { "when": { "min_apocalypse_meters": { "famine_pressure": 10 } }, "add": 10 }
+      ],
+      "cooldown_days": 20,
+      "category_note": "court plus famine",
+      "trigger": {
+        "all_of": [
+          { "max_territory": { "food_stores": 18 } },
+          { "min_territory": { "population": 30 } }
+        ]
+      },
+      "choices": [
+        {
+          "key": "ration_peasants",
+          "label": "Ration the village",
+          "ai": { "base": 35 },
+          "immediate": [
+            { "op": "add_food", "delta": 4 },
+            { "op": "add_despair", "delta": 6 },
+            { "op": "add_prestige", "delta": -2 }
+          ],
+          "hidden": [
+            { "op": "set_hook", "hook": "court_ate_first", "ttl_days": 60 }
+          ]
+        },
+        {
+          "key": "ration_hall",
+          "label": "Ration the hall",
+          "ai": { "base": 20 },
+          "immediate": [
+            { "op": "add_food", "delta": -2 },
+            { "op": "add_despair", "delta": -2 },
+            { "op": "add_treasury", "delta": -4 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dynasty_succession_whisper",
+      "title": "A cousin counts the sick",
+      "body": "A kinsman asks, too carefully, who holds the county if the fever takes the current holder.",
+      "category": "succession",
+      "scope": "dynasty",
+      "visibility": "player",
+      "weight": 12,
+      "weight_modifiers": [
+        { "when": { "plague_active": true }, "add": 18 },
+        { "when": { "min_apocalypse_phase_ordinal": 3 }, "add": 8 }
+      ],
+      "cooldown_days": 80,
+      "trigger": {
+        "any_of": [
+          { "plague_active": true },
+          { "min_apocalypse_meters": { "institutional_collapse": 8 } }
+        ]
+      },
+      "choices": [
+        {
+          "key": "name_heir",
+          "label": "Name the heir in hall",
+          "ai": { "base": 40 },
+          "immediate": [
+            { "op": "add_prestige", "delta": 3 },
+            { "op": "set_hook", "hook": "heir_named_in_fever", "ttl_days": 200 }
+          ]
+        },
+        {
+          "key": "ignore",
+          "label": "Call it gossip",
+          "ai": { "base": 20 },
+          "immediate": [
+            { "op": "add_despair", "delta": 2 },
+            { "op": "set_hook", "hook": "succession_unsettled", "ttl_days": 120 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "war_camp_sickness",
+      "title": "Sickness in the camp",
+      "body": "Men who marched past a charnel village now cough in the palisade. The captain wants them isolated. The lord wants the campaign kept.",
+      "category": "warfare",
+      "scope": "army",
+      "visibility": "player",
+      "weight": 20,
+      "weight_modifiers": [
+        { "when": { "plague_active": true }, "add": 20 },
+        { "when": { "has_war": true }, "add": 15 }
+      ],
+      "cooldown_days": 21,
+      "trigger": {
+        "all_of": [
+          { "min_army_strength": 10 },
+          { "plague_active": true }
+        ]
+      },
+      "choices": [
+        {
+          "key": "isolate",
+          "label": "Isolate the sick",
+          "ai": { "base": 35 },
+          "immediate": [
+            { "op": "add_despair", "delta": 2 }
+          ],
+          "hidden": [
+            { "op": "apocalypse_signal", "signal": "plague_mortality", "magnitude": 4 }
+          ]
+        },
+        {
+          "key": "march",
+          "label": "Keep the march",
+          "ai": { "base": 25 },
+          "immediate": [
+            { "op": "add_plague_intensity", "delta": 1 },
+            { "op": "add_corruption", "delta": 4, "source": "marching_sick" }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "abbey_miracle_claim",
+      "title": "A claimed miracle",
+      "body": "The abbey says a fever broke after the relic was shown. Pilgrims are already on the road. A deacon thinks it was luck and a clean well.",
+      "category": "miracle",
+      "scope": "monastery",
+      "visibility": "observer",
+      "weight": 14,
+      "weight_modifiers": [
+        { "when": { "min_hooks": { "refugees_sheltered": 1 } }, "add": 10 },
+        { "when": { "min_apocalypse_meters": { "church_cohesion": 70 } }, "add": 8 }
+      ],
+      "cooldown_days": 50,
+      "trigger": {
+        "all_of": [
+          { "has_monastery": true },
+          {
+            "any_of": [
+              { "has_hook": "refugees_sheltered" },
+              { "plague_active": true }
+            ]
+          }
+        ]
+      },
+      "choices": [
+        {
+          "key": "endorse",
+          "label": "Endorse the relic",
+          "ai": { "base": 40 },
+          "immediate": [
+            { "op": "add_monastery_stores", "delta": 4 },
+            { "op": "add_despair", "delta": -3 }
+          ],
+          "hidden": [
+            { "op": "apocalypse_signal", "signal": "relic_recovery", "magnitude": 7 }
+          ]
+        },
+        {
+          "key": "investigate",
+          "label": "Investigate quietly",
+          "ai": { "base": 25 },
+          "immediate": [
+            { "op": "add_church_standing", "delta": 1 }
+          ]
+        }
+      ]
+    }
+  ]
+}

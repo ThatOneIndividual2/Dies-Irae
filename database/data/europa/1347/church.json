@@ -1,0 +1,44 @@
+{
+  "provinces": [
+    {"key": "prov-canterbury", "name": "Province of Canterbury", "faith": "latin-rite", "metropolitan": "see-canterbury"},
+    {"key": "prov-york", "name": "Province of York", "faith": "latin-rite", "metropolitan": "see-york"},
+    {"key": "prov-reims", "name": "Province of Reims", "faith": "latin-rite", "metropolitan": "see-reims"},
+    {"key": "prov-lyon", "name": "Province of Lyon", "faith": "latin-rite", "metropolitan": "see-lyon"},
+    {"key": "prov-mainz", "name": "Province of Mainz", "faith": "latin-rite", "metropolitan": "see-mainz"},
+    {"key": "prov-cologne", "name": "Province of Cologne", "faith": "latin-rite", "metropolitan": "see-cologne"},
+    {"key": "prov-prague", "name": "Province of Prague", "faith": "latin-rite", "metropolitan": "see-prague"},
+    {"key": "prov-gniezno", "name": "Province of Gniezno", "faith": "latin-rite", "metropolitan": "see-gniezno"},
+    {"key": "prov-esztergom", "name": "Province of Esztergom", "faith": "latin-rite", "metropolitan": "see-esztergom"},
+    {"key": "prov-toledo", "name": "Province of Toledo", "faith": "latin-rite", "metropolitan": "see-toledo"},
+    {"key": "prov-compostela", "name": "Province of Santiago", "faith": "latin-rite", "metropolitan": "see-santiago"},
+    {"key": "prov-naples", "name": "Province of Naples", "faith": "latin-rite", "metropolitan": "see-naples"},
+    {"key": "prov-avignon", "name": "Province of Avignon", "faith": "latin-rite", "metropolitan": "see-avignon"},
+    {"key": "prov-lund", "name": "Province of Lund", "faith": "latin-rite", "metropolitan": "see-lund"},
+    {"key": "prov-constantinople", "name": "Patriarchate of Constantinople", "faith": "greek-rite", "metropolitan": "see-constantinople"}
+  ],
+  "sees": [
+    {"key": "see-canterbury", "name": "Canterbury", "type": "archdiocese", "province": "prov-canterbury", "territory": "canterbury", "rank": "archbishop", "holder": "john-stratford"},
+    {"key": "see-london", "name": "London", "type": "diocese", "province": "prov-canterbury", "territory": "london", "parent": "see-canterbury", "rank": "bishop"},
+    {"key": "see-york", "name": "York", "type": "archdiocese", "province": "prov-york", "territory": "york", "rank": "archbishop", "holder": "william-zouche"},
+    {"key": "see-reims", "name": "Reims", "type": "archdiocese", "province": "prov-reims", "territory": "reims", "rank": "archbishop", "holder": "ordinary-reims"},
+    {"key": "see-lyon", "name": "Lyon", "type": "archdiocese", "province": "prov-lyon", "territory": "lyon", "rank": "archbishop", "holder": "ordinary-lyon"},
+    {"key": "see-mainz", "name": "Mainz", "type": "archdiocese", "province": "prov-mainz", "territory": "mainz", "rank": "archbishop", "holder": "heinrich-mainz"},
+    {"key": "see-cologne", "name": "Cologne", "type": "archdiocese", "province": "prov-cologne", "territory": "cologne", "rank": "archbishop", "holder": "walram-cologne"},
+    {"key": "see-prague", "name": "Prague", "type": "archdiocese", "province": "prov-prague", "territory": "prague", "rank": "archbishop", "holder": "arnost-prague"},
+    {"key": "see-gniezno", "name": "Gniezno", "type": "archdiocese", "province": "prov-gniezno", "territory": "gniezno", "rank": "archbishop", "holder": "ordinary-gniezno"},
+    {"key": "see-esztergom", "name": "Esztergom", "type": "archdiocese", "province": "prov-esztergom", "territory": "buda", "rank": "archbishop", "holder": "ordinary-esztergom"},
+    {"key": "see-toledo", "name": "Toledo", "type": "archdiocese", "province": "prov-toledo", "territory": "toledo", "rank": "archbishop", "holder": "gil-albornoz"},
+    {"key": "see-santiago", "name": "Santiago de Compostela", "type": "archdiocese", "province": "prov-compostela", "territory": "santiago", "rank": "archbishop", "holder": "ordinary-santiago"},
+    {"key": "see-naples", "name": "Naples", "type": "archdiocese", "province": "prov-naples", "territory": "naples", "rank": "archbishop", "holder": "ordinary-naples"},
+    {"key": "see-avignon", "name": "Avignon", "type": "papal", "province": "prov-avignon", "territory": "avignon", "rank": "pope", "holder": "clement-vi"},
+    {"key": "see-rome", "name": "Rome", "type": "diocese", "province": "prov-avignon", "territory": "rome", "parent": "see-avignon", "rank": "cardinal", "holder": "annibale-ceccano"},
+    {"key": "see-lund", "name": "Lund", "type": "archdiocese", "province": "prov-lund", "territory": "lund", "rank": "archbishop", "holder": "ordinary-lund"},
+    {"key": "see-constantinople", "name": "Constantinople", "type": "patriarchate", "province": "prov-constantinople", "territory": "constantinople", "rank": "archbishop", "holder": "isidore-i"}
+  ],
+  "papacy": {
+    "see": "see-avignon",
+    "office_key": "office-pope",
+    "status": "occupied",
+    "holder": "clement-vi"
+  }
+}

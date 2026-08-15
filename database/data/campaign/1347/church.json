@@ -1,0 +1,59 @@
+{
+  "faith": {"key": "latin_christianity", "name": "Latin Christianity", "rite": "roman"},
+  "provinces": [
+    {"key": "province_avignon", "name": "Province of Avignon", "metropolitan": "see_avignon"},
+    {"key": "province_aix", "name": "Province of Aix", "metropolitan": "see_aix"},
+    {"key": "province_sens", "name": "Province of Sens", "metropolitan": "see_paris"},
+    {"key": "province_cologne", "name": "Province of Cologne", "metropolitan": "see_cologne"}
+  ],
+  "sees": [
+    {"key": "see_avignon", "name": "Apostolic See at Avignon", "type": "papal_see", "territory": "avignon", "province": "province_avignon"},
+    {"key": "see_aix", "name": "Archdiocese of Aix", "type": "archdiocese", "territory": "aix", "province": "province_aix", "parent": "see_avignon"},
+    {"key": "see_salon", "name": "Parish of Salon", "type": "parish", "territory": "salon", "province": "province_aix", "parent": "see_aix"},
+    {"key": "see_paris", "name": "Diocese of Paris", "type": "diocese", "territory": "paris", "province": "province_sens", "parent": "see_avignon"},
+    {"key": "see_cologne", "name": "Archdiocese of Cologne", "type": "archdiocese", "territory": "cologne", "province": "province_cologne", "parent": "see_avignon"},
+    {"key": "see_rome", "name": "Diocese of Rome", "type": "diocese", "territory": "rome", "province": "province_avignon", "parent": "see_avignon"}
+  ],
+  "see_territories": {
+    "see_avignon": ["avignon"],
+    "see_aix": ["aix", "marseille"],
+    "see_salon": ["salon"],
+    "see_paris": ["paris", "rouen", "artois"],
+    "see_cologne": ["cologne"],
+    "see_rome": ["rome"]
+  },
+  "offices": [
+    {"key": "papacy", "name": "Bishop of Rome (Avignon)", "rank": "pope", "see": "see_avignon", "holder": "clement_vi", "papal_apex": true},
+    {"key": "archbishop_aix", "name": "Archbishop of Aix", "rank": "archbishop", "see": "see_aix", "holder": "jacques_aix"},
+    {"key": "bishop_paris", "name": "Bishop of Paris", "rank": "bishop", "see": "see_paris", "holder": "foulques_paris"},
+    {"key": "archbishop_cologne", "name": "Archbishop of Cologne", "rank": "archbishop", "see": "see_cologne", "holder": "walram_cologne"},
+    {"key": "abbot_st_michel", "name": "Abbot of Saint-Michel", "rank": "abbot", "see": "see_salon", "holder": "etienne_stmichael"},
+    {"key": "parish_salon", "name": "Parish priest of Salon", "rank": "priest", "see": "see_salon", "holder": "bertrand_salon"},
+    {"key": "grand_master_hospital", "name": "Grand Master of the Hospital", "rank": "grand_master", "holder": "dieudonne_gozon", "holy_order": "knights_hospitaller"}
+  ],
+  "monasteries": [
+    {"key": "abbey_st_michel", "name": "Abbey of Saint-Michel", "holding": "st_michel_abbey", "territory": "salon", "see": "see_salon", "rule": "benedictine", "population": 48, "stores": 24}
+  ],
+  "holy_orders": [
+    {
+      "key": "knights_hospitaller",
+      "name": "Order of the Hospital of Saint John",
+      "headquarters": "rhodes_collachium",
+      "territory": "rhodes",
+      "master": "dieudonne_gozon",
+      "sanction_status": "sanctioned",
+      "papal_protection": true,
+      "status": "active",
+      "legitimacy": "recognized",
+      "papal_recognition_status": "bull",
+      "treasury": 90,
+      "manpower_cap": 400,
+      "manpower_current": 220,
+      "founded_date": "1099-07-15"
+    }
+  ],
+  "religious_orders": [
+    {"key": "benedictines", "name": "Order of Saint Benedict", "rule": "benedictine"},
+    {"key": "hospitallers", "name": "Hospitallers", "rule": "augustinian"}
+  ]
+}

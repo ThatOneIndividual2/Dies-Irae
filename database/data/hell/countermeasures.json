@@ -1,0 +1,221 @@
+{
+  "noise": 0.03,
+  "bands": {
+    "success": 0.72,
+    "partial": 0.48,
+    "failure": 0.28
+  },
+  "kinds": {
+    "exorcism": {
+      "supporting": {
+        "clergy_rank_weight": 1.2,
+        "clergy_legitimacy": 1.1,
+        "relic_authenticity": 1.0,
+        "relic_power": 0.8,
+        "holy_order_support": 0.6,
+        "accumulated_prayer": 0.5,
+        "devotional_standing": 0.35
+      },
+      "opposing": {
+        "local_corruption": 1.0,
+        "named_demon_rank": 1.3,
+        "despair": 0.8,
+        "apocalypse_intensity": 0.7,
+        "cult_activity": 0.6,
+        "possession_depth": 0.9
+      },
+      "requires": ["clergy_present"],
+      "targets": ["possession", "manifestation", "territory"],
+      "state_shift_success": -2,
+      "state_shift_partial": -1,
+      "possession_shift_success": -2,
+      "possession_shift_partial": -1,
+      "backlash": true
+    },
+    "relic_use": {
+      "supporting": {
+        "relic_authenticity": 1.4,
+        "relic_power": 1.2,
+        "clergy_legitimacy": 0.6,
+        "local_faith": 0.5
+      },
+      "opposing": {
+        "local_corruption": 0.9,
+        "named_demon_rank": 1.0,
+        "apocalypse_intensity": 0.5
+      },
+      "requires": ["relic_present"],
+      "targets": ["territory", "possession", "breach"],
+      "state_shift_success": -1,
+      "state_shift_partial": 0,
+      "corruption_delta_success": -18,
+      "corruption_delta_partial": -8,
+      "backlash": true
+    },
+    "prayer": {
+      "supporting": {
+        "accumulated_prayer": 1.3,
+        "clergy_presence": 0.7,
+        "local_faith": 0.8,
+        "devotional_standing": 0.4
+      },
+      "opposing": {
+        "despair": 1.1,
+        "cult_activity": 0.7,
+        "apocalypse_intensity": 0.4
+      },
+      "requires": [],
+      "targets": ["territory", "character"],
+      "despair_delta_success": -12,
+      "despair_delta_partial": -5,
+      "corruption_delta_success": -4,
+      "state_shift_success": 0,
+      "backlash": false
+    },
+    "consecration": {
+      "supporting": {
+        "clergy_rank_weight": 1.0,
+        "relic_authenticity": 0.8,
+        "holy_order_support": 0.7,
+        "local_faith": 0.6
+      },
+      "opposing": {
+        "local_corruption": 1.2,
+        "cult_activity": 0.8,
+        "breach_open": 1.4,
+        "apocalypse_intensity": 0.6
+      },
+      "requires": ["clergy_present"],
+      "targets": ["territory"],
+      "corruption_delta_success": -22,
+      "corruption_delta_partial": -10,
+      "state_shift_success": -1,
+      "state_shift_partial": 0,
+      "backlash": true
+    },
+    "pilgrimage": {
+      "supporting": {
+        "pilgrimage_strength": 1.4,
+        "relic_authenticity": 0.7,
+        "local_faith": 0.8,
+        "population_morale": 0.5
+      },
+      "opposing": {
+        "travel_closed": 1.5,
+        "plague_burden": 0.8,
+        "despair": 0.6,
+        "apocalypse_intensity": 0.4
+      },
+      "requires": ["travel_open"],
+      "targets": ["territory"],
+      "morale_delta_success": 14,
+      "despair_delta_success": -10,
+      "despair_delta_partial": -4,
+      "backlash": false
+    },
+    "military_cleansing": {
+      "supporting": {
+        "military_force": 1.4,
+        "holy_order_support": 0.9,
+        "clergy_presence": 0.4,
+        "population_morale": 0.3
+      },
+      "opposing": {
+        "host_strength": 1.3,
+        "named_demon_rank": 1.1,
+        "fear": 0.8,
+        "plague_burden": 0.5,
+        "apocalypse_intensity": 0.5
+      },
+      "requires": ["military_present"],
+      "targets": ["territory", "host", "corrupted_army"],
+      "state_shift_success": -2,
+      "state_shift_partial": -1,
+      "army_cleanse_success": true,
+      "backlash": true
+    },
+    "destroy_cult": {
+      "supporting": {
+        "military_force": 0.8,
+        "clergy_legitimacy": 1.0,
+        "intrigue_strength": 1.1,
+        "local_faith": 0.6
+      },
+      "opposing": {
+        "cult_activity": 1.2,
+        "ruler_complicit": 1.0,
+        "despair": 0.5,
+        "named_demon_rank": 0.6
+      },
+      "requires": [],
+      "targets": ["cult"],
+      "cult_delta_success": -40,
+      "cult_delta_partial": -18,
+      "state_shift_success": -1,
+      "backlash": false
+    },
+    "close_breach": {
+      "supporting": {
+        "clergy_rank_weight": 1.1,
+        "relic_authenticity": 1.3,
+        "holy_order_support": 1.0,
+        "military_force": 0.7,
+        "martyrdom_offered": 1.2
+      },
+      "opposing": {
+        "breach_open": 1.0,
+        "named_demon_rank": 1.4,
+        "host_strength": 1.0,
+        "apocalypse_intensity": 0.9,
+        "local_corruption": 0.7
+      },
+      "requires": ["breach_open"],
+      "targets": ["breach"],
+      "closes_breach_on_success": true,
+      "state_shift_success": -2,
+      "state_shift_partial": -1,
+      "backlash": true
+    },
+    "martyrdom": {
+      "supporting": {
+        "martyrdom_offered": 1.8,
+        "clergy_legitimacy": 0.8,
+        "local_faith": 0.9,
+        "relic_authenticity": 0.5
+      },
+      "opposing": {
+        "named_demon_rank": 1.0,
+        "apocalypse_intensity": 0.6,
+        "despair": 0.4
+      },
+      "requires": ["martyr_character"],
+      "targets": ["territory", "possession", "breach"],
+      "state_shift_success": -3,
+      "state_shift_partial": -1,
+      "closes_breach_on_success": true,
+      "costs_character_life": true,
+      "backlash": true
+    },
+    "holy_order": {
+      "supporting": {
+        "holy_order_support": 1.5,
+        "military_force": 1.0,
+        "clergy_rank_weight": 0.8,
+        "relic_authenticity": 0.7
+      },
+      "opposing": {
+        "host_strength": 1.1,
+        "local_corruption": 0.8,
+        "named_demon_rank": 1.0,
+        "apocalypse_intensity": 0.6
+      },
+      "requires": ["holy_order_present"],
+      "targets": ["territory", "host", "cult", "breach"],
+      "state_shift_success": -2,
+      "state_shift_partial": -1,
+      "cult_delta_success": -20,
+      "corruption_delta_success": -12,
+      "backlash": true
+    }
+  }
+}

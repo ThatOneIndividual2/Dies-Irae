@@ -1,0 +1,13 @@
+{
+  "corridors": [
+    {"key": "english-wool", "name": "English wool to Flanders", "stops": ["london", "calais", "bruges"], "good": "wool"},
+    {"key": "rhine", "name": "Rhine corridor", "stops": ["utrecht", "cologne", "mainz", "nuremberg"], "good": "wine"},
+    {"key": "hansa-baltic", "name": "Hansa Baltic", "stops": ["lubeck", "copenhagen", "lund", "stockholm", "bergen"], "good": "herring"},
+    {"key": "champagne", "name": "Champagne-Lyon axis", "stops": ["paris", "reims", "dijon", "lyon", "avignon"], "good": "cloth"},
+    {"key": "guyenne-wine", "name": "Gascon wine", "stops": ["bordeaux", "rouen", "london"], "good": "wine"},
+    {"key": "iberian-med", "name": "Iberian Mediterranean", "stops": ["seville", "granada", "mallorca", "barcelona", "genoa"], "good": "oil"},
+    {"key": "italian-levant", "name": "Venetian Levant", "stops": ["venice", "ragusa", "crete", "rhodes", "cyprus", "constantinople"], "good": "spices"},
+    {"key": "genoese-black-sea", "name": "Genoese Black Sea", "stops": ["genoa", "messina", "constantinople", "caffa"], "good": "grain"},
+    {"key": "sicilian-grain", "name": "Sicilian grain", "stops": ["palermo", "messina", "naples", "genoa"], "good": "grain"}
+  ]
+}

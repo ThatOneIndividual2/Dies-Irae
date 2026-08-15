@@ -1,0 +1,59 @@
+{
+  "world": {
+    "slug": "lys-1348",
+    "name": "Kingdom of Lys",
+    "start_date": "1348-06-24",
+    "current_date": "1348-06-24",
+    "status": "running",
+    "game_speed": 2
+  },
+  "succession_law": {
+    "key": "agnatic_primogeniture",
+    "name": "Agnatic Primogeniture",
+    "description": "Eldest legitimate son inherits; daughters only if no eligible son."
+  },
+  "faith": {
+    "key": "latin-rite",
+    "name": "Latin Church",
+    "rite": "roman"
+  },
+  "dynasty": {
+    "key": "house-lys",
+    "name": "House of Lys",
+    "motto": "The river remembers."
+  },
+  "characters": {
+    "king": {
+      "key": "aldric-lys",
+      "first_name": "Aldric",
+      "epithet": "the Steadfast",
+      "sex": "male",
+      "birth_date": "1302-03-12",
+      "culture": "lysian"
+    },
+    "duke": {
+      "key": "renard-lys",
+      "first_name": "Renard",
+      "epithet": "of the Vale",
+      "sex": "male",
+      "birth_date": "1318-09-01",
+      "culture": "lysian"
+    },
+    "count": {
+      "key": "michel-cressy",
+      "first_name": "Michel",
+      "epithet": "of Cressy",
+      "sex": "male",
+      "birth_date": "1324-11-20",
+      "culture": "lysian"
+    },
+    "bishop": {
+      "key": "tomas-of-lys",
+      "first_name": "Tomas",
+      "epithet": "of Lys",
+      "sex": "male",
+      "birth_date": "1308-01-06",
+      "culture": "lysian"
+    }
+  }
+}

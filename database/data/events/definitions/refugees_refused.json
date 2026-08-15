@@ -1,0 +1,237 @@
+{
+  "events": [
+    {
+      "key": "refugees_at_the_gate",
+      "title": "Refugees at the gate",
+      "body": "Hungry people from a wounded neighbor wait outside the walls. The stores would feed them. The stores would also feed the garrison if the mortality deepens.",
+      "category": "refugee",
+      "scope": "territory",
+      "visibility": "player",
+      "weight": 35,
+      "weight_modifiers": [
+        { "when": { "min_hooks": { "refugees_in_motion": 1 } }, "add": 20 },
+        { "when": { "plague_active": true }, "add": 15 },
+        { "when": { "min_territory": { "despair": 12 } }, "add": 10 }
+      ],
+      "cooldown_days": 45,
+      "exclusivity": "refugee_crisis",
+      "exclusivity_scope": "same_scope",
+      "max_pending": 1,
+      "chain": "refused_refugees",
+      "trigger": {
+        "all_of": [
+          { "min_territory": { "food_stores": 8, "population": 40 } },
+          {
+            "any_of": [
+              { "plague_active": true },
+              { "has_hook": "refugees_in_motion" },
+              { "min_territory": { "despair": 10 } }
+            ]
+          }
+        ]
+      },
+      "choices": [
+        {
+          "key": "admit",
+          "label": "Admit them",
+          "ai": {
+            "base": 25,
+            "modifiers": [
+              { "when": { "min_church_standing": 20 }, "add": 20 },
+              { "when": { "min_territory": { "food_stores": 40 } }, "add": 10 }
+            ]
+          },
+          "immediate": [
+            { "op": "add_food", "delta": -12 },
+            { "op": "add_population", "delta": 80 },
+            { "op": "add_despair", "delta": 3 },
+            { "op": "set_hook", "hook": "refugees_sheltered", "ttl_days": 90, "intensity": 1 },
+            { "op": "clear_hook", "hook": "refugees_in_motion" }
+          ],
+          "hidden": [
+            { "op": "add_church_standing", "delta": 3 }
+          ]
+        },
+        {
+          "key": "refuse",
+          "label": "Turn them away",
+          "ai": {
+            "base": 40,
+            "modifiers": [
+              { "when": { "max_territory": { "food_stores": 20 } }, "add": 25 },
+              { "when": { "max_church_standing": 5 }, "add": 10 }
+            ]
+          },
+          "immediate": [
+            { "op": "set_hook", "hook": "refugees_refused", "ttl_days": 180, "intensity": 1 },
+            { "op": "add_hook", "hook": "harsh_reputation", "ttl_days": 180, "intensity": 1 },
+            { "op": "add_prestige", "delta": -4 }
+          ],
+          "hidden": [
+            { "op": "add_church_standing", "delta": -4 }
+          ],
+          "delayed": [
+            { "op": "move_refugees_onward", "days": 3, "souls": 80 },
+            { "op": "add_despair", "days": 7, "delta": 8, "when": { "has_hook": "refugees_refused" } },
+            { "op": "spawn_event", "days": 10, "event": "hostile_preacher", "scope": "same" }
+          ]
+        },
+        {
+          "key": "send_to_monastery",
+          "label": "Send them to the house of prayer",
+          "visible_if": { "has_monastery": true },
+          "ai": { "base": 20, "modifiers": [{ "when": { "has_monastery": true }, "add": 15 }] },
+          "immediate": [
+            { "op": "add_monastery_stores", "delta": -6 },
+            { "op": "add_population", "delta": 20 },
+            { "op": "set_hook", "hook": "refugees_sheltered", "ttl_days": 60 }
+          ],
+          "hidden": [
+            { "op": "add_church_standing", "delta": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "hostile_preacher",
+      "title": "A preacher at the refuse heap",
+      "body": "A ragged preacher names the lord who shut the gate. The hungry listen. Some of them already know a darker liturgy.",
+      "category": "morality",
+      "scope": "territory",
+      "visibility": "player",
+      "weight": 20,
+      "weight_modifiers": [
+        { "when": { "min_hooks": { "refugees_refused": 1 } }, "add": 30 },
+        { "when": { "min_territory": { "despair": 12 } }, "add": 15 }
+      ],
+      "cooldown_days": 40,
+      "exclusivity": "preacher_trouble",
+      "chain": "refused_refugees",
+      "trigger": {
+        "all_of": [
+          { "has_hook": "refugees_refused" },
+          { "min_territory": { "despair": 8 } }
+        ]
+      },
+      "choices": [
+        {
+          "key": "disperse",
+          "label": "Drive him off",
+          "ai": { "base": 35 },
+          "immediate": [
+            { "op": "add_despair", "delta": 2 },
+            { "op": "add_corruption", "delta": 3, "source": "silenced_preacher" }
+          ],
+          "hidden": [
+            { "op": "add_church_standing", "delta": -2 }
+          ]
+        },
+        {
+          "key": "listen",
+          "label": "Let him speak",
+          "ai": { "base": 25 },
+          "immediate": [
+            { "op": "add_despair", "delta": 5 },
+            { "op": "set_hook", "hook": "hostile_preacher_heard", "ttl_days": 90 }
+          ]
+        },
+        {
+          "key": "ask_bishop",
+          "label": "Ask the bishop to answer him",
+          "ai": {
+            "base": 20,
+            "modifiers": [{ "when": { "min_church_standing": 10 }, "add": 20 }]
+          },
+          "immediate": [
+            { "op": "spawn_event", "days": 4, "event": "bishop_condemns_ruler", "scope": "same" }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "bishop_condemns_ruler",
+      "title": "The bishop names a sin",
+      "body": "The ordinary of the see writes that a Christian lord who turns away the hungry has already chosen a side.",
+      "category": "church_politics",
+      "scope": "territory",
+      "visibility": "player",
+      "weight": 18,
+      "weight_modifiers": [
+        { "when": { "max_church_standing": 8 }, "add": 25 },
+        { "when": { "min_hooks": { "refugees_refused": 1 } }, "add": 20 }
+      ],
+      "cooldown_days": 90,
+      "chain": "refused_refugees",
+      "trigger": {
+        "all_of": [
+          { "has_hook": "refugees_refused" },
+          { "max_church_standing": 12 }
+        ]
+      },
+      "choices": [
+        {
+          "key": "submit",
+          "label": "Do public penance",
+          "ai": { "base": 30, "modifiers": [{ "when": { "min_church_standing": 0 }, "add": 10 }] },
+          "immediate": [
+            { "op": "add_church_standing", "delta": 6 },
+            { "op": "add_prestige", "delta": -6 },
+            { "op": "clear_hook", "hook": "bishop_condemned_ruler" }
+          ]
+        },
+        {
+          "key": "defy",
+          "label": "Refuse the letter",
+          "ai": { "base": 25 },
+          "immediate": [
+            { "op": "condemn_ruler" },
+            { "op": "add_despair", "delta": 4 }
+          ],
+          "hidden": [
+            { "op": "apocalypse_signal", "signal": "mass_sin", "magnitude": 8 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cult_finds_the_refused",
+      "title": "A cell among the turned-away",
+      "body": "People who were refused a gate are easy to catechize. The words are not the bishop's.",
+      "category": "cult",
+      "scope": "territory",
+      "visibility": "hidden",
+      "weight": 16,
+      "weight_modifiers": [
+        { "when": { "min_hooks": { "refugees_refused": 1 } }, "add": 28 },
+        { "when": { "min_hooks": { "hostile_preacher_heard": 1 } }, "add": 12 },
+        { "when": { "min_territory": { "despair": 14 } }, "add": 10 }
+      ],
+      "cooldown_days": 30,
+      "chain": "refused_refugees",
+      "trigger": {
+        "all_of": [
+          { "has_hook": "refugees_refused" },
+          {
+            "any_of": [
+              { "min_territory": { "despair": 10 } },
+              { "has_hook": "hostile_preacher_heard" },
+              { "min_apocalypse_meters": { "global_corruption": 8 } }
+            ]
+          }
+        ]
+      },
+      "choices": [
+        {
+          "key": "take_root",
+          "label": "The cell takes root",
+          "ai": { "base": 100 },
+          "immediate": [
+            { "op": "seed_cult", "strength": 3 },
+            { "op": "add_corruption", "delta": 6, "source": "refused_refugees_cult" },
+            { "op": "apocalypse_signal", "signal": "successful_cult", "magnitude": 10 }
+          ]
+        }
+      ]
+    }
+  ]
+}

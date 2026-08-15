@@ -1,0 +1,271 @@
+{
+  "wait": {
+    "label": "Wait and watch",
+    "concerns": { "survival": 0.2, "fear": 0.1 },
+    "risk": 0.05,
+    "grain": ["character", "organization"]
+  },
+  "raise_levy": {
+    "label": "Raise a levy",
+    "concerns": { "territorial_security": 0.85, "ambition": 0.15, "fear": 0.2 },
+    "risk": 0.45,
+    "requires": ["arms"],
+    "grain": ["character"]
+  },
+  "call_bannermen": {
+    "label": "Call bannermen",
+    "concerns": { "territorial_security": 0.7, "loyalty": 0.4, "legitimacy": 0.25 },
+    "risk": 0.5,
+    "requires": ["arms", "realm_head"],
+    "grain": ["character"]
+  },
+  "fortify": {
+    "label": "Fortify holdings",
+    "concerns": { "territorial_security": 0.7, "survival": 0.4, "fear": 0.2 },
+    "risk": 0.15,
+    "grain": ["character", "organization"]
+  },
+  "press_claim": {
+    "label": "Press a title claim",
+    "concerns": { "ambition": 0.9, "dynasty": 0.6, "legitimacy": 0.4 },
+    "risk": 0.7,
+    "requires": ["dynasty"],
+    "grain": ["character"]
+  },
+  "secure_succession": {
+    "label": "Secure the succession",
+    "concerns": { "dynasty": 0.9, "legitimacy": 0.5, "survival": 0.2 },
+    "risk": 0.2,
+    "requires": ["dynasty"],
+    "grain": ["character"]
+  },
+  "pacify_vassals": {
+    "label": "Pacify vassals",
+    "concerns": { "loyalty": 0.85, "legitimacy": 0.4, "territorial_security": 0.2 },
+    "risk": 0.2,
+    "grain": ["character"]
+  },
+  "treat_with_papacy": {
+    "label": "Treat with the papacy",
+    "concerns": { "church_standing": 0.8, "legitimacy": 0.5, "faith": 0.3 },
+    "risk": 0.25,
+    "grain": ["character"]
+  },
+  "petition_pope": {
+    "label": "Petition the pope",
+    "concerns": { "church_standing": 0.7, "faith": 0.4, "infernal_threat": 0.3 },
+    "risk": 0.15,
+    "grain": ["character"]
+  },
+  "petition_liege": {
+    "label": "Petition liege",
+    "concerns": { "loyalty": 0.5, "territorial_security": 0.4, "survival": 0.3 },
+    "risk": 0.15,
+    "grain": ["character"]
+  },
+  "military_cleansing": {
+    "label": "Military cleansing of the wound",
+    "concerns": { "infernal_threat": 0.8, "territorial_security": 0.5, "fear": 0.3 },
+    "risk": 0.65,
+    "requires": ["arms"],
+    "grain": ["character", "organization"]
+  },
+  "hold_the_line": {
+    "label": "Hold the line",
+    "concerns": { "territorial_security": 0.75, "survival": 0.4, "loyalty": 0.2 },
+    "risk": 0.55,
+    "requires": ["arms"],
+    "grain": ["character"]
+  },
+  "withdraw_army": {
+    "label": "Withdraw the army",
+    "concerns": { "survival": 0.8, "plague_safety": 0.4, "fear": 0.3 },
+    "risk": 0.25,
+    "requires": ["arms"],
+    "grain": ["character"]
+  },
+  "exorcism": {
+    "label": "Attempt exorcism",
+    "concerns": { "infernal_threat": 0.85, "faith": 0.6, "church_standing": 0.3 },
+    "risk": 0.5,
+    "requires": ["sacrament"],
+    "grain": ["character"]
+  },
+  "consecrate_land": {
+    "label": "Consecrate the land",
+    "concerns": { "infernal_threat": 0.7, "faith": 0.55, "church_standing": 0.25 },
+    "risk": 0.35,
+    "requires": ["sacrament"],
+    "grain": ["character"]
+  },
+  "call_for_relic": {
+    "label": "Send for a relic",
+    "concerns": { "infernal_threat": 0.6, "faith": 0.5, "church_standing": 0.4 },
+    "risk": 0.2,
+    "requires": ["sacrament"],
+    "grain": ["character"]
+  },
+  "preach": {
+    "label": "Preach to the people",
+    "concerns": { "faith": 0.7, "legitimacy": 0.3, "fear": 0.2 },
+    "risk": 0.1,
+    "grain": ["character"]
+  },
+  "investigate_heresy": {
+    "label": "Investigate heresy",
+    "concerns": { "faith": 0.75, "church_standing": 0.45, "legitimacy": 0.2 },
+    "risk": 0.3,
+    "requires": ["sacrament"],
+    "grain": ["character"]
+  },
+  "expose_cult": {
+    "label": "Expose a cult",
+    "concerns": { "faith": 0.6, "infernal_threat": 0.5, "church_standing": 0.4 },
+    "risk": 0.4,
+    "grain": ["character"]
+  },
+  "shelter_refugees": {
+    "label": "Shelter refugees",
+    "concerns": { "faith": 0.4, "famine": 0.5, "plague_safety": -0.2, "church_standing": 0.3 },
+    "risk": 0.35,
+    "grain": ["character", "organization"]
+  },
+  "open_granary": {
+    "label": "Open the granary",
+    "concerns": { "famine": 0.9, "loyalty": 0.3, "wealth": -0.3 },
+    "risk": 0.2,
+    "grain": ["character", "organization"]
+  },
+  "seize_grain": {
+    "label": "Seize grain for the court",
+    "concerns": { "famine": 0.4, "wealth": 0.4, "loyalty": -0.5, "survival": 0.3 },
+    "risk": 0.45,
+    "grain": ["character", "organization"]
+  },
+  "quarantine": {
+    "label": "Impose quarantine",
+    "concerns": { "plague_safety": 0.9, "survival": 0.4, "wealth": -0.2 },
+    "risk": 0.25,
+    "grain": ["character", "organization"]
+  },
+  "relocate_goods": {
+    "label": "Relocate goods from the stricken road",
+    "concerns": { "wealth": 0.85, "plague_safety": 0.4, "survival": 0.3 },
+    "risk": 0.3,
+    "grain": ["character"]
+  },
+  "close_market": {
+    "label": "Close the market",
+    "concerns": { "plague_safety": 0.7, "wealth": -0.4, "survival": 0.2 },
+    "risk": 0.15,
+    "grain": ["character"]
+  },
+  "authorize_exorcists": {
+    "label": "Authorize extraordinary exorcists",
+    "concerns": { "infernal_threat": 0.8, "faith": 0.5, "church_standing": 0.3 },
+    "risk": 0.35,
+    "requires": ["papal_office"],
+    "grain": ["character", "organization"]
+  },
+  "issue_bull": {
+    "label": "Issue a papal bull",
+    "concerns": { "church_standing": 0.7, "legitimacy": 0.5, "faith": 0.4 },
+    "risk": 0.3,
+    "requires": ["papal_office"],
+    "grain": ["character", "organization"]
+  },
+  "excommunicate_rival": {
+    "label": "Excommunicate a rival",
+    "concerns": { "church_standing": 0.4, "revenge": 0.5, "legitimacy": 0.4, "faith": 0.3 },
+    "risk": 0.55,
+    "requires": ["papal_office"],
+    "grain": ["character"]
+  },
+  "arrange_heir_marriage": {
+    "label": "Arrange an heir's marriage",
+    "concerns": { "dynasty": 0.85, "ambition": 0.35, "legitimacy": 0.25 },
+    "risk": 0.2,
+    "requires": ["dynasty"],
+    "grain": ["character"]
+  },
+  "march_on_breach": {
+    "label": "March on the breach",
+    "concerns": { "infernal_threat": 0.9, "faith": 0.5, "territorial_security": 0.4 },
+    "risk": 0.7,
+    "requires": ["arms"],
+    "grain": ["character", "organization"]
+  },
+  "seek_papal_sanction": {
+    "label": "Seek papal sanction for arms",
+    "concerns": { "church_standing": 0.7, "faith": 0.4, "legitimacy": 0.3 },
+    "risk": 0.15,
+    "grain": ["character", "organization"]
+  },
+  "conceal_cell": {
+    "label": "Conceal the cell",
+    "concerns": { "survival": 0.85, "corruption": 0.4, "fear": 0.3 },
+    "risk": 0.25,
+    "grain": ["character", "organization"]
+  },
+  "accelerate_rite": {
+    "label": "Accelerate the infernal rite",
+    "concerns": { "corruption": 0.8, "ambition": 0.5, "infernal_threat": 0.4 },
+    "risk": 0.75,
+    "grain": ["character", "organization"]
+  },
+  "preach_against_church": {
+    "label": "Preach against Church failure",
+    "concerns": { "ambition": 0.5, "faith": 0.2, "legitimacy": 0.4, "revenge": 0.3 },
+    "risk": 0.55,
+    "grain": ["character"]
+  },
+  "shelter_heretics": {
+    "label": "Shelter the accused",
+    "concerns": { "loyalty": 0.4, "survival": 0.5, "church_standing": -0.4 },
+    "risk": 0.5,
+    "grain": ["character"]
+  },
+  "expand_breach": {
+    "label": "Widen the breach",
+    "concerns": { "infernal_threat": 0.9, "ambition": 0.5, "corruption": 0.4 },
+    "risk": 0.4,
+    "grain": ["character", "organization"]
+  },
+  "corrupt_garrison": {
+    "label": "Corrupt a garrison",
+    "concerns": { "corruption": 0.7, "territorial_security": 0.4, "ambition": 0.3 },
+    "risk": 0.5,
+    "grain": ["character"]
+  },
+  "harvest_fear": {
+    "label": "Harvest fear from the living",
+    "concerns": { "fear": 0.7, "infernal_threat": 0.5, "ambition": 0.3 },
+    "risk": 0.2,
+    "grain": ["character"]
+  },
+  "close_borders": {
+    "label": "Close the realm's borders",
+    "concerns": { "plague_safety": 0.8, "territorial_security": 0.4, "wealth": -0.3 },
+    "risk": 0.3,
+    "grain": ["organization"]
+  },
+  "levy_from_vassals": {
+    "label": "Demand levy from vassals",
+    "concerns": { "territorial_security": 0.7, "loyalty": -0.2, "ambition": 0.2 },
+    "risk": 0.4,
+    "grain": ["organization"]
+  },
+  "copy_chronicle": {
+    "label": "Copy a chronicle of the age",
+    "concerns": { "faith": 0.5, "church_standing": 0.3, "survival": 0.1 },
+    "risk": 0.05,
+    "grain": ["organization"]
+  },
+  "deploy_commandery": {
+    "label": "Deploy a commandery",
+    "concerns": { "infernal_threat": 0.6, "territorial_security": 0.6, "faith": 0.3 },
+    "risk": 0.45,
+    "requires": ["arms"],
+    "grain": ["organization"]
+  }
+}

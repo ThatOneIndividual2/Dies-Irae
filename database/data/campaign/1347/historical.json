@@ -1,0 +1,34 @@
+{
+  "world": {
+    "start_date": "1347-10-01",
+    "slug": "europa-1347",
+    "apocalypse_phase": "ordinary",
+    "papacy_seat": "avignon",
+    "pope_key": "clement_vi",
+    "plague_entry": "messina",
+    "plague_absent_at_start": ["paris", "london", "prague", "buda", "toledo"]
+  },
+  "facts": [
+    {"id": "date_october_1347", "assert": "start_date", "value": "1347-10-01", "note": "Black Death made Messina in October 1347."},
+    {"id": "avignon_papacy", "assert": "papacy_territory", "value": "avignon", "note": "Clement VI resided at Avignon, 1342-1352."},
+    {"id": "clement_vi_pope", "assert": "character_office", "character": "clement_vi", "office_rank": "pope"},
+    {"id": "philip_vi_france", "assert": "character_title", "character": "philip_vi", "title": "kingdom_france"},
+    {"id": "edward_iii_england", "assert": "character_title", "character": "edward_iii", "title": "kingdom_england"},
+    {"id": "calais_english", "assert": "territory_owner", "territory": "calais", "character": "edward_iii", "note": "Calais surrendered 3 August 1347."},
+    {"id": "joanna_naples", "assert": "character_title", "character": "joanna_naples", "title": "kingdom_naples"},
+    {"id": "charles_iv_bohemia", "assert": "character_title", "character": "charles_iv", "title": "kingdom_bohemia", "note": "King of the Romans since 1346; imperial coronation in Rome is later."},
+    {"id": "alfonso_xi_castile", "assert": "character_title", "character": "alfonso_xi", "title": "kingdom_castile"},
+    {"id": "peter_iv_aragon", "assert": "character_title", "character": "peter_iv", "title": "kingdom_aragon"},
+    {"id": "louis_hungary", "assert": "character_title", "character": "louis_hungary", "title": "kingdom_hungary"},
+    {"id": "hospitallers_rhodes", "assert": "holy_order_seat", "order": "knights_hospitaller", "territory": "rhodes", "note": "Dieudonné de Gozon, Grand Master 1346-1353."},
+    {"id": "walram_cologne", "assert": "prince_bishop", "character": "walram_cologne", "title": "duchy_westphalia", "office_rank": "archbishop", "note": "Walram of Jülich, Archbishop-Elector, died 1349."},
+    {"id": "jacques_no_title", "assert": "bishop_without_title", "character": "jacques_aix"},
+    {"id": "messina_plague_entry", "assert": "plague_only_entry", "territory": "messina"},
+    {"id": "cults_hidden", "assert": "cults_unrevealed"},
+    {"id": "threats_dormant", "assert": "threats_dormant"},
+    {"id": "no_demonic_armies", "assert": "no_demonic_armies"},
+    {"id": "hundred_years_war", "assert": "local_war", "war": "hundred_years_war"},
+    {"id": "edward_claim_france", "assert": "title_claim", "claimant": "edward_iii", "title": "kingdom_france"},
+    {"id": "holy_order_not_realm", "assert": "holy_order_not_realm", "order": "knights_hospitaller"}
+  ]
+}

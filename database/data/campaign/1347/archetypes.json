@@ -1,0 +1,39 @@
+{
+  "king": {
+    "character": "philip_vi",
+    "playable": true,
+    "notes": "Full secular loop: titles, vassals, war at Calais, events, plague, church standing."
+  },
+  "duke": {
+    "character": "jean_normandy",
+    "playable": true,
+    "notes": "Vassal of France. Levy, events, and Norman lands. Diplomacy kernel is still a stub."
+  },
+  "count": {
+    "character": "raimond_adhemar",
+    "playable": true,
+    "notes": "County of Salon under Naples/Provence. Closest to the vertical-slice loop."
+  },
+  "minor_lord": {
+    "character": "gui_pelissanne",
+    "playable": true,
+    "notes": "Barony only. Events are local. No independent realm cache worth a crown."
+  },
+  "bishop": {
+    "character": "jacques_aix",
+    "playable": true,
+    "limitations": ["no_secular_title", "levy_is_residence_not_vassalage"],
+    "notes": "Archbishop of Aix, no secular title. Church, events, and plague. Army raise uses the see's town levy, not a feudal host."
+  },
+  "prince_bishop": {
+    "character": "walram_cologne",
+    "playable": true,
+    "notes": "Duchy of Westphalia plus Archbishop of Cologne. Dual authority is live."
+  },
+  "holy_order": {
+    "character": "dieudonne_gozon",
+    "playable": true,
+    "limitations": ["no_dynasty", "no_feudal_realm", "war_doctrine_ui_unwired"],
+    "notes": "Grand Master at Rhodes. Order tables, levy, and events work. The order is not a realm. Fleet and crusade missions are not a playable loop yet."
+  }
+}

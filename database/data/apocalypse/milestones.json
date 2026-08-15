@@ -1,0 +1,132 @@
+{
+  "milestones": [
+    {
+      "key": "veil_thinned",
+      "name": "The veil thins",
+      "irreversible": true,
+      "chronicle": "The ordinary night is no longer a promise. Signs are no longer only weather and rumor.",
+      "when": {
+        "min_phase_ordinal": 2,
+        "any_of": [
+          { "min_meters": { "global_corruption": 20, "demonic_manifestation": 8 } },
+          { "min_signal_counts": { "failed_exorcism": 1, "desecration": 2 } }
+        ]
+      },
+      "apply_floors": {
+        "global_corruption": 10,
+        "demonic_manifestation": 4
+      }
+    },
+    {
+      "key": "first_plague_wave",
+      "name": "First plague wave acknowledged",
+      "irreversible": true,
+      "chronicle": "Mortality has a name. The dead are too many for the parish books.",
+      "when": {
+        "min_meters": { "plague_severity": 18 },
+        "min_signal_counts": { "plague_mortality": 1 }
+      },
+      "apply_floors": {
+        "plague_severity": 10,
+        "despair": 8
+      }
+    },
+    {
+      "key": "first_manifestation",
+      "name": "First open manifestation",
+      "irreversible": true,
+      "chronicle": "Hell is no longer only a doctrine. A place has been seen to fail.",
+      "when": {
+        "min_phase_ordinal": 4,
+        "min_meters": { "demonic_manifestation": 18 },
+        "any_of": [
+          { "min_signal_counts": { "failed_exorcism": 1 } },
+          { "min_signal_counts": { "successful_cult": 1 } }
+        ]
+      },
+      "apply_floors": {
+        "demonic_manifestation": 12,
+        "global_corruption": 16
+      }
+    },
+    {
+      "key": "first_incursion",
+      "name": "First successful incursion",
+      "irreversible": true,
+      "chronicle": "A wound in the land holds. Title and occupation no longer describe the same country.",
+      "when": {
+        "min_phase_ordinal": 5,
+        "min_meters": { "demonic_manifestation": 36 }
+      },
+      "apply_floors": {
+        "demonic_manifestation": 24,
+        "institutional_collapse": 14
+      }
+    },
+    {
+      "key": "papacy_wounded",
+      "name": "Papacy wounded",
+      "irreversible": true,
+      "chronicle": "The apex of spiritual office is no longer a certainty. Vacancy becomes a climate.",
+      "when": {
+        "min_phase_ordinal": 4,
+        "max_meters": { "church_cohesion": 48 }
+      },
+      "apply_floors": {
+        "institutional_collapse": 16
+      },
+      "apply_ceilings": {
+        "church_cohesion": 60
+      }
+    },
+    {
+      "key": "first_kingdom_fallen",
+      "name": "First kingdom fallen",
+      "irreversible": true,
+      "chronicle": "A crown has failed in public. Other crowns take note.",
+      "when": {
+        "min_phase_ordinal": 6,
+        "any_of": [
+          { "min_signal_counts": { "realm_collapse": 1 } },
+          { "min_meters": { "political_fragmentation": 45, "institutional_collapse": 36 } }
+        ]
+      },
+      "apply_floors": {
+        "political_fragmentation": 28,
+        "institutional_collapse": 26
+      }
+    },
+    {
+      "key": "infernal_dominion_declared",
+      "name": "Infernal dominion declared",
+      "irreversible": true,
+      "chronicle": "Hell is mapped. The age of restoration talk is over.",
+      "when": {
+        "min_phase_ordinal": 7,
+        "min_meters": { "demonic_manifestation": 52 },
+        "require_milestones": ["first_incursion", "first_kingdom_fallen"]
+      },
+      "apply_floors": {
+        "demonic_manifestation": 46,
+        "global_corruption": 34
+      }
+    },
+    {
+      "key": "age_cannot_return",
+      "name": "The old age cannot return",
+      "irreversible": true,
+      "chronicle": "Enough thresholds have been crossed that ordinary medieval order is historical, not pending.",
+      "when": {
+        "min_phase_ordinal": 8
+      },
+      "apply_floors": {
+        "demonic_manifestation": 48,
+        "institutional_collapse": 36,
+        "political_fragmentation": 36
+      },
+      "apply_ceilings": {
+        "church_cohesion": 42
+      }
+    }
+  ]
+}

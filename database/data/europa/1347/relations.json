@@ -1,0 +1,11 @@
+[
+  {"from_realm": "realm-england", "to_realm": "realm-france", "type": "war", "name": "Hundred Years War", "since": "1337-05-24", "note": "Open war after the homage crisis and Crécy. Calais has just fallen."},
+  {"from_realm": "realm-england", "to_realm": "realm-scotland", "type": "war", "name": "Second War of Independence", "since": "1332-01-01", "note": "David II is a prisoner in England after Neville's Cross."},
+  {"from_realm": "realm-castile", "to_realm": "realm-granada", "type": "war", "name": "Strait campaigns", "since": "1340-10-30", "note": "Castile presses Granada after the Salado victory; intermittent sieges."},
+  {"from_realm": "realm-venice", "to_realm": "realm-genoa", "type": "rivalry", "name": "Gulf rivalry", "since": "1298-01-01", "note": "Commercial and naval rivalry in the eastern Mediterranean."},
+  {"from_realm": "realm-hungary", "to_realm": "realm-naples", "type": "claim", "name": "Angevin revenge", "since": "1345-09-18", "note": "Louis I prepares war over the murder of his brother Andrew."},
+  {"from_realm": "realm-aragon", "to_realm": "realm-genoa", "type": "war", "name": "Sardinian war", "since": "1351-01-01", "skip": true},
+  {"from_realm": "realm-serbia", "to_realm": "realm-byzantium", "type": "pressure", "name": "Serbian expansion", "since": "1345-01-01", "note": "Dusan's imperial coronation follows conquests in Macedonia."},
+  {"from_realm": "realm-bohemia", "to_realm": "realm-hre", "type": "dispute", "name": "Imperial election", "since": "1346-07-11", "note": "Charles IV is anti-king against Louis IV. Not modeled as a vassal bond."},
+  {"from_realm": "realm-england", "to_realm": "realm-france", "type": "homage_dispute", "name": "Aquitaine homage", "since": "1337-05-24", "note": "Edward holds Aquitaine and Calais. He is not stored as Philippe's vassal because a character may have only one current liege."}
+]

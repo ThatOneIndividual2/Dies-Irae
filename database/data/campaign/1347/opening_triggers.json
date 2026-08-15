@@ -1,0 +1,316 @@
+{
+  "families": [
+    "plague_rumor",
+    "merchant_report",
+    "clergy_warning",
+    "mass_death",
+    "disrupted_harvest",
+    "refugee_movement",
+    "accusation_of_sin",
+    "political_opportunism",
+    "strange_omen",
+    "disappearing_travelers",
+    "unexplained_violence",
+    "first_manifestation",
+    "feudal_levy_call",
+    "harvest_tithe",
+    "court_rivalry",
+    "papal_taxation"
+  ],
+  "triggers": [
+    {
+      "key": "plague_rumor",
+      "family": "plague_rumor",
+      "title": "Rumors from the ports",
+      "body": "Sailors speak of swellings and a fever that empties streets. The clerks call it rumor. The merchants call it bad for trade.",
+      "min_month": 0,
+      "max_month": 18,
+      "base_weight": 38,
+      "cooldown_pulses": 2,
+      "once": false,
+      "requires": ["plague_exists_or_trade_to_plague"],
+      "place_policy": "trade_or_plague",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "options": {
+        "send_inquiries": "Send riders to the ports",
+        "close_nothing": "Treat it as sailors' talk",
+        "warn_clergy": "Ask the clergy what they have heard"
+      }
+    },
+    {
+      "key": "merchant_report",
+      "family": "merchant_report",
+      "title": "A merchant's letter",
+      "body": "A factor writes that cargo sits unloaded and that a galley from the east buried men at sea. He asks whether to keep the warehouses open.",
+      "min_month": 0,
+      "max_month": 24,
+      "base_weight": 32,
+      "cooldown_pulses": 2,
+      "requires": ["has_trade"],
+      "place_policy": "trade_hub",
+      "roles": ["king", "duke", "count", "minor_lord", "holy_order"],
+      "options": {
+        "keep_open": "Keep the warehouses open",
+        "inspect_cargo": "Inspect the cargo and the crews",
+        "halt_eastern": "Halt eastern cargo for a season"
+      }
+    },
+    {
+      "key": "clergy_warning",
+      "family": "clergy_warning",
+      "title": "A letter from the chapter",
+      "body": "The chapter writes of a hard winter of souls. They do not yet name a plague. They name sin, and they ask for processions.",
+      "min_month": 1,
+      "max_month": 30,
+      "base_weight": 28,
+      "cooldown_pulses": 3,
+      "place_policy": "see",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "role_weight": {"bishop": 1.8, "prince_bishop": 1.5},
+      "options": {
+        "permit_procession": "Permit public processions",
+        "grant_alms": "Grant alms to the chapter",
+        "defer": "Defer until the season turns"
+      }
+    },
+    {
+      "key": "mass_death",
+      "family": "mass_death",
+      "title": "The burying grounds overflow",
+      "body": "Carts of the dead are no longer a story from elsewhere. Parish books cannot keep the names. The bells have gone hoarse.",
+      "min_month": 2,
+      "max_month": 36,
+      "base_weight": 22,
+      "cooldown_pulses": 3,
+      "requires": ["local_plague"],
+      "place_policy": "plague",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "options": {
+        "send_physicians": "Send physicians and alms",
+        "close_roads": "Close the roads",
+        "leave_to_parish": "Leave it to the parish"
+      }
+    },
+    {
+      "key": "disrupted_harvest",
+      "family": "disrupted_harvest",
+      "title": "The harvest comes in thin",
+      "body": "Reapers are few. Some fields stand uncut. The stewards argue whether pestilence, rain, or idle hands are to blame.",
+      "min_month": 8,
+      "max_month": 36,
+      "base_weight": 26,
+      "cooldown_pulses": 4,
+      "requires": ["harvest_season_or_plague"],
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count", "minor_lord", "prince_bishop"],
+      "options": {
+        "open_stores": "Open the stores",
+        "raise_tithe": "Squeeze the tithe anyway",
+        "remit": "Remit a portion of the dues"
+      }
+    },
+    {
+      "key": "refugee_movement",
+      "family": "refugee_movement",
+      "title": "Columns on the road",
+      "body": "People from the coast and from stricken towns camp outside the walls. They bring labor, mouths, and whatever they fled.",
+      "min_month": 3,
+      "max_month": 36,
+      "base_weight": 24,
+      "cooldown_pulses": 3,
+      "requires": ["neighbor_plague"],
+      "place_policy": "neighbor_of_plague",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "options": {
+        "admit": "Admit them",
+        "turn_away": "Turn them from the gates",
+        "send_to_church": "Send them to the houses of religion"
+      }
+    },
+    {
+      "key": "accusation_of_sin",
+      "family": "accusation_of_sin",
+      "title": "Accusations in the market",
+      "body": "Preachers name poisoners, usurers, and secret conventicles. A neighbor is easier to blame than a fever.",
+      "min_month": 4,
+      "max_month": 36,
+      "base_weight": 20,
+      "cooldown_pulses": 3,
+      "requires": ["plague_or_despair"],
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop"],
+      "role_weight": {"bishop": 1.6, "prince_bishop": 1.4},
+      "options": {
+        "investigate": "Investigate quietly",
+        "ask_ordinary": "Refer the matter to the ordinary",
+        "let_crowd": "Let the crowd have its shout"
+      }
+    },
+    {
+      "key": "political_opportunism",
+      "family": "political_opportunism",
+      "title": "A vassal smells weakness",
+      "body": "While the clerks count the sick, a rival counts spears. Someone offers aid at a price, or withholds what is owed.",
+      "min_month": 2,
+      "max_month": 36,
+      "base_weight": 24,
+      "cooldown_pulses": 3,
+      "requires": ["war_or_vassal"],
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count", "minor_lord", "prince_bishop"],
+      "role_weight": {"king": 1.4, "duke": 1.3},
+      "options": {
+        "demand_contract": "Demand the contract",
+        "buy_loyalty": "Buy loyalty with coin",
+        "wait": "Wait out the season"
+      }
+    },
+    {
+      "key": "strange_omen",
+      "family": "strange_omen",
+      "title": "A sign in the sky",
+      "body": "A chronicler notes a red dusk, or bells that rang without hands, or animals that would not enter a church. Learned men disagree on the cause.",
+      "min_month": 4,
+      "max_month": 36,
+      "base_weight": 14,
+      "cooldown_pulses": 4,
+      "requires": ["plague_or_corruption"],
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "options": {
+        "ask_astrologers": "Ask the astrologers",
+        "ask_clergy": "Ask the clergy",
+        "record_only": "Record it and keep the peace"
+      }
+    },
+    {
+      "key": "disappearing_travelers",
+      "family": "disappearing_travelers",
+      "title": "The road is missing people",
+      "body": "A courier did not arrive. A pilgrim band is short. Innkeepers shrug. Bandits are named. The names do not always fit.",
+      "min_month": 3,
+      "max_month": 36,
+      "base_weight": 16,
+      "cooldown_pulses": 3,
+      "requires": ["trade_or_plague"],
+      "place_policy": "trade_or_plague",
+      "roles": ["king", "duke", "count", "minor_lord", "holy_order"],
+      "role_weight": {"holy_order": 1.5},
+      "options": {
+        "patrol": "Send a patrol",
+        "pay_guides": "Pay local guides",
+        "suspend_travel": "Suspend unnecessary travel"
+      }
+    },
+    {
+      "key": "unexplained_violence",
+      "family": "unexplained_violence",
+      "title": "Blood without a feud",
+      "body": "A hamlet reports killings that do not look like war or theft. The survivors use words the chancery does not file under ordinary crime.",
+      "min_month": 6,
+      "max_month": 36,
+      "base_weight": 12,
+      "cooldown_pulses": 4,
+      "requires": ["corruption_or_cult"],
+      "place_policy": "corruption_or_plague",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "role_weight": {"holy_order": 1.4, "prince_bishop": 1.2},
+      "options": {
+        "send_sergeants": "Send sergeants",
+        "ask_exorcist": "Ask if a priest should attend",
+        "seal_hamlet": "Seal the hamlet and wait"
+      }
+    },
+    {
+      "key": "first_manifestation",
+      "family": "first_manifestation",
+      "title": "What no chronicle can recast",
+      "body": "Witnesses will not recant. A well boiled black. A shape walked a charnel pit. The bells rang without hands. This is no longer a dispute among clerks.",
+      "min_month": 8,
+      "max_month": 36,
+      "base_weight": 8,
+      "cooldown_pulses": 99,
+      "once": true,
+      "requires": ["manifestation_ready"],
+      "place_policy": "plague",
+      "roles": ["king", "duke", "count", "minor_lord", "bishop", "prince_bishop", "holy_order"],
+      "options": {
+        "call_clergy": "Call the clergy",
+        "send_soldiers": "Send soldiers to hold the square",
+        "record_and_pray": "Record it and order public prayer"
+      }
+    },
+    {
+      "key": "feudal_levy_call",
+      "family": "feudal_levy_call",
+      "title": "The war still asks for men",
+      "body": "Calais is English. The old war has not paused for fever. A summons arrives, or a captain asks whether this season's levy will march.",
+      "min_month": 0,
+      "max_month": 36,
+      "base_weight": 30,
+      "cooldown_pulses": 4,
+      "requires": ["active_war"],
+      "place_policy": "war_theater",
+      "roles": ["king", "duke", "count", "minor_lord", "prince_bishop"],
+      "role_weight": {"king": 1.3, "duke": 1.4},
+      "options": {
+        "send_levy": "Send the levy",
+        "commute": "Commute service for coin",
+        "plead_season": "Plead the season"
+      }
+    },
+    {
+      "key": "harvest_tithe",
+      "family": "harvest_tithe",
+      "title": "The tithe carts",
+      "body": "Stewards bring the customary carts. The barns look ordinary. So does the quarrel over who paid short.",
+      "min_month": 0,
+      "max_month": 14,
+      "base_weight": 34,
+      "cooldown_pulses": 5,
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count", "minor_lord", "prince_bishop"],
+      "options": {
+        "collect_full": "Collect in full",
+        "audit": "Audit the short pays",
+        "ease": "Ease the poorest villages"
+      }
+    },
+    {
+      "key": "court_rivalry",
+      "family": "court_rivalry",
+      "title": "A quarrel at court",
+      "body": "Two houses dispute a marriage, a mill, or a seat at table. It is the sort of matter that filled the year before anyone spoke of swellings.",
+      "min_month": 0,
+      "max_month": 20,
+      "base_weight": 28,
+      "cooldown_pulses": 3,
+      "requires": ["has_vassal_or_peer"],
+      "place_policy": "realm",
+      "roles": ["king", "duke", "count"],
+      "options": {
+        "judge": "Judge it yourself",
+        "delay": "Delay until a better week",
+        "favor_stronger": "Favor the stronger house"
+      }
+    },
+    {
+      "key": "papal_taxation",
+      "family": "papal_taxation",
+      "title": "A collector from Avignon",
+      "body": "A papal collector asks for tenths. Avignon is not far, and Clement's court is not cheap. Local clergy watch what you do.",
+      "min_month": 0,
+      "max_month": 36,
+      "base_weight": 22,
+      "cooldown_pulses": 5,
+      "place_policy": "see",
+      "roles": ["king", "duke", "count", "bishop", "prince_bishop"],
+      "role_weight": {"bishop": 1.5, "prince_bishop": 1.3, "king": 1.2},
+      "options": {
+        "pay": "Pay the tenth",
+        "bargain": "Bargain for delay",
+        "refuse": "Refuse and write a complaint"
+      }
+    }
+  ]
+}

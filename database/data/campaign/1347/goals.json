@@ -1,0 +1,14 @@
+{
+  "goals": [
+    {"key": "preserve_dynasty", "name": "Preserve the dynasty", "description": "Keep the house alive and titled."},
+    {"key": "preserve_realm", "name": "Preserve the realm", "description": "Keep the political order from coming apart."},
+    {"key": "preserve_church", "name": "Preserve Church institutions", "description": "Keep sees, houses, and the papacy functioning."},
+    {"key": "survive_plague", "name": "Survive the mortality", "description": "Keep enough people alive to till and pray."},
+    {"key": "defeat_local_infernal", "name": "Defeat a local infernal threat", "description": "End a manifestation or cell when it can no longer be denied."},
+    {"key": "regional_hegemon", "name": "Become regional hegemon", "description": "Turn collapse into a larger lordship."},
+    {"key": "restore_territory", "name": "Restore devastated territory", "description": "Bring a ruined place back to tillage and bells."},
+    {"key": "pursue_sainthood", "name": "Pursue sainthood", "description": "Live so that the Church might one day name you."},
+    {"key": "exploit_collapse", "name": "Exploit the collapse", "description": "Take what others drop."},
+    {"key": "join_corruption", "name": "Join the corruption", "description": "Make a bargain the chroniclers will not print."}
+  ]
+}

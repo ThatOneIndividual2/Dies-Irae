@@ -1,0 +1,199 @@
+{
+  "categories": [
+    {"key": "lesser", "label": "Lesser entities"},
+    {"key": "tempter", "label": "Tempters"},
+    {"key": "possessor", "label": "Possessors"},
+    {"key": "commander", "label": "Commanders"},
+    {"key": "prince", "label": "Princes"},
+    {"key": "named_unique", "label": "Named unique demons"}
+  ],
+  "themes": [
+    "pride",
+    "greed",
+    "lust",
+    "envy",
+    "gluttony",
+    "wrath",
+    "sloth",
+    "despair",
+    "heresy",
+    "pestilence"
+  ],
+  "templates": [
+    {
+      "key": "shadow_imp",
+      "category": "lesser",
+      "themes": ["despair", "sloth"],
+      "capabilities": ["haunt", "frighten"],
+      "rank_weight": 8,
+      "host_slot_cost": 1
+    },
+    {
+      "key": "plague_fly",
+      "category": "lesser",
+      "themes": ["pestilence", "gluttony"],
+      "capabilities": ["amplify_plague"],
+      "rank_weight": 10,
+      "host_slot_cost": 1
+    },
+    {
+      "key": "whispering_tempter",
+      "category": "tempter",
+      "themes": ["pride", "envy"],
+      "capabilities": ["tempt", "whisper", "scandal"],
+      "rank_weight": 22,
+      "host_slot_cost": 2
+    },
+    {
+      "key": "inhabiting_spirit",
+      "category": "possessor",
+      "themes": ["lust", "wrath"],
+      "capabilities": ["possess", "oppress"],
+      "rank_weight": 38,
+      "host_slot_cost": 3
+    },
+    {
+      "key": "legion_captain",
+      "category": "commander",
+      "themes": ["wrath", "pride"],
+      "capabilities": ["command_host", "corrupt_army", "hold_breach"],
+      "rank_weight": 55,
+      "host_slot_cost": 5
+    },
+    {
+      "key": "infernal_prince_mask",
+      "category": "prince",
+      "themes": ["pride", "heresy"],
+      "capabilities": ["claim_stronghold", "command_host", "open_breach"],
+      "rank_weight": 78,
+      "host_slot_cost": 8
+    }
+  ],
+  "named": [
+    {
+      "key": "mammon_the_gilded",
+      "name": "Mammon the Gilded",
+      "true_name": "Mammon",
+      "public_alias": "the gilded moth",
+      "epithets": ["the Gilded", "the Coin that Speaks"],
+      "titles": ["Treasurer of the Outer Court"],
+      "category": "named_unique",
+      "strategy": "corrupter",
+      "hierarchy": "court_officer",
+      "liege_catalog_key": null,
+      "themes": ["greed", "pride"],
+      "capabilities": ["tempt", "corrupt_settlement", "whisper"],
+      "channels": ["dreams", "temptation", "corrupted_nobles"],
+      "objectives": [
+        {"key": "bind_the_purse", "aim": "Turn the count's treasury into a leash"},
+        {"key": "crown_the_proud", "aim": "Make a noble prefer gold to the Mass"}
+      ],
+      "known_manifestations": ["a moth of gold leaf in a locked chest"],
+      "hidden_true_state": {
+        "nature": "A hunger that wears a merchant's courtesy",
+        "seat": "no parish, only ledgers",
+        "wound": "alms given without witness"
+      },
+      "vulnerabilities": ["unwitnessed alms", "a broken tally-stick blessed at terce"],
+      "rank_weight": 88,
+      "unique": true,
+      "respawn_policy": "lore_only",
+      "return_min_apocalypse": 80,
+      "physical_manifest_min_apocalypse": 40,
+      "physical_manifest_forbidden_phases": ["ordinary", "portents"],
+      "rivals": ["apollyon_the_unmaker"],
+      "host_capacity": 4
+    },
+    {
+      "key": "the_whisper_in_the_nave",
+      "name": "The Whisper in the Nave",
+      "true_name": "the Whisper in the Nave",
+      "public_alias": "a draft in the choir",
+      "epithets": ["of the Hollow Psalm"],
+      "titles": ["Sacristan of Unsaid Names"],
+      "category": "named_unique",
+      "strategy": "cult_organizer",
+      "hierarchy": "parish_infiltrator",
+      "liege_catalog_key": null,
+      "themes": ["heresy", "despair"],
+      "capabilities": ["possess", "tempt", "scandal"],
+      "channels": ["cult_agents", "corrupted_clergy", "temptation"],
+      "objectives": [
+        {"key": "hollow_the_parish", "aim": "Replace the office of the priest with a cell"},
+        {"key": "steal_the_pyx", "aim": "Make the stolen pyx a cult relic"}
+      ],
+      "known_manifestations": ["a voice that finishes the collect a breath late"],
+      "hidden_true_state": {
+        "nature": "A silence that recruits",
+        "seat": "the unused stall behind the rood",
+        "wound": "a named confession spoken aloud"
+      },
+      "vulnerabilities": ["public confession of the cell", "a legitimate exorcist in the same nave"],
+      "rank_weight": 84,
+      "unique": true,
+      "respawn_policy": "ritual",
+      "return_min_apocalypse": 40,
+      "physical_manifest_min_apocalypse": 22,
+      "physical_manifest_forbidden_phases": ["ordinary"],
+      "rivals": ["mammon_the_gilded"],
+      "host_capacity": 1
+    },
+    {
+      "key": "apollyon_the_unmaker",
+      "name": "Apollyon the Unmaker",
+      "true_name": "Apollyon",
+      "public_alias": "the locust captain",
+      "epithets": ["the Unmaker", "Breaker of Roads"],
+      "titles": ["Marshal of the Locust Host"],
+      "category": "named_unique",
+      "strategy": "military_invader",
+      "hierarchy": "host_marshal",
+      "liege_catalog_key": null,
+      "themes": ["wrath", "pestilence"],
+      "capabilities": ["command_host", "open_breach", "amplify_plague", "claim_stronghold"],
+      "channels": ["manifestations", "infernal_armies", "localized_breaches"],
+      "objectives": [
+        {"key": "open_the_locust_road", "aim": "Cut a breach from Aix toward the county seat"},
+        {"key": "unmake_the_levy", "aim": "Turn a human host into a rotten column"}
+      ],
+      "known_manifestations": ["a black well and a shape in the charnel pit"],
+      "hidden_true_state": {
+        "nature": "A campaign, not a haunt",
+        "seat": "wherever the breach last held",
+        "wound": "a closed gate and a named martyr"
+      },
+      "vulnerabilities": ["closed breach", "consecrated host on the same road"],
+      "rank_weight": 95,
+      "unique": true,
+      "respawn_policy": "never",
+      "return_min_apocalypse": 100,
+      "physical_manifest_min_apocalypse": 52,
+      "physical_manifest_forbidden_phases": ["ordinary", "portents", "great_pestilence"],
+      "rivals": ["mammon_the_gilded"],
+      "host_capacity": 12
+    }
+  ],
+  "factions": [
+    {
+      "key": "court_of_the_gilded_moth",
+      "name": "Court of the Gilded Moth",
+      "themes": ["greed", "pride"],
+      "patron_named_key": "mammon_the_gilded",
+      "rivals": ["locust_host"]
+    },
+    {
+      "key": "locust_host",
+      "name": "The Locust Host",
+      "themes": ["pestilence", "wrath"],
+      "patron_named_key": "apollyon_the_unmaker",
+      "rivals": ["court_of_the_gilded_moth"]
+    },
+    {
+      "key": "nave_whisperers",
+      "name": "Nave Whisperers",
+      "themes": ["heresy", "despair"],
+      "patron_named_key": "the_whisper_in_the_nave",
+      "rivals": []
+    }
+  ]
+}

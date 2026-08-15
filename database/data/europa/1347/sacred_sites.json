@@ -1,0 +1,24 @@
+{
+  "monasteries": [
+    {"key": "cluny", "name": "Cluny Abbey", "territory": "lyon", "rule": "cluniac", "population": 200},
+    {"key": "citeaux", "name": "Citeaux Abbey", "territory": "dijon", "rule": "cistercian", "population": 120},
+    {"key": "montecassino", "name": "Monte Cassino", "territory": "naples", "rule": "benedictine", "population": 80},
+    {"key": "fulda", "name": "Fulda Abbey", "territory": "mainz", "rule": "benedictine", "population": 90},
+    {"key": "westminster", "name": "Westminster Abbey", "territory": "london", "rule": "benedictine", "population": 70},
+    {"key": "mont-saint-michel", "name": "Mont-Saint-Michel", "territory": "rouen", "rule": "benedictine", "population": 50},
+    {"key": "melk", "name": "Melk Abbey", "territory": "vienna", "rule": "benedictine", "population": 40},
+    {"key": "poblet", "name": "Poblet Abbey", "territory": "barcelona", "rule": "cistercian", "population": 60},
+    {"key": "studion", "name": "Stoudios Monastery", "territory": "constantinople", "rule": "basilian", "population": 70},
+    {"key": "ion-a", "name": "Iona Abbey", "territory": "stirling", "rule": "benedictine", "population": 20}
+  ],
+  "pilgrimage_sites": [
+    {"key": "santiago-camino", "name": "Santiago de Compostela", "territory": "santiago", "dedication": "Saint James", "importance": 95},
+    {"key": "canterbury-becket", "name": "Shrine of Thomas Becket", "territory": "canterbury", "dedication": "Saint Thomas Becket", "importance": 85},
+    {"key": "rome-peter", "name": "Shrine of the Apostles", "territory": "rome", "dedication": "Saints Peter and Paul", "importance": 100},
+    {"key": "cologne-magi", "name": "Shrine of the Three Kings", "territory": "cologne", "dedication": "the Magi", "importance": 80},
+    {"key": "mont-saint-michel-shrine", "name": "Mont-Saint-Michel", "territory": "rouen", "dedication": "Saint Michael", "importance": 75},
+    {"key": "chartres-veil", "name": "Notre-Dame de Chartres", "territory": "orleans", "dedication": "the Virgin", "importance": 70},
+    {"key": "walsingham", "name": "Our Lady of Walsingham", "territory": "york", "dedication": "the Virgin", "importance": 65},
+    {"key": "bari-nicholas", "name": "Saint Nicholas of Bari", "territory": "naples", "dedication": "Saint Nicholas", "importance": 60}
+  ]
+}

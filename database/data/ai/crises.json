@@ -1,0 +1,52 @@
+{
+  "plague": {
+    "plague_safety": 0.7,
+    "ambition": -0.35,
+    "wealth": -0.1,
+    "territorial_security": -0.15
+  },
+  "famine": {
+    "famine": 0.75,
+    "wealth": -0.15,
+    "ambition": -0.2,
+    "loyalty": 0.15
+  },
+  "war": {
+    "territorial_security": 0.55,
+    "survival": 0.2,
+    "plague_safety": -0.1
+  },
+  "succession_crisis": {
+    "dynasty": 0.7,
+    "legitimacy": 0.5,
+    "ambition": 0.25,
+    "loyalty": 0.2
+  },
+  "heresy": {
+    "faith": 0.45,
+    "church_standing": 0.35,
+    "legitimacy": 0.15
+  },
+  "cult_discovery": {
+    "faith": 0.4,
+    "infernal_threat": 0.3,
+    "corruption": 0.25
+  },
+  "demonic_incursion": {
+    "infernal_threat": 0.85,
+    "fear": 0.35,
+    "ambition": -0.25,
+    "faith": 0.2
+  },
+  "papal_conflict": {
+    "church_standing": 0.55,
+    "legitimacy": 0.35,
+    "faith": 0.15
+  },
+  "local_collapse": {
+    "survival": 0.6,
+    "fear": 0.4,
+    "ambition": -0.4,
+    "territorial_security": 0.25
+  }
+}
