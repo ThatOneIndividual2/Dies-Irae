@@ -48,8 +48,8 @@
     @endauth
 </header>
 <main>
-    @if(session('status'))<div class="flash">{{ session('status') }}</div>@endif
-    @if($errors->any())<div class="err">{{ $errors->first() }}</div>@endif
+    @if(session('status'))<div class="flash" role="alert" aria-live="polite">{{ session('status') }}</div>@endif
+    @if($errors->any())<div class="err" role="alert">{{ $errors->first() }}</div>@endif
     @yield('content')
 </main>
 </body>
