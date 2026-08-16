@@ -1,6 +1,15 @@
 @extends('layouts.play')
 @section('title', 'Map')
 @section('content')
+@php
+    $modeLabel = match ($mode) {
+        'plague' => 'Plague',
+        'faith' => 'Faith',
+        'corruption' => 'Corruption',
+        default => 'Political',
+    };
+    $mapTitle = $modeLabel.' map of settlements';
+@endphp
 <h1>Map</h1>
 <p>
     Mode:
@@ -9,7 +18,8 @@
     <a href="{{ route('map', ['mode'=>'faith']) }}">faith</a> ·
     <a href="{{ route('map', ['mode'=>'corruption']) }}">corruption</a>
 </p>
-<svg class="map" viewBox="0 0 720 400">
+<svg class="map" viewBox="0 0 720 400" role="img" aria-label="{{ $mapTitle }}">
+<title>{{ $mapTitle }}</title>
 @foreach($territories as $t)
     @php
         $box = $t->map_box ?? ['x'=>10,'y'=>10,'w'=>80,'h'=>40];
@@ -27,5 +37,14 @@
     </a>
 @endforeach
 </svg>
+@if($mode === 'political')
+<p class="muted">Legend: your lands and Salon in darker brown; Miramas in deep red; other settlements in base brown.</p>
+@elseif($mode === 'plague')
+<p class="muted">Legend: plague-touched settlements in deep red; clear settlements in base brown.</p>
+@elseif($mode === 'faith')
+<p class="muted">Legend: settlements shown in faith blue.</p>
+@elseif($mode === 'corruption')
+<p class="muted">Legend: corrupted or overlaid settlements in purple; ordinary settlements in base brown.</p>
+@endif
 <p class="muted">Click a settlement. Your lands are marked on the political layer.</p>
 @endsection
