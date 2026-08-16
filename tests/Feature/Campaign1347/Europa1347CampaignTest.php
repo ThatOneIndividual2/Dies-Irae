@@ -17,6 +17,7 @@ use App\Models\Army;
 use App\Models\CampaignState;
 use App\Models\Character;
 use App\Models\Cult;
+use App\Actions\Campaign\ResolveGameEvent;
 use App\Models\GameEvent;
 use App\Models\HolyOrder;
 use App\Models\Papacy;
@@ -222,6 +223,20 @@ class Europa1347CampaignTest extends TestCase
             $result = $pulse->execute($world);
             foreach ($result['fired'] ?? [] as $family) {
                 $families[] = $family;
+            }
+
+            $pending = GameEvent::query()
+                ->where('world_id', $world->id)
+                ->where('status', 'awaiting_decision')
+                ->get();
+
+            foreach ($pending as $event) {
+                $options = $event->options ?? [];
+                $choice = array_key_first($options);
+
+                if ($choice !== null) {
+                    app(ResolveGameEvent::class)->execute($event, $choice);
+                }
             }
         }
 

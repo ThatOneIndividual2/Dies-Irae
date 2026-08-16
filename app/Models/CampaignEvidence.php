@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CampaignEvidence extends Model
 {
+    protected $table = 'campaign_evidences';
+
     protected $guarded = [];
 
     protected $casts = [

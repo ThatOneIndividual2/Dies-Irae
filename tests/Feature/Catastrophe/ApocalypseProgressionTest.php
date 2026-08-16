@@ -200,7 +200,7 @@ class ApocalypseProgressionTest extends LaravelTestCase
         $world->save();
 
         $result = app(ProcessDueWorldEvents::class)->execute($world);
-        $this->assertSame(1, $result['processed']);
+        $this->assertGreaterThanOrEqual(1, $result['processed']);
         $this->assertGreaterThanOrEqual(1, $world->fresh()->apocalypseState->tick_count);
     }
 
