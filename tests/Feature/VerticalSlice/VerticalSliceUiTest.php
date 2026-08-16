@@ -39,6 +39,11 @@ class VerticalSliceUiTest extends TestCase
             $this->get($path)->assertOk()->assertSee($needle, false);
         }
 
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Campaign goals', false)
+            ->assertSee('No campaign goals yet.', false);
+
         $this->get('/settlements/'.$salon->id)->assertOk()->assertSee('Salon-de-Provence', false);
     }
 

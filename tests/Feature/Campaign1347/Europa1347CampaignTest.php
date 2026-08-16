@@ -164,7 +164,12 @@ class Europa1347CampaignTest extends TestCase
             ->assertSee('The year keeps its shape', false)
             ->assertDontSee('demonic_manifestation', false)
             ->assertDontSee('phase_key', false);
-        $this->get('/dashboard')->assertOk()->assertSee('Kingdom of France', false)->assertDontSee('phase_key', false);
+        $this->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Kingdom of France', false)
+            ->assertSee('Campaign goals', false)
+            ->assertSee('preserve_dynasty', false)
+            ->assertDontSee('phase_key', false);
 
         $this->get('/dev/inspect/apocalypse/'.$ctx->world->id)
             ->assertOk()
