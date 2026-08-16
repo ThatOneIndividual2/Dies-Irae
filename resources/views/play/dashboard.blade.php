@@ -16,5 +16,12 @@
         @endforelse
     </div>
     <div class="card"><h3>Treasury</h3><p>{{ $play->ruler->treasury }} coin on the person. Realm is a separate chest.</p></div>
+    <div class="card"><h3>Campaign goals</h3>
+        @forelse($goals as $goal)
+            <p>{{ $goal->goal_key }} · {{ $goal->status }} · {{ $goal->progress }}</p>
+        @empty
+            <p class="muted">No campaign goals yet.</p>
+        @endforelse
+    </div>
 </div>
 @endsection
