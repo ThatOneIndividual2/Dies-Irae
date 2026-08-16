@@ -16,13 +16,22 @@
     </form>
     <form method="post" action="{{ route('dev.inspect.events.force', $world) }}">
         @csrf
-        <select name="definition_key">
-            @foreach ($keys as $key)
-                <option value="{{ $key }}">{{ $key }}</option>
-            @endforeach
-        </select>
-        <input name="scope_type" value="territory" size="12">
-        <input name="scope_id" type="number" value="1" size="6">
+        <label>
+            Definition
+            <select name="definition_key">
+                @foreach ($keys as $key)
+                    <option value="{{ $key }}">{{ $key }}</option>
+                @endforeach
+            </select>
+        </label>
+        <label>
+            Scope type
+            <input name="scope_type" value="territory" size="12">
+        </label>
+        <label>
+            Scope id
+            <input name="scope_id" type="number" value="1" size="6">
+        </label>
         <button>Force trigger</button>
     </form>
 
