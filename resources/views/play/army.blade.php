@@ -6,7 +6,9 @@
 <form method="post" action="{{ route('army.raise') }}">
     @csrf
     Raise levy at {{ $home->name }} (available {{ $home->levy_available }}):
-    <input type="number" name="strength" value="80" min="1" max="{{ max(1,$home->levy_available) }}">
+    <label>Raise levy strength
+        <input type="number" name="strength" value="80" min="1" max="{{ max(1,$home->levy_available) }}">
+    </label>
     <button>Raise army</button>
 </form>
 @endif
@@ -23,11 +25,13 @@
                 @if($army->is_active && (int)$army->owner_character_id === (int)$play->ruler->id)
                     <form method="post" action="{{ route('army.move', $army) }}">
                         @csrf
-                        <select name="territory_id">
-                            @foreach($army->territory->neighbors as $n)
-                                <option value="{{ $n->id }}">{{ $n->name }}</option>
-                            @endforeach
-                        </select>
+                        <label>March destination
+                            <select name="territory_id">
+                                @foreach($army->territory->neighbors as $n)
+                                    <option value="{{ $n->id }}">{{ $n->name }}</option>
+                                @endforeach
+                            </select>
+                        </label>
                         <button>March</button>
                     </form>
                     @foreach($armies->where('territory_id', $army->territory_id)->where('is_active', true) as $other)
