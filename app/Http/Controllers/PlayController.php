@@ -242,13 +242,15 @@ class PlayController extends Controller
         abort_unless((int) $event->world_id === (int) $play->world->id, 404);
         $option = (string) $request->input('option');
 
+        $label = $event->optionLabel($option) ?? $option;
+
         try {
             $resolver->execute($event, $option);
         } catch (InvalidArgumentException|RuntimeException $e) {
             return redirect()->route('events')->with('error', $e->getMessage());
         }
 
-        return redirect()->route('events')->with('status', 'Decision recorded: '.$option);
+        return redirect()->route('events')->with('status', 'Decision recorded: '.$label);
     }
 
     public function raiseArmy(Request $request, RaiseArmy $raise)

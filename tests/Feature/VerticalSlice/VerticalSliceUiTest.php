@@ -55,7 +55,9 @@ class VerticalSliceUiTest extends TestCase
         $this->actingAs($slice->user);
 
         $this->post('/time/advance')->assertRedirect('/dashboard');
-        $this->get('/events')->assertSee('awaiting_decision', false);
+        $this->get('/events')
+            ->assertSee('awaiting decision', false)
+            ->assertDontSee('awaiting_decision', false);
 
         $this->post('/army/raise', ['strength' => 80])->assertRedirect('/army');
         $this->get('/army')->assertSee('Levy of Salon', false);
@@ -80,12 +82,18 @@ class VerticalSliceUiTest extends TestCase
         $this->assertSame(GameEventStatus::AWAITING_DECISION, $event->fresh()->status);
 
         $validOption = (string) array_key_first($event->options ?? []);
+        $optionLabel = (string) ($event->options[$validOption] ?? $validOption);
         $this->post('/events/'.$event->id.'/resolve', ['option' => $validOption])
             ->assertRedirect('/events')
-            ->assertSessionHas('status');
+            ->assertSessionHas('status', 'Decision recorded: '.$optionLabel);
 
         $event->refresh();
         $this->assertSame(GameEventStatus::RESOLVED, $event->status);
         $this->assertSame($validOption, $event->chosen_option);
+
+        $this->get('/events')
+            ->assertSee('Chosen: '.$optionLabel, false)
+            ->assertDontSee('Chosen: '.$validOption, false)
+            ->assertDontSee($event->event_key, false);
     }
 }

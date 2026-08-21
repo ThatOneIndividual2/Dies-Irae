@@ -28,4 +28,27 @@ class GameEvent extends Model
         return in_array($this->visibility ?? 'player', ['player', 'observer'], true);
     }
 
+    public function statusLabel(): string
+    {
+        return match ($this->status) {
+            'awaiting_decision' => 'awaiting decision',
+            'resolved' => 'resolved',
+            'scheduled' => 'scheduled',
+            'cancelled' => 'cancelled',
+            default => str_replace('_', ' ', (string) $this->status),
+        };
+    }
+
+    public function optionLabel(?string $key = null): ?string
+    {
+        $key ??= $this->chosen_option;
+        if ($key === null || $key === '') {
+            return null;
+        }
+
+        $options = $this->options ?? [];
+
+        return isset($options[$key]) ? (string) $options[$key] : $key;
+    }
+
 }
