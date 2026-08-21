@@ -24,6 +24,7 @@ use App\Models\GameEvent;
 use App\Models\HolyOrder;
 use App\Models\Papacy;
 use App\Models\Realm;
+use App\Models\ScheduledWorldEvent;
 use App\Models\Territory;
 use App\Models\TerritoryPlagueState;
 use App\Models\Title;
@@ -197,6 +198,41 @@ class Europa1347CampaignTest extends TestCase
             (int) CampaignState::query()->where('world_id', $ctx->world->id)->value('pulse_count')
         );
         $this->assertGreaterThanOrEqual($before, GameEvent::query()->where('world_id', $ctx->world->id)->count());
+    }
+
+    public function test_campaign_pulses_stop_scheduling_after_opening_until(): void
+    {
+        $ctx = app(SeedEuropa1347::class)->execute(
+            PlayerArchetype::KING,
+            'king-pulse-stop@diesirae.test',
+            null,
+            8,
+            'europa-1347-pulse-stop'
+        );
+        $world = $ctx->world;
+        $campaign = CampaignState::query()->where('world_id', $world->id)->firstOrFail();
+
+        $campaign->opening_until = $world->start_date->toDateString();
+        $campaign->save();
+
+        $world->current_date = $world->start_date->copy()->addDays(14);
+        $world->save();
+
+        ScheduledWorldEvent::query()
+            ->where('world_id', $world->id)
+            ->where('event_type', 'campaign_pulse')
+            ->delete();
+
+        $result = app(RunCampaignPulse::class)->execute($world);
+
+        $this->assertTrue($result['ok'] ?? false);
+        $this->assertSame(
+            0,
+            ScheduledWorldEvent::query()
+                ->where('world_id', $world->id)
+                ->where('event_type', 'campaign_pulse')
+                ->count()
+        );
     }
 
     public function test_holy_order_and_bishop_starts_are_assignable(): void

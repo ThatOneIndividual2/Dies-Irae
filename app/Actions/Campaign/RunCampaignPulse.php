@@ -95,7 +95,7 @@ final class RunCampaignPulse
 
             $next = $date->copy()->addDays((int) $cfg['pulse_interval_days']);
             $openingUntil = Carbon::parse($campaign->opening_until);
-            if ($next->lte($openingUntil) || $next->lte($date->copy()->addMonths((int) $cfg['opening_max_months']))) {
+            if ($next->lte($openingUntil)) {
                 $this->schedule->execute(
                     $world,
                     'campaign_pulse',
