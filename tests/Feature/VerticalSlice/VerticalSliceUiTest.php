@@ -3,6 +3,8 @@
 namespace Tests\Feature\VerticalSlice;
 
 use App\Actions\Campaign\SeedVerticalSlice;
+use App\Domain\Enums\GameEventStatus;
+use App\Models\GameEvent;
 use App\Models\Territory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -57,5 +59,33 @@ class VerticalSliceUiTest extends TestCase
 
         $this->post('/army/raise', ['strength' => 80])->assertRedirect('/army');
         $this->get('/army')->assertSee('Levy of Salon', false);
+    }
+
+    public function test_invalid_event_option_redirects_with_error_not_500(): void
+    {
+        $slice = app(SeedVerticalSlice::class)->execute();
+        $this->actingAs($slice->user);
+
+        $this->post('/time/advance')->assertRedirect('/dashboard');
+
+        $event = GameEvent::query()
+            ->where('world_id', $slice->world->id)
+            ->where('status', GameEventStatus::AWAITING_DECISION)
+            ->firstOrFail();
+
+        $this->post('/events/'.$event->id.'/resolve', ['option' => 'not_a_real_option'])
+            ->assertRedirect('/events')
+            ->assertSessionHas('error');
+
+        $this->assertSame(GameEventStatus::AWAITING_DECISION, $event->fresh()->status);
+
+        $validOption = (string) array_key_first($event->options ?? []);
+        $this->post('/events/'.$event->id.'/resolve', ['option' => $validOption])
+            ->assertRedirect('/events')
+            ->assertSessionHas('status');
+
+        $event->refresh();
+        $this->assertSame(GameEventStatus::RESOLVED, $event->status);
+        $this->assertSame($validOption, $event->chosen_option);
     }
 }

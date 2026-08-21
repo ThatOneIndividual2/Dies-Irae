@@ -30,6 +30,8 @@ use App\Models\TitleOwnership;
 use App\Models\VassalRelationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
+use RuntimeException;
 
 class PlayController extends Controller
 {
@@ -239,7 +241,12 @@ class PlayController extends Controller
         $play = $this->play();
         abort_unless((int) $event->world_id === (int) $play->world->id, 404);
         $option = (string) $request->input('option');
-        $resolver->execute($event, $option);
+
+        try {
+            $resolver->execute($event, $option);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('events')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('events')->with('status', 'Decision recorded: '.$option);
     }
