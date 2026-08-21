@@ -30,19 +30,19 @@
 <header>
     <strong>DIES IRAE</strong>
     @auth
-        <nav>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-            <a href="{{ route('character') }}">Ruler</a>
-            <a href="{{ route('dynasty') }}">Dynasty</a>
-            <a href="{{ route('titles') }}">Titles</a>
-            <a href="{{ route('realm') }}">Realm</a>
-            <a href="{{ route('map') }}">Map</a>
-            <a href="{{ route('church') }}">Church</a>
-            <a href="{{ route('spiritual') }}">Spiritual</a>
-            <a href="{{ route('plague') }}">Plague</a>
-            <a href="{{ route('army') }}">Army</a>
-            <a href="{{ route('apocalypse') }}">Apocalypse</a>
-            <a href="{{ route('events') }}">Events</a>
+        <nav aria-label="Primary">
+            <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif>Dashboard</a>
+            <a href="{{ route('character') }}" @if(request()->routeIs('character')) aria-current="page" @endif>Ruler</a>
+            <a href="{{ route('dynasty') }}" @if(request()->routeIs('dynasty')) aria-current="page" @endif>Dynasty</a>
+            <a href="{{ route('titles') }}" @if(request()->routeIs('titles')) aria-current="page" @endif>Titles</a>
+            <a href="{{ route('realm') }}" @if(request()->routeIs('realm')) aria-current="page" @endif>Realm</a>
+            <a href="{{ route('map') }}" @if(request()->routeIs('map')) aria-current="page" @endif>Map</a>
+            <a href="{{ route('church') }}" @if(request()->routeIs('church')) aria-current="page" @endif>Church</a>
+            <a href="{{ route('spiritual') }}" @if(request()->routeIs('spiritual')) aria-current="page" @endif>Spiritual</a>
+            <a href="{{ route('plague') }}" @if(request()->routeIs('plague')) aria-current="page" @endif>Plague</a>
+            <a href="{{ route('army') }}" @if(request()->routeIs('army')) aria-current="page" @endif>Army</a>
+            <a href="{{ route('apocalypse') }}" @if(request()->routeIs('apocalypse')) aria-current="page" @endif>Apocalypse</a>
+            <a href="{{ route('events') }}" @if(request()->routeIs('events')) aria-current="page" @endif>Events</a>
             <form class="inline" method="post" action="{{ route('logout') }}">@csrf<button>Logout</button></form>
         </nav>
     @endauth
