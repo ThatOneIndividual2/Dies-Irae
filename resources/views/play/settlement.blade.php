@@ -10,8 +10,8 @@
 <p>Cult: {{ optional($territory->cult)->revealed ? $territory->cult->name : (optional($territory->cult)->name ? 'rumored' : 'none') }}</p>
 @if($territory->monastery)<p>Monastery: <a href="{{ route('church') }}">{{ $territory->monastery->name }}</a></p>@endif
 <h3>Holdings</h3>
-<ul>@foreach($territory->holdings as $h)<li>{{ $h->name }} ({{ $h->holding_type }}){{ $h->is_seat ? ' · seat' : '' }}</li>@endforeach</ul>
+<ul>@forelse($territory->holdings as $h)<li>{{ $h->name }} ({{ $h->holding_type }}){{ $h->is_seat ? ' · seat' : '' }}</li>@empty<li class="muted">No holdings recorded.</li>@endforelse</ul>
 <h3>Armies here</h3>
-<ul>@foreach($territory->armies->where('is_active', true) as $a)<li>{{ $a->name }} ({{ $a->kind }}, {{ $a->strength }})</li>@endforeach</ul>
+<ul>@forelse($territory->armies->where('is_active', true) as $a)<li>{{ $a->name }} ({{ $a->kind }}, {{ $a->strength }})</li>@empty<li class="muted">No armies here.</li>@endforelse</ul>
 <p><a href="{{ route('map') }}">Back to map</a></p>
 @endsection
