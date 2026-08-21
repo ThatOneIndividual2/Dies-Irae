@@ -76,7 +76,7 @@ class PlayController extends Controller
     public function dynasty()
     {
         $play = $this->play();
-        $dynasty = $play->ruler->dynasty()->with(['characters', 'houses'])->first();
+        $dynasty = $play->ruler->dynasty()->with(['characters.residence', 'houses'])->first();
 
         return view('play.dynasty', compact('play', 'dynasty'));
     }
