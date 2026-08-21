@@ -6,7 +6,6 @@ use App\Actions\Catastrophe\AdjustTerritoryState;
 use App\Models\CampaignGoalProgress;
 use App\Models\Character;
 use App\Models\ChurchRelation;
-use App\Models\Cult;
 use App\Models\GameEvent;
 use App\Models\Territory;
 use App\Models\World;
@@ -135,7 +134,7 @@ final class ApplyCampaignEventChoice
         }
         $row->progress = min(100, (int) $row->progress + $amount);
         if ($row->progress >= 100) {
-            $row->status = 'pursued';
+            $row->status = 'completed';
         }
         $row->save();
     }
