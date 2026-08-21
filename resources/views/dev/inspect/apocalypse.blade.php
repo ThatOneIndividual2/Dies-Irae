@@ -43,13 +43,22 @@
     <h2>Debug controls</h2>
     <form method="post" action="{{ route('dev.inspect.apocalypse.signal', $world) }}">
         @csrf
-        <select name="signal_key">
-            @foreach ($signalKeys as $key)
-                <option value="{{ $key }}">{{ $key }}</option>
-            @endforeach
-        </select>
-        <input type="number" name="magnitude" value="10" min="1" max="100">
-        <input type="number" name="territory_id" placeholder="territory id">
+        <label>
+            Signal
+            <select name="signal_key">
+                @foreach ($signalKeys as $key)
+                    <option value="{{ $key }}">{{ $key }}</option>
+                @endforeach
+            </select>
+        </label>
+        <label>
+            Magnitude
+            <input type="number" name="magnitude" value="10" min="1" max="100">
+        </label>
+        <label>
+            Territory id
+            <input type="number" name="territory_id" placeholder="territory id">
+        </label>
         <button type="submit">Record signal</button>
     </form>
     <form method="post" action="{{ route('dev.inspect.apocalypse.tick', $world) }}">
