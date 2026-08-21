@@ -11,7 +11,12 @@
     </label>
     <button>Raise army</button>
 </form>
+@else
+<p class="muted">No home seat is set, so levy raise is unavailable.</p>
 @endif
+@if($armies->isEmpty())
+<p class="muted">No armies in the field.</p>
+@else
 <table>
     <tr><th>Name</th><th>Kind</th><th>Owner</th><th>Place</th><th>Strength</th><th>Act</th></tr>
     @foreach($armies as $army)
@@ -48,7 +53,11 @@
         </tr>
     @endforeach
 </table>
+@endif
 <h3>Battles</h3>
+@if($battles->isEmpty())
+<p class="muted">No battles recorded.</p>
+@else
 <table>
     <tr><th>Date</th><th>Place</th><th>Kind</th><th>Winner</th><th>Losses</th></tr>
     @foreach($battles as $b)
@@ -61,4 +70,5 @@
         </tr>
     @endforeach
 </table>
+@endif
 @endsection
