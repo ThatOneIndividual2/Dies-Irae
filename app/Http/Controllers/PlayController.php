@@ -222,6 +222,10 @@ class PlayController extends Controller
             ->where(function ($q) {
                 $q->whereNull('visibility')->orWhereIn('visibility', ['player', 'observer']);
             })
+            ->where(function ($q) use ($play) {
+                $q->whereNull('audience_character_id')
+                    ->orWhere('audience_character_id', $play->ruler->id);
+            })
             ->orderBy('due_on')
             ->get();
 
@@ -240,6 +244,11 @@ class PlayController extends Controller
     {
         $play = $this->play();
         abort_unless((int) $event->world_id === (int) $play->world->id, 404);
+        abort_unless(
+            $event->audience_character_id === null
+                || (int) $event->audience_character_id === (int) $play->ruler->id,
+            403
+        );
         $option = (string) $request->input('option');
 
         $label = $event->optionLabel($option) ?? $option;
