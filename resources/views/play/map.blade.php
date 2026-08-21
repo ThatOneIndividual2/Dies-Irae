@@ -13,12 +13,12 @@
 <h1>Map</h1>
 <p>
     Mode:
-    <a href="{{ route('map', ['mode'=>'political']) }}">political</a> ·
-    <a href="{{ route('map', ['mode'=>'plague']) }}">plague</a> ·
-    <a href="{{ route('map', ['mode'=>'faith']) }}">faith</a> ·
-    <a href="{{ route('map', ['mode'=>'corruption']) }}">corruption</a>
+    <a href="{{ route('map', ['mode'=>'political']) }}"@if($mode === 'political') aria-current="page"@endif>political</a> ·
+    <a href="{{ route('map', ['mode'=>'plague']) }}"@if($mode === 'plague') aria-current="page"@endif>plague</a> ·
+    <a href="{{ route('map', ['mode'=>'faith']) }}"@if($mode === 'faith') aria-current="page"@endif>faith</a> ·
+    <a href="{{ route('map', ['mode'=>'corruption']) }}"@if($mode === 'corruption') aria-current="page"@endif>corruption</a>
 </p>
-<svg class="map" viewBox="0 0 720 400" role="img" aria-label="{{ $mapTitle }}">
+<svg class="map" viewBox="0 0 720 400">
 <title>{{ $mapTitle }}</title>
 @foreach($territories as $t)
     @php
@@ -46,5 +46,5 @@
 @elseif($mode === 'corruption')
 <p class="muted">Legend: corrupted or overlaid settlements in purple; ordinary settlements in base brown.</p>
 @endif
-<p class="muted">Click a settlement. Your lands are marked on the political layer.</p>
+<p class="muted">Select a settlement. Your lands are marked on the political layer.</p>
 @endsection
