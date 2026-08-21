@@ -170,7 +170,9 @@ class Europa1347CampaignTest extends TestCase
             ->assertOk()
             ->assertSee('Kingdom of France', false)
             ->assertSee('Campaign goals', false)
-            ->assertSee('preserve_dynasty', false)
+            ->assertSee('Preserve the dynasty', false)
+            ->assertSee('available', false)
+            ->assertDontSee('preserve_dynasty', false)
             ->assertDontSee('phase_key', false);
 
         $this->get('/dev/inspect/apocalypse/'.$ctx->world->id)
