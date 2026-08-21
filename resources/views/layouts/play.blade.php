@@ -21,6 +21,16 @@
         th, td { text-align:left; padding:6px 8px; border-bottom:1px solid #4a372c; vertical-align:top; }
         button, .btn { background:var(--accent); color:#fff; border:0; padding:7px 12px; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
         select, input[type=number], input[type=email], input[type=password] { background:#120e0b; color:var(--ink); border:1px solid #5a3b28; padding:6px; }
+        a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+        button:focus-visible, .btn:focus-visible { outline:2px solid var(--link); outline-offset:2px; }
+        select:focus-visible,
+        input[type=number]:focus-visible,
+        input[type=email]:focus-visible,
+        input[type=password]:focus-visible {
+            outline:2px solid var(--link);
+            outline-offset:2px;
+            border-color:var(--link);
+        }
         .muted { color:var(--muted); }
         svg.map { background:#120e0b; border:1px solid #4a372c; width:100%; max-width:640px; height:320px; }
         form.inline { display:inline; }
