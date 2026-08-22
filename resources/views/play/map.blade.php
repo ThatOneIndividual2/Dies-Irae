@@ -27,7 +27,17 @@
         $box = $t->map_box ?? ['x'=>10,'y'=>10,'w'=>80,'h'=>40];
         $fill = '#5a4638';
         if ($mode === 'plague' && $t->plagueState) $fill = '#7a1f1f';
-        if ($mode === 'faith') $fill = '#35506a';
+        if ($mode === 'faith') {
+            $hasCult = $t->cult && ! $t->cult->destroyed;
+            $hasHeresy = $t->heresyPresences->isNotEmpty();
+            if ($hasCult) {
+                $fill = '#1e3a55';
+            } elseif ($hasHeresy) {
+                $fill = '#5a4a6a';
+            } elseif ($t->seeTerritory) {
+                $fill = '#35506a';
+            }
+        }
         if ($mode === 'corruption' && optional($t->overlay)->state !== 'ordinary') $fill = '#4b2a6a';
         if ($mode === 'political' && (int) $t->owner_character_id === (int) $play->ruler->id) $fill = '#6a4a22';
     @endphp
@@ -42,7 +52,7 @@
 @elseif($mode === 'plague')
 <p class="muted">Legend: plague-touched settlements in deep red; clear settlements in base brown.</p>
 @elseif($mode === 'faith')
-<p class="muted">Legend: settlements shown in faith blue.</p>
+<p class="muted">Legend: cult presence in deep navy; heresy presence in muted violet; ordinary see lands in faith blue; other settlements in base brown.</p>
 @elseif($mode === 'corruption')
 <p class="muted">Legend: corrupted or overlaid settlements in purple; ordinary settlements in base brown.</p>
 @endif

@@ -108,7 +108,14 @@ class PlayController extends Controller
         $mode = $request->query('mode', 'political');
         $territories = Territory::query()
             ->where('world_id', $play->world->id)
-            ->with(['plagueState', 'overlay', 'despair', 'cult'])
+            ->with([
+                'plagueState',
+                'overlay',
+                'despair',
+                'cult',
+                'heresyPresences' => fn ($q) => $q->where('is_current', true),
+                'seeTerritory',
+            ])
             ->get();
 
         return view('play.map', compact('play', 'territories', 'mode'));
