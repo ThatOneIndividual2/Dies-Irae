@@ -272,11 +272,18 @@ class PlayController extends Controller
     public function raiseArmy(Request $request, RaiseArmy $raise)
     {
         $play = $this->play();
-        $territory = $play->ruler->residence
-            ?? Territory::query()->where('world_id', $play->world->id)->where('key', 'salon')->firstOrFail();
+        $territory = $play->ruler->residence;
+        if (!$territory) {
+            return redirect()->route('army')->with('error', 'Your ruler has no residence from which to raise a levy.');
+        }
         $strength = max(1, (int) $request->input('strength', 80));
         $name = $territory->key === 'salon' ? 'Levy of Salon' : 'Levy of '.$territory->name;
-        $raise->execute($play->ruler, $territory, $strength, $name);
+
+        try {
+            $raise->execute($play->ruler, $territory, $strength, $name);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', "Raised {$strength} men at {$territory->name}.");
     }
@@ -287,7 +294,12 @@ class PlayController extends Controller
         abort_unless((int) $army->world_id === (int) $play->world->id, 404);
         abort_unless((int) $army->owner_character_id === (int) $play->ruler->id, 403);
         $destination = Territory::query()->where('world_id', $play->world->id)->findOrFail($request->input('territory_id'));
-        $move->execute($army, $destination);
+
+        try {
+            $move->execute($army, $destination);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', 'The host marched to '.$destination->name.'.');
     }
@@ -304,7 +316,12 @@ class PlayController extends Controller
             ->where('is_active', true)
             ->findOrFail($request->input('enemy_army_id'));
         $kind = $enemy->kind === 'demonic' ? 'supernatural' : 'human';
-        $result = $battle->execute($army, $enemy, $kind);
+
+        try {
+            $result = $battle->execute($army, $enemy, $kind);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', 'Battle fought. Winner: '.$result->winner);
     }
