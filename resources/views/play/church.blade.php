@@ -23,12 +23,14 @@
 <h3>Offices (not titles)</h3>
 <table>
     <tr><th>Office</th><th>Key</th><th>Holder</th></tr>
-    @foreach($offices as $office)
+    @forelse($offices as $office)
         <tr>
             <td>{{ $office->name }}</td>
             <td>{{ $office->key ?? $office->office_key }}</td>
             <td>{{ optional(optional($office->currentHoldership)->holder)->displayName() ?? 'vacant' }}</td>
         </tr>
-    @endforeach
+    @empty
+        <tr><td colspan="3" class="muted">No offices recorded.</td></tr>
+    @endforelse
 </table>
 @endsection

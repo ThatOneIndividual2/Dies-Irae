@@ -16,9 +16,11 @@
     <div class="card">
         <h3>Titles held</h3>
         <ul>
-            @foreach($titles as $own)
+            @forelse($titles as $own)
                 <li>{{ $own->title->name }} ({{ $own->title->rank }})</li>
-            @endforeach
+            @empty
+                <li class="muted">No titles held.</li>
+            @endforelse
         </ul>
     </div>
 </div>
