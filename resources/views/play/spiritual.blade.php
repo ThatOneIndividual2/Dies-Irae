@@ -5,16 +5,20 @@
 <h3>Overlays</h3>
 <table>
     <tr><th>Place</th><th>Overlay</th><th>Despair</th></tr>
-    @foreach($territories as $t)
+    @forelse($territories as $t)
         <tr><td><a href="{{ route('settlement', $t) }}">{{ $t->name }}</a></td><td>{{ optional($t->overlay)->state }}</td><td>{{ optional($t->despair)->intensity ?? 0 }}</td></tr>
-    @endforeach
+    @empty
+        <tr><td colspan="3" class="muted">No places recorded.</td></tr>
+    @endforelse
 </table>
 <h3>Corruption</h3>
 <table>
     <tr><th>Subject</th><th>Intensity</th><th>Source</th></tr>
-    @foreach($corruptions as $c)
-        <tr><td>{{ $c->subject_type }} #{{ $c->subject_id }}</td><td>{{ $c->intensity }}</td><td>{{ $c->source }}</td></tr>
-    @endforeach
+    @forelse($corruptions as $c)
+        <tr><td>{{ $c->subjectDisplayName() }}</td><td>{{ $c->intensity }}</td><td>{{ $c->source }}</td></tr>
+    @empty
+        <tr><td colspan="3" class="muted">None recorded.</td></tr>
+    @endforelse
 </table>
 <h3>Heresy</h3>
 <ul>@forelse($heresy as $h)<li>{{ $h->heresy->name }} in {{ $h->territory->name }} ({{ $h->is_public ? 'public' : 'hidden' }}, {{ $h->intensity }})</li>@empty<li class="muted">None recorded.</li>@endforelse</ul>

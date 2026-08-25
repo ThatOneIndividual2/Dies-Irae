@@ -154,6 +154,7 @@ class PlayController extends Controller
         $play = $this->play();
         $territories = Territory::query()->where('world_id', $play->world->id)->with(['overlay', 'despair'])->get();
         $corruptions = CorruptionState::query()->where('world_id', $play->world->id)->get();
+        CorruptionState::hydrateSubjectNames($corruptions);
         $heresy = HeresyPresence::query()->where('world_id', $play->world->id)->with(['heresy', 'territory'])->get();
         $cults = Cult::query()->where('world_id', $play->world->id)->with('territory')->get();
         if (CampaignState::query()->where('world_id', $play->world->id)->exists()) {
