@@ -31,12 +31,37 @@
             outline-offset:2px;
             border-color:var(--link);
         }
+        .skip-link {
+            position:absolute;
+            left:-9999px;
+            top:auto;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+            z-index:1000;
+        }
+        .skip-link:focus,
+        .skip-link:focus-visible {
+            position:fixed;
+            left:12px;
+            top:12px;
+            width:auto;
+            height:auto;
+            overflow:visible;
+            padding:8px 12px;
+            background:var(--accent);
+            color:#fff;
+            text-decoration:none;
+            outline:2px solid var(--link);
+            outline-offset:2px;
+        }
         .muted { color:var(--muted); }
         svg.map { background:#120e0b; border:1px solid #4a372c; width:100%; max-width:640px; height:320px; }
         form.inline { display:inline; }
     </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header>
     <strong>DIES IRAE</strong>
     @auth
@@ -57,7 +82,7 @@
         </nav>
     @endauth
 </header>
-<main>
+<main id="main" tabindex="-1">
     @if(session('status'))<div class="flash" role="alert" aria-live="polite">{{ session('status') }}</div>@endif
     @if(session('error'))<div class="err" role="alert">{{ session('error') }}</div>@endif
     @if($errors->any())<div class="err" role="alert">{{ $errors->first() }}</div>@endif
