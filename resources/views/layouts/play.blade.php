@@ -21,34 +21,70 @@
         th, td { text-align:left; padding:6px 8px; border-bottom:1px solid #4a372c; vertical-align:top; }
         button, .btn { background:var(--accent); color:#fff; border:0; padding:7px 12px; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
         select, input[type=number], input[type=email], input[type=password] { background:#120e0b; color:var(--ink); border:1px solid #5a3b28; padding:6px; }
+        a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+        button:focus-visible, .btn:focus-visible { outline:2px solid var(--link); outline-offset:2px; }
+        select:focus-visible,
+        input[type=number]:focus-visible,
+        input[type=email]:focus-visible,
+        input[type=password]:focus-visible {
+            outline:2px solid var(--link);
+            outline-offset:2px;
+            border-color:var(--link);
+        }
+        .skip-link {
+            position:absolute;
+            left:-9999px;
+            top:auto;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+            z-index:1000;
+        }
+        .skip-link:focus,
+        .skip-link:focus-visible {
+            position:fixed;
+            left:12px;
+            top:12px;
+            width:auto;
+            height:auto;
+            overflow:visible;
+            padding:8px 12px;
+            background:var(--accent);
+            color:#fff;
+            text-decoration:none;
+            outline:2px solid var(--link);
+            outline-offset:2px;
+        }
         .muted { color:var(--muted); }
         svg.map { background:#120e0b; border:1px solid #4a372c; width:100%; max-width:640px; height:320px; }
         form.inline { display:inline; }
     </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header>
     <strong>DIES IRAE</strong>
     @auth
-        <nav>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-            <a href="{{ route('character') }}">Ruler</a>
-            <a href="{{ route('dynasty') }}">Dynasty</a>
-            <a href="{{ route('titles') }}">Titles</a>
-            <a href="{{ route('realm') }}">Realm</a>
-            <a href="{{ route('map') }}">Map</a>
-            <a href="{{ route('church') }}">Church</a>
-            <a href="{{ route('spiritual') }}">Spiritual</a>
-            <a href="{{ route('plague') }}">Plague</a>
-            <a href="{{ route('army') }}">Army</a>
-            <a href="{{ route('apocalypse') }}">Apocalypse</a>
-            <a href="{{ route('events') }}">Events</a>
+        <nav aria-label="Primary">
+            <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif>Dashboard</a>
+            <a href="{{ route('character') }}" @if(request()->routeIs('character')) aria-current="page" @endif>Ruler</a>
+            <a href="{{ route('dynasty') }}" @if(request()->routeIs('dynasty')) aria-current="page" @endif>Dynasty</a>
+            <a href="{{ route('titles') }}" @if(request()->routeIs('titles')) aria-current="page" @endif>Titles</a>
+            <a href="{{ route('realm') }}" @if(request()->routeIs('realm')) aria-current="page" @endif>Realm</a>
+            <a href="{{ route('map') }}" @if(request()->routeIs('map')) aria-current="page" @endif>Map</a>
+            <a href="{{ route('church') }}" @if(request()->routeIs('church')) aria-current="page" @endif>Church</a>
+            <a href="{{ route('spiritual') }}" @if(request()->routeIs('spiritual')) aria-current="page" @endif>Spiritual</a>
+            <a href="{{ route('plague') }}" @if(request()->routeIs('plague')) aria-current="page" @endif>Plague</a>
+            <a href="{{ route('army') }}" @if(request()->routeIs('army')) aria-current="page" @endif>Army</a>
+            <a href="{{ route('apocalypse') }}" @if(request()->routeIs('apocalypse')) aria-current="page" @endif>Apocalypse</a>
+            <a href="{{ route('events') }}" @if(request()->routeIs('events')) aria-current="page" @endif>Events</a>
             <form class="inline" method="post" action="{{ route('logout') }}">@csrf<button>Logout</button></form>
         </nav>
     @endauth
 </header>
-<main>
+<main id="main" tabindex="-1">
     @if(session('status'))<div class="flash" role="alert" aria-live="polite">{{ session('status') }}</div>@endif
+    @if(session('error'))<div class="err" role="alert">{{ session('error') }}</div>@endif
     @if($errors->any())<div class="err" role="alert">{{ $errors->first() }}</div>@endif
     @yield('content')
 </main>

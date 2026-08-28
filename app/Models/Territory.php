@@ -68,6 +68,16 @@ class Territory extends Model
         return $this->hasOne(Cult::class);
     }
 
+    public function heresyPresences(): HasMany
+    {
+        return $this->hasMany(HeresyPresence::class);
+    }
+
+    public function seeTerritory(): HasOne
+    {
+        return $this->hasOne(SeeTerritory::class);
+    }
+
     public function monastery(): HasOne
     {
         return $this->hasOne(Monastery::class);

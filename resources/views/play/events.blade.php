@@ -2,10 +2,10 @@
 @section('title', 'Events')
 @section('content')
 <h1>Decisions</h1>
-@foreach($events as $event)
+@forelse($events as $event)
     <div class="card" style="margin-bottom:12px;">
         <h3>{{ $event->title }}</h3>
-        <p class="muted">{{ $event->event_key }} · due {{ $event->due_on }} · {{ $event->status }}</p>
+        <p class="muted">due {{ $event->due_on }} · {{ $event->statusLabel() }}</p>
         <p>{{ $event->body }}</p>
         @if($event->status === 'awaiting_decision')
             @foreach($event->options as $key => $label)
@@ -15,9 +15,11 @@
                     <button>{{ $label }}</button>
                 </form>
             @endforeach
-        @elseif($event->chosen_option)
-            <p>Chosen: {{ $event->chosen_option }}</p>
+        @elseif($event->optionLabel())
+            <p>Chosen: {{ $event->optionLabel() }}</p>
         @endif
     </div>
-@endforeach
+@empty
+    <p class="muted">No decision waits today.</p>
+@endforelse
 @endsection

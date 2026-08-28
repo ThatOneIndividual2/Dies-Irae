@@ -30,6 +30,8 @@ use App\Models\TitleOwnership;
 use App\Models\VassalRelationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
+use RuntimeException;
 
 class PlayController extends Controller
 {
@@ -74,7 +76,7 @@ class PlayController extends Controller
     public function dynasty()
     {
         $play = $this->play();
-        $dynasty = $play->ruler->dynasty()->with(['characters', 'houses'])->first();
+        $dynasty = $play->ruler->dynasty()->with(['characters.residence', 'houses'])->first();
 
         return view('play.dynasty', compact('play', 'dynasty'));
     }
@@ -106,7 +108,14 @@ class PlayController extends Controller
         $mode = $request->query('mode', 'political');
         $territories = Territory::query()
             ->where('world_id', $play->world->id)
-            ->with(['plagueState', 'overlay', 'despair', 'cult'])
+            ->with([
+                'plagueState',
+                'overlay',
+                'despair',
+                'cult',
+                'heresyPresences' => fn ($q) => $q->where('is_current', true),
+                'seeTerritory',
+            ])
             ->get();
 
         return view('play.map', compact('play', 'territories', 'mode'));
@@ -145,6 +154,7 @@ class PlayController extends Controller
         $play = $this->play();
         $territories = Territory::query()->where('world_id', $play->world->id)->with(['overlay', 'despair'])->get();
         $corruptions = CorruptionState::query()->where('world_id', $play->world->id)->get();
+        CorruptionState::hydrateSubjectNames($corruptions);
         $heresy = HeresyPresence::query()->where('world_id', $play->world->id)->with(['heresy', 'territory'])->get();
         $cults = Cult::query()->where('world_id', $play->world->id)->with('territory')->get();
         if (CampaignState::query()->where('world_id', $play->world->id)->exists()) {
@@ -220,6 +230,10 @@ class PlayController extends Controller
             ->where(function ($q) {
                 $q->whereNull('visibility')->orWhereIn('visibility', ['player', 'observer']);
             })
+            ->where(function ($q) use ($play) {
+                $q->whereNull('audience_character_id')
+                    ->orWhere('audience_character_id', $play->ruler->id);
+            })
             ->orderBy('due_on')
             ->get();
 
@@ -238,20 +252,39 @@ class PlayController extends Controller
     {
         $play = $this->play();
         abort_unless((int) $event->world_id === (int) $play->world->id, 404);
+        abort_unless(
+            $event->audience_character_id === null
+                || (int) $event->audience_character_id === (int) $play->ruler->id,
+            403
+        );
         $option = (string) $request->input('option');
-        $resolver->execute($event, $option);
 
-        return redirect()->route('events')->with('status', 'Decision recorded: '.$option);
+        $label = $event->optionLabel($option) ?? $option;
+
+        try {
+            $resolver->execute($event, $option);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('events')->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('events')->with('status', 'Decision recorded: '.$label);
     }
 
     public function raiseArmy(Request $request, RaiseArmy $raise)
     {
         $play = $this->play();
-        $territory = $play->ruler->residence
-            ?? Territory::query()->where('world_id', $play->world->id)->where('key', 'salon')->firstOrFail();
+        $territory = $play->ruler->residence;
+        if (!$territory) {
+            return redirect()->route('army')->with('error', 'Your ruler has no residence from which to raise a levy.');
+        }
         $strength = max(1, (int) $request->input('strength', 80));
         $name = $territory->key === 'salon' ? 'Levy of Salon' : 'Levy of '.$territory->name;
-        $raise->execute($play->ruler, $territory, $strength, $name);
+
+        try {
+            $raise->execute($play->ruler, $territory, $strength, $name);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', "Raised {$strength} men at {$territory->name}.");
     }
@@ -262,7 +295,12 @@ class PlayController extends Controller
         abort_unless((int) $army->world_id === (int) $play->world->id, 404);
         abort_unless((int) $army->owner_character_id === (int) $play->ruler->id, 403);
         $destination = Territory::query()->where('world_id', $play->world->id)->findOrFail($request->input('territory_id'));
-        $move->execute($army, $destination);
+
+        try {
+            $move->execute($army, $destination);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', 'The host marched to '.$destination->name.'.');
     }
@@ -279,7 +317,12 @@ class PlayController extends Controller
             ->where('is_active', true)
             ->findOrFail($request->input('enemy_army_id'));
         $kind = $enemy->kind === 'demonic' ? 'supernatural' : 'human';
-        $result = $battle->execute($army, $enemy, $kind);
+
+        try {
+            $result = $battle->execute($army, $enemy, $kind);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            return redirect()->route('army')->with('error', $e->getMessage());
+        }
 
         return redirect()->route('army')->with('status', 'Battle fought. Winner: '.$result->winner);
     }

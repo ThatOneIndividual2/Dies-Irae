@@ -1,13 +1,16 @@
 @extends('layouts.play')
 @section('title', 'Realm')
 @section('content')
-<h1>{{ $realm->name ?? 'No realm cache' }}</h1>
+<h1>{{ $realm->name ?? 'No realm recorded' }}</h1>
 @if($realm)
 <p>Top liege: {{ optional($realm->topLiege)->displayName() }}</p>
 <p>Primary title: {{ optional($realm->primaryTitle)->name }}</p>
 <p>Realm treasury: {{ $realm->treasury }}</p>
 @endif
 <h3>Vassals</h3>
+@if($vassals->isEmpty())
+<p class="muted">No vassals recorded.</p>
+@else
 <table>
     <tr><th>Vassal</th><th>Tax</th><th>Levy</th></tr>
     @foreach($vassals as $link)
@@ -18,4 +21,5 @@
         </tr>
     @endforeach
 </table>
+@endif
 @endsection

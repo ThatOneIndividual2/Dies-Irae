@@ -14,14 +14,17 @@ use App\Domain\Enums\ArmyKind;
 use App\Domain\Enums\SpiritualOfficeRank;
 use App\Domain\Enums\TitleRank;
 use App\Models\Army;
+use App\Models\CampaignGoalProgress;
 use App\Models\CampaignState;
 use App\Models\Character;
 use App\Models\Cult;
 use App\Actions\Campaign\ResolveGameEvent;
+use App\Domain\Enums\GameEventStatus;
 use App\Models\GameEvent;
 use App\Models\HolyOrder;
 use App\Models\Papacy;
 use App\Models\Realm;
+use App\Models\ScheduledWorldEvent;
 use App\Models\Territory;
 use App\Models\TerritoryPlagueState;
 use App\Models\Title;
@@ -168,7 +171,9 @@ class Europa1347CampaignTest extends TestCase
             ->assertOk()
             ->assertSee('Kingdom of France', false)
             ->assertSee('Campaign goals', false)
-            ->assertSee('preserve_dynasty', false)
+            ->assertSee('Preserve the dynasty', false)
+            ->assertSee('available', false)
+            ->assertDontSee('preserve_dynasty', false)
             ->assertDontSee('phase_key', false);
 
         $this->get('/dev/inspect/apocalypse/'.$ctx->world->id)
@@ -195,6 +200,41 @@ class Europa1347CampaignTest extends TestCase
         $this->assertGreaterThanOrEqual($before, GameEvent::query()->where('world_id', $ctx->world->id)->count());
     }
 
+    public function test_campaign_pulses_stop_scheduling_after_opening_until(): void
+    {
+        $ctx = app(SeedEuropa1347::class)->execute(
+            PlayerArchetype::KING,
+            'king-pulse-stop@diesirae.test',
+            null,
+            8,
+            'europa-1347-pulse-stop'
+        );
+        $world = $ctx->world;
+        $campaign = CampaignState::query()->where('world_id', $world->id)->firstOrFail();
+
+        $campaign->opening_until = $world->start_date->toDateString();
+        $campaign->save();
+
+        $world->current_date = $world->start_date->copy()->addDays(14);
+        $world->save();
+
+        ScheduledWorldEvent::query()
+            ->where('world_id', $world->id)
+            ->where('event_type', 'campaign_pulse')
+            ->delete();
+
+        $result = app(RunCampaignPulse::class)->execute($world);
+
+        $this->assertTrue($result['ok'] ?? false);
+        $this->assertSame(
+            0,
+            ScheduledWorldEvent::query()
+                ->where('world_id', $world->id)
+                ->where('event_type', 'campaign_pulse')
+                ->count()
+        );
+    }
+
     public function test_holy_order_and_bishop_starts_are_assignable(): void
     {
         $bishop = app(SeedEuropa1347::class)->execute(PlayerArchetype::BISHOP, 'bishop-a@diesirae.test', null, 3, 'europa-1347-bishop');
@@ -213,6 +253,60 @@ class Europa1347CampaignTest extends TestCase
         $campaign = app(SeedEuropa1347::class)->execute(PlayerArchetype::KING, 'king-iso@diesirae.test');
         $this->assertNotSame('provence-1347', $campaign->world->slug);
         $this->assertSame(0, GameEvent::query()->where('world_id', $campaign->world->id)->where('event_key', 'plague_appears')->count());
+    }
+
+    public function test_campaign_choice_that_nudges_a_goal_to_full_marks_it_completed(): void
+    {
+        $ctx = app(SeedEuropa1347::class)->execute(PlayerArchetype::KING, 'king-goal@diesirae.test', null, 5, 'europa-1347-goal');
+
+        $goal = CampaignGoalProgress::query()
+            ->where('world_id', $ctx->world->id)
+            ->where('character_id', $ctx->player->id)
+            ->where('goal_key', 'regional_hegemon')
+            ->firstOrFail();
+        $goal->progress = 90;
+        $goal->status = 'available';
+        $goal->save();
+
+        $other = CampaignGoalProgress::query()
+            ->where('world_id', $ctx->world->id)
+            ->where('character_id', $ctx->player->id)
+            ->where('goal_key', 'preserve_dynasty')
+            ->firstOrFail();
+        $otherStatus = $other->status;
+        $otherProgress = $other->progress;
+
+        $place = Territory::query()->where('world_id', $ctx->world->id)->where('key', 'paris')->firstOrFail();
+        $event = GameEvent::query()->create([
+            'world_id' => $ctx->world->id,
+            'event_key' => 'political_opportunism:paris:test',
+            'catalog_family' => 'political_opportunism',
+            'title' => 'A vassal smells weakness',
+            'body' => 'Test political opportunism.',
+            'status' => GameEventStatus::AWAITING_DECISION,
+            'due_on' => $ctx->world->current_date->toDateString(),
+            'options' => [
+                'demand_contract' => 'Demand the contract',
+                'buy_loyalty' => 'Buy loyalty with coin',
+                'wait' => 'Wait out the season',
+            ],
+            'payload' => [
+                'family' => 'political_opportunism',
+                'territory_key' => $place->key,
+            ],
+            'audience_character_id' => $ctx->player->id,
+            'territory_id' => $place->id,
+        ]);
+
+        app(ResolveGameEvent::class)->execute($event, 'demand_contract');
+
+        $goal->refresh();
+        $this->assertSame(100, (int) $goal->progress);
+        $this->assertSame('completed', $goal->status);
+
+        $other->refresh();
+        $this->assertSame($otherStatus, $other->status);
+        $this->assertSame($otherProgress, (int) $other->progress);
     }
 
     /**
