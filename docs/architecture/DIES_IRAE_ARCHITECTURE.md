@@ -6,6 +6,8 @@
 **Stack:** PHP 8.0+, Laravel 9.52, MySQL `dies_irae_game` / `dies_irae_game_testing`  
 **Donor:** Feudalism foundation contracts (read-only). No runtime dependency.
 
+The standing brief for agents is `docs/game-design.md`. The "deliberately unfinished" list at the bottom of this file is the August kernel snapshot. Salon succession, the calendar, settlement plague, and the recorded rites have moved past it. Current play status is `docs/DIES_IRAE_VERTICAL_SLICE_STATUS.md`.
+
 ---
 
 ## What this is

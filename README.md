@@ -67,6 +67,7 @@ Tests use `dies_irae_game_testing` only.
 
 ## Docs
 
+- `docs/game-design.md` (standing brief for agents: identity, loops, constraints, priorities)
 - `docs/DIES_IRAE_VERTICAL_SLICE_STATUS.md` (playable loop, login, seed-slice)
 - `docs/world/1347_WORLD_SEED.md` (Europa 1347 historical pack vs campaign seed)
 - `docs/architecture/DIES_IRAE_ARCHITECTURE.md`

@@ -30,7 +30,7 @@ Still open:
 * Trade, buildings, guilds, Redis, formable nations, and an NPC daily schedule are not in the slice.
 * Settlement food is not the lord's granary. Territory `food_stores` stays the scripted granary.
 
-The August sections below are the original slice inventory. Where they disagree with this section, this section is the later one.
+The August sections below are the original slice inventory. Where they disagree with this section, this section is the later one. The standing brief for later agents is `docs/game-design.md`.
 
 Test run on 2026-11-11, PHP 8.3.6, PHPUnit 9.6.36, MySQL database `dies_irae_game_testing`: `php artisan test` reported 294 passed and 7 failed. The 7 failures were `Tests\Feature\Events\DynamicEventEngineTest`, which creates `dies_irae_events_testing` and was denied that privilege on this machine. After that local database privilege was granted, the same class passed 7 tests. No test was skipped. Browser play was not opened; the play pages were exercised by `VerticalSliceUiTest` and the yield path in `CountyContinuationTest`.
 
