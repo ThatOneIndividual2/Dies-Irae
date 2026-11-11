@@ -59,9 +59,10 @@ final class TitleOwnershipMutator
             }
 
             $previousHolderId = $current->holder_character_id;
-            $current->lost_date = $date->toDateString();
-            $current->is_current = null;
-            $current->save();
+            TitleOwnership::query()->whereKey($current->id)->update([
+                'lost_date' => $date->toDateString(),
+                'is_current' => null,
+            ]);
 
             AfterCommit::dispatch(function () use ($lockedTitle, $previousHolderId, $revokedBy, $date) {
                 event(new TitleRevoked($lockedTitle->id, $previousHolderId, $revokedBy?->id, $date->toDateString()));
@@ -103,9 +104,10 @@ final class TitleOwnershipMutator
                 if ((int) $current->holder_character_id === (int) $holder->id) {
                     throw new RuntimeException('Character already holds this title.');
                 }
-                $current->lost_date = $date->toDateString();
-                $current->is_current = null;
-                $current->save();
+                TitleOwnership::query()->whereKey($current->id)->update([
+                    'lost_date' => $date->toDateString(),
+                    'is_current' => null,
+                ]);
                 $previousId = $current->id;
             }
 

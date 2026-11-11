@@ -2,6 +2,8 @@
 
 namespace App\Actions\Time;
 
+use App\Actions\Catastrophe\PersistedSettlementPlague;
+use App\Actions\Hell\PulsePlayableHell;
 use App\Domain\Enums\GameEventStatus;
 use App\Domain\Support\Transactional;
 use App\Models\GameEvent;
@@ -11,8 +13,11 @@ use InvalidArgumentException;
 
 final class AdvanceWorldCalendar
 {
-    public function __construct(private ProcessDueWorldEvents $processEvents)
-    {
+    public function __construct(
+        private ProcessDueWorldEvents $processEvents,
+        private PersistedSettlementPlague $plague,
+        private PulsePlayableHell $hell
+    ) {
     }
     public function execute(World $world, int $days = 1): World
     {
@@ -34,6 +39,8 @@ final class AdvanceWorldCalendar
                 $locked->last_processed_at = now();
                 $locked->save();
                 $this->openDueEvents($locked, $date->toDateString());
+                $this->plague->tick($locked);
+                $this->hell->execute($locked);
             }
 
             $this->processEvents->execute($locked);

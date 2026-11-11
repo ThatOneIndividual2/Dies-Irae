@@ -41,8 +41,11 @@ class DualAuthorityAndIsolationTest extends TestCase
         ]);
 
         $this->assertSame(
-            10,
+            11,
             GameEvent::query()->where('world_id', $slice->world->id)->count()
+        );
+        $this->assertTrue(
+            GameEvent::query()->where('world_id', $slice->world->id)->where('event_key', 'count_stricken')->exists()
         );
         $this->assertSame(
             0,

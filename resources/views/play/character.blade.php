@@ -5,7 +5,9 @@
 <div class="grid">
     <div class="card">
         <p>Alive: {{ $play->ruler->is_alive ? 'yes' : 'no' }}</p>
+        <p>Health: {{ $play->ruler->health }}</p>
         <p>Born: {{ optional($play->ruler->birth_date)->toDateString() }}</p>
+        <p>Heir presumptive: {{ isset($heir) && $heir ? $heir->displayName() : 'none in the law' }}</p>
         <p>Dynasty: {{ optional($play->ruler->dynasty)->name }}</p>
         <p>Faith: {{ optional($play->ruler->faith)->name }}</p>
         <p>Residence: {{ optional($play->ruler->residence)->name }}</p>

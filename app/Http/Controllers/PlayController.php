@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Campaign\ResolveGameEvent;
 use App\Actions\Army\MoveArmy;
 use App\Actions\Army\RaiseArmy;
 use App\Actions\Army\ResolveBattle;
+use App\Actions\Campaign\ResolveGameEvent;
+use App\Actions\Succession\PreviewSuccession;
 use App\Actions\Time\AdvanceWorldCalendar;
 use App\Domain\Campaign\Fog\ApocalypseFog;
 use App\Domain\Playable\CurrentPlay;
 use App\Models\Army;
 use App\Models\CampaignGoalProgress;
+use App\Models\CountermeasureAttemptRecord;
+use App\Models\HellDailyPulse;
+use App\Models\SacramentRecord;
+use App\Models\Settlement;
+use App\Models\SettlementPlagueState;
+use App\Models\SuccessionSummary;
+use App\Models\TerritoryIncursion;
 use App\Models\CampaignState;
 use App\Models\CorruptionState;
 use App\Models\Cult;
@@ -64,13 +72,18 @@ class PlayController extends Controller
         return view('play.dashboard', compact('play', 'pending', 'apocalypse', 'church', 'ageLine', 'realmName', 'goals'));
     }
 
-    public function character()
+    public function character(PreviewSuccession $preview)
     {
         $play = $this->play();
         $play->ruler->load(['dynasty', 'faith', 'residence', 'clergyStatus']);
-        $titles = TitleOwnership::query()->where('holder_character_id', $play->ruler->id)->where('is_current', true)->with('title')->get();
+        $titles = TitleOwnership::query()->where('holder_character_id', $play->ruler->id)->where('is_current', true)->with('title.successionLaw')->get();
+        $heir = null;
+        $primary = $titles->first();
+        if ($primary && $play->ruler->is_alive) {
+            $heir = $preview->execute($primary->title, $play->ruler)['heir'];
+        }
 
-        return view('play.character', compact('play', 'titles'));
+        return view('play.character', compact('play', 'titles', 'heir'));
     }
 
     public function dynasty()
@@ -81,12 +94,24 @@ class PlayController extends Controller
         return view('play.dynasty', compact('play', 'dynasty'));
     }
 
-    public function titles()
+    public function titles(PreviewSuccession $preview)
     {
         $play = $this->play();
-        $titles = Title::query()->where('world_id', $play->world->id)->with('currentOwnership.holder', 'capital')->get();
+        $titles = Title::query()->where('world_id', $play->world->id)->with('currentOwnership.holder', 'capital', 'successionLaw')->get();
+        $heirs = [];
+        foreach ($titles as $title) {
+            $holder = $title->currentOwnership?->holder;
+            if ($holder && $holder->is_alive) {
+                $heirs[$title->id] = $preview->execute($title, $holder);
+            }
+        }
+        $successions = SuccessionSummary::query()
+            ->where('world_id', $play->world->id)
+            ->with(['title', 'heir', 'deceased'])
+            ->orderBy('id')
+            ->get();
 
-        return view('play.titles', compact('play', 'titles'));
+        return view('play.titles', compact('play', 'titles', 'heirs', 'successions'));
     }
 
     public function realm()
@@ -145,8 +170,14 @@ class PlayController extends Controller
         $papacy = Papacy::query()->where('world_id', $play->world->id)->with('papalOffice.currentHoldership.holder', 'papalSee')->first();
         $monastery = Monastery::query()->where('world_id', $play->world->id)->with('territory')->first();
         $relation = $play->ruler->churchRelation;
+        $sacraments = SacramentRecord::query()
+            ->where('world_id', $play->world->id)
+            ->with(['subject', 'minister'])
+            ->orderByDesc('id')
+            ->limit(12)
+            ->get();
 
-        return view('play.church', compact('play', 'see', 'offices', 'papacy', 'monastery', 'relation'));
+        return view('play.church', compact('play', 'see', 'offices', 'papacy', 'monastery', 'relation', 'sacraments'));
     }
 
     public function spiritual()
@@ -186,15 +217,36 @@ class PlayController extends Controller
                 ];
             });
 
-        return view('play.spiritual', compact('play', 'territories', 'corruptions', 'heresy', 'cults', 'rumors'));
+        $incursions = TerritoryIncursion::query()
+            ->where('world_id', $play->world->id)
+            ->where('is_current', true)
+            ->with('territory')
+            ->get();
+        $rites = CountermeasureAttemptRecord::query()
+            ->where('world_id', $play->world->id)
+            ->with(['territory', 'actor'])
+            ->orderByDesc('id')
+            ->limit(8)
+            ->get();
+
+        return view('play.spiritual', compact('play', 'territories', 'corruptions', 'heresy', 'cults', 'rumors', 'incursions', 'rites'));
     }
 
     public function plague()
     {
         $play = $this->play();
         $waves = PlagueWave::query()->where('world_id', $play->world->id)->with('territoryStates.territory')->get();
+        $settlements = Settlement::query()
+            ->where('world_id', $play->world->id)
+            ->with(['population', 'territory'])
+            ->orderBy('name')
+            ->get();
+        $settlementPlague = SettlementPlagueState::query()
+            ->where('world_id', $play->world->id)
+            ->get()
+            ->keyBy('settlement_id');
 
-        return view('play.plague', compact('play', 'waves'));
+        return view('play.plague', compact('play', 'waves', 'settlements', 'settlementPlague'));
     }
 
     public function army()
@@ -218,8 +270,9 @@ class PlayController extends Controller
         $view = $isCampaign ? $fog->playerView($play->world, false) : null;
         $current = $play->world->apocalypseState;
         $history = $play->world->apocalypseChronicle()->orderBy('id')->get();
+        $pulses = HellDailyPulse::query()->where('world_id', $play->world->id)->orderBy('pulsed_on')->get();
 
-        return view('play.apocalypse', compact('play', 'current', 'history', 'isCampaign', 'view'));
+        return view('play.apocalypse', compact('play', 'current', 'history', 'isCampaign', 'view', 'pulses'));
     }
 
     public function events()

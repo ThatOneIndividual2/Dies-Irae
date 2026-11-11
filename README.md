@@ -22,7 +22,7 @@ php artisan serve --port=8766
 
 Playable slice world: `provence-1347` (County of Salon, November 1347). Demo login: `lord@diesirae.test` / `password`.
 
-`diesirae:seed-slice` rebuilds that world only. Fixture world `lys-1348` remains for kernel validation (`php artisan diesirae:validate-world lys-1348`); it is not the playable login.
+`diesirae:seed-slice` rebuilds that world only. After the ten beats, day 16 can anoint the count, hide the fever, or yield the county to his heir. Fixture world `lys-1348` remains for kernel validation (`php artisan diesirae:validate-world lys-1348`); it is not the playable login. Status and leftovers: `docs/DIES_IRAE_VERTICAL_SLICE_STATUS.md`.
 
 ### Europa 1347 campaign (`europa-1347`)
 
@@ -67,6 +67,7 @@ Tests use `dies_irae_game_testing` only.
 
 ## Docs
 
+- `docs/game-design.md` (standing brief for agents: identity, loops, constraints, priorities)
 - `docs/DIES_IRAE_VERTICAL_SLICE_STATUS.md` (playable loop, login, seed-slice)
 - `docs/world/1347_WORLD_SEED.md` (Europa 1347 historical pack vs campaign seed)
 - `docs/architecture/DIES_IRAE_ARCHITECTURE.md`

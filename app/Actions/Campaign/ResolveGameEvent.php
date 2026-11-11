@@ -4,21 +4,26 @@ namespace App\Actions\Campaign;
 
 use App\Actions\Army\ResolveBattle;
 use App\Actions\Catastrophe\AdjustTerritoryState;
+use App\Actions\Catastrophe\PersistedSettlementPlague;
 use App\Actions\Events\ResolveCatalogEvent;
+use App\Actions\Hell\ResolveSliceExorcism;
 use App\Actions\Hell\SetApocalypseStage;
+use App\Actions\Spiritual\AnointSick;
+use App\Actions\Spiritual\OfferRequiem;
+use App\Actions\Succession\ProcessCharacterDeath;
 use App\Domain\Campaign\BeatKey;
 use App\Domain\Enums\ApocalypseStage;
 use App\Domain\Enums\ArmyKind;
 use App\Domain\Enums\GameEventStatus;
 use App\Domain\Enums\OverlayState;
 use App\Domain\Support\Transactional;
+use App\Models\ApocalypseChronicleEntry;
 use App\Models\Army;
 use App\Models\Character;
 use App\Models\ChurchRelation;
 use App\Models\Cult;
 use App\Models\DemonicFaction;
 use App\Models\DemonicInfluence;
-use App\Models\Displacement;
 use App\Models\GameEvent;
 use App\Models\Heresy;
 use App\Models\HeresyPresence;
@@ -28,6 +33,7 @@ use App\Models\SupernaturalOverlay;
 use App\Models\Territory;
 use App\Models\TerritoryPlagueState;
 use App\Models\World;
+use Carbon\Carbon;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -38,7 +44,12 @@ final class ResolveGameEvent
         private SetApocalypseStage $apocalypse,
         private ResolveBattle $battle,
         private ResolveCatalogEvent $catalog,
-        private ApplyCampaignEventChoice $campaignChoice
+        private ApplyCampaignEventChoice $campaignChoice,
+        private PersistedSettlementPlague $settlementPlague,
+        private OfferRequiem $requiem,
+        private ResolveSliceExorcism $exorcism,
+        private AnointSick $anointing,
+        private ProcessCharacterDeath $deaths
     ) {
     }
 
@@ -85,6 +96,7 @@ final class ResolveGameEvent
             BeatKey::CLERGY_RESPONSE => $this->clergyResponse($world, $option),
             BeatKey::MILITARY_RESPONSE => $this->militaryResponse($world, $option),
             BeatKey::AFTERMATH => $this->aftermath($world, $option),
+            'count_stricken' => $this->countStricken($world, $option),
             default => $this->campaignChoice->execute($world, $event, $option),
         };
     }
@@ -133,8 +145,14 @@ final class ResolveGameEvent
             $this->state->addCorruption('territory', (int) $aix->id, (int) $world->id, 6, 'untended_plague');
         }
         $this->apocalypse->execute($world, ApocalypseStage::GREAT_MORTALITY, ['plague_in_aix']);
+        $settlement = $this->settlementPlague->attachWave($world, $wave->fresh(), $aix->fresh(), $intensity);
 
-        return ['plague_wave_id' => $wave->id, 'dead_in_aix' => $dead, 'intensity' => $intensity];
+        return [
+            'plague_wave_id' => $wave->id,
+            'dead_in_aix' => $dead,
+            'intensity' => $intensity,
+            'settlement_id' => $settlement->id,
+        ];
     }
 
     private function refugeesArrive(World $world, string $option): array
@@ -219,7 +237,20 @@ final class ResolveGameEvent
             $this->churchStanding($world, 2);
         }
 
-        return ['church_decision' => $option, 'monastery_stores' => $monastery->fresh()->stores];
+        $sacrament = null;
+        if ($option === 'grant' || $option === 'ask_prayers') {
+            $ministerKey = $option === 'grant' ? 'etienne_stmichael' : 'bertrand_salon';
+            $placeKey = $option === 'grant' ? 'st_michel' : 'salon';
+            $minister = Character::query()->where('world_id', $world->id)->where('key', $ministerKey)->firstOrFail();
+            $record = $this->requiem->execute($world, $ruler, $minister, $this->territory($world, $placeKey));
+            $sacrament = ['id' => $record->id, 'validity' => $record->validity, 'type' => $record->sacrament_type];
+        }
+
+        return [
+            'church_decision' => $option,
+            'monastery_stores' => $monastery->fresh()->stores,
+            'sacrament' => $sacrament,
+        ];
     }
 
     private function rumors(World $world, string $option): array
@@ -280,8 +311,7 @@ final class ResolveGameEvent
             ->lockForUpdate()
             ->first();
         if ($overlay) {
-            $overlay->is_current = null;
-            $overlay->save();
+            SupernaturalOverlay::query()->whereKey($overlay->id)->update(['is_current' => null]);
         }
         SupernaturalOverlay::query()->create([
             'world_id' => $world->id,
@@ -329,14 +359,11 @@ final class ResolveGameEvent
     {
         $aix = $this->territory($world, 'aix');
         if ($option === 'exorcism') {
-            $this->state->addCorruption('territory', (int) $aix->id, (int) $world->id, -6, 'exorcism');
-            $this->state->addDespair($aix, -4);
+            $bishop = Character::query()->where('world_id', $world->id)->where('key', 'jacques_aix')->firstOrFail();
+            $rite = $this->exorcism->execute($world, $aix, $bishop);
             $this->churchStanding($world, 6);
-            $host = Army::query()->where('world_id', $world->id)->where('kind', ArmyKind::DEMONIC)->where('is_active', true)->first();
-            if ($host) {
-                $host->strength = max(10, (int) $host->strength - 15);
-                $host->save();
-            }
+
+            return ['clergy_act' => $option, 'exorcism' => $rite];
         } elseif ($option === 'procession') {
             $this->state->addDespair($aix, -8);
             $this->churchStanding($world, 5);
@@ -404,6 +431,15 @@ final class ResolveGameEvent
         $this->state->addCorruption('territory', (int) $salon->id, (int) $world->id, 3, 'aftermath_memory');
         $this->state->addDespair($salon, 2);
         $stage = $world->apocalypseState()->first();
+        ApocalypseChronicleEntry::query()->create([
+            'world_id' => $world->id,
+            'world_date' => $world->current_date->toDateString(),
+            'entry_type' => 'chronicle',
+            'subject_key' => 'county_salon',
+            'title' => 'What the clerks wrote',
+            'body' => 'The count ordered the deaths, the refugees, and the sins of this season copied into the book.',
+            'payload' => ['option' => $option],
+        ]);
 
         return [
             'chronicle' => $option,
@@ -411,6 +447,41 @@ final class ResolveGameEvent
             'apocalypse_stage' => $stage?->stage,
             'salon_population' => $salon->fresh()->population,
             'aix_population' => $aix->fresh()->population,
+        ];
+    }
+
+    private function countStricken(World $world, string $option): array
+    {
+        $ruler = $this->ruler($world);
+        $salon = $this->territory($world, 'salon');
+        if ($option === 'anoint') {
+            $priest = Character::query()->where('world_id', $world->id)->where('key', 'bertrand_salon')->firstOrFail();
+            $record = $this->anointing->execute($world, $ruler, $priest, $salon);
+            $ruler->health = min(100, (int) $ruler->health + 25);
+            $ruler->save();
+            $this->churchStanding($world, 4);
+
+            return [
+                'lived' => true,
+                'sacrament_id' => $record->id,
+                'validity' => $record->validity,
+            ];
+        }
+
+        if ($option === 'hide_the_fever') {
+            $this->state->addCorruption('character', (int) $ruler->id, (int) $world->id, 6, 'hidden_fever');
+            $ruler->health = max(1, (int) $ruler->health - 20);
+            $ruler->save();
+
+            return ['lived' => true, 'concealed' => true];
+        }
+
+        $dead = $this->deaths->execute($ruler, 'plague', Carbon::parse($world->current_date));
+
+        return [
+            'lived' => false,
+            'heir_character_id' => $dead->heir_character_id,
+            'cause' => $dead->cause,
         ];
     }
 

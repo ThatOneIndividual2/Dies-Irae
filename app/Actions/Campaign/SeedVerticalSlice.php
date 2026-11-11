@@ -18,9 +18,11 @@ use App\Domain\Enums\ArmyKind;
 use App\Domain\Enums\GameEventStatus;
 use App\Domain\Enums\HoldingType;
 use App\Domain\Enums\OverlayState;
+use App\Domain\Enums\ReligiousState;
 use App\Domain\Enums\SpiritualOfficeKey;
 use App\Domain\Enums\SpiritualOfficeRank;
 use App\Domain\Enums\TitleRank;
+use App\Domain\Succession\HeirOrder;
 use App\Domain\Support\Transactional;
 use App\Models\Army;
 use App\Models\Character;
@@ -41,6 +43,7 @@ use App\Models\Realm;
 use App\Models\Region;
 use App\Models\ScheduledWorldEvent;
 use App\Models\See;
+use App\Models\SuccessionLaw;
 use App\Models\SeeTerritory;
 use App\Models\SpiritualOffice;
 use App\Models\SpiritualOfficeHoldership;
@@ -173,6 +176,21 @@ final class SeedVerticalSlice
             $house->head_character_id = $ruler->id;
             $house->save();
 
+            $heir = $this->person($world, $faith, $territories['salon'], [
+                'key' => 'hugues_adhemar',
+                'first_name' => 'Hugues',
+                'epithet' => 'Adhémar',
+                'dynasty_id' => $dynasty->id,
+                'house_id' => $house->id,
+                'father_id' => $ruler->id,
+                'birth_date' => '1336-02-02',
+                'martial' => 7,
+                'diplomacy' => 8,
+                'stewardship' => 9,
+                'learning' => 6,
+                'treasury' => 4,
+            ]);
+
             $vassal = $this->person($world, $faith, $territories['pelissanne'], [
                 'key' => 'gui_pelissanne',
                 'first_name' => 'Gui',
@@ -220,6 +238,14 @@ final class SeedVerticalSlice
                 'diplomacy' => 14,
             ]);
 
+            $successionLaw = SuccessionLaw::query()->firstOrCreate(
+                ['key' => HeirOrder::LAW_KEY],
+                [
+                    'name' => 'Male-preference primogeniture',
+                    'description' => 'Legitimate sons by age, then legitimate daughters. Vows, major orders, and excommunication bar the heir.',
+                ]
+            );
+
             $county = $this->createTitle->execute($world, 'County of Salon', TitleRank::COUNTY, [
                 'key' => 'county_salon',
                 'capital_territory_id' => $territories['salon']->id,
@@ -233,6 +259,11 @@ final class SeedVerticalSlice
                 'key' => 'barony_miramas',
                 'capital_territory_id' => $territories['miramas']->id,
             ]);
+
+            foreach ([$county, $barony, $enemyTitle] as $lawful) {
+                $lawful->succession_law_id = $successionLaw->id;
+                $lawful->save();
+            }
 
             $this->titles->grant($county, $ruler, AcquisitionType::CREATION, $date);
             $this->titles->grant($barony, $vassal, AcquisitionType::CREATION, $date);
@@ -397,6 +428,30 @@ final class SeedVerticalSlice
                 ]);
             }
 
+            $strickenOn = Carbon::parse($world->start_date)->addDays(16)->toDateString();
+            GameEvent::query()->create([
+                'world_id' => $world->id,
+                'event_key' => 'count_stricken',
+                'title' => 'The count is stricken',
+                'body' => 'After the chronicle is closed, Raimond takes to his bed. The swellings are on him. Hugues Adhémar waits in the hall, and Bertrand of Salon has the oil ready.',
+                'status' => GameEventStatus::SCHEDULED,
+                'due_on' => $strickenOn,
+                'options' => [
+                    'anoint' => 'Send for the parish priest',
+                    'yield_the_county' => 'Name Hugues and yield the county',
+                    'hide_the_fever' => 'Conceal the fever',
+                ],
+                'payload' => ['heir_key' => 'hugues_adhemar'],
+            ]);
+            ScheduledWorldEvent::query()->create([
+                'world_id' => $world->id,
+                'process_at' => $strickenOn,
+                'event_type' => 'campaign_beat',
+                'status' => 'pending',
+                'payload' => ['event_key' => 'count_stricken'],
+                'idempotency_key' => 'beat:count_stricken',
+            ]);
+
             return new SliceContext(
                 $world->fresh(),
                 $user->fresh(),
@@ -415,7 +470,8 @@ final class SeedVerticalSlice
                 $see->fresh(),
                 $monastery->fresh(),
                 $papacy->fresh(),
-                $territories->map->fresh()
+                $territories->map->fresh(),
+                $heir->fresh()
             );
         });
     }
@@ -472,10 +528,18 @@ final class SeedVerticalSlice
             'acquired_date' => $date->toDateString(),
             'is_current' => true,
         ]);
+        [$orders, $religious] = match ($status) {
+            SpiritualOfficeKey::ABBOT => ['priest', ReligiousState::REGULAR],
+            SpiritualOfficeKey::BISHOP, SpiritualOfficeKey::POPE => ['bishop', ReligiousState::SECULAR_CLERIC],
+            default => ['priest', ReligiousState::SECULAR_CLERIC],
+        };
+
         ClergyStatus::query()->create([
             'world_id' => $holder->world_id,
             'character_id' => $holder->id,
             'status' => $status,
+            'orders_grade' => $orders,
+            'religious_state' => $religious,
             'started_date' => $date->toDateString(),
             'is_current' => true,
         ]);

@@ -24,6 +24,26 @@
 <ul>@forelse($heresy as $h)<li>{{ $h->heresy->name }} in {{ $h->territory->name }} ({{ $h->is_public ? 'public' : 'hidden' }}, {{ $h->intensity }})</li>@empty<li class="muted">None recorded.</li>@endforelse</ul>
 <h3>Cults</h3>
 <ul>@forelse($cults as $cult)<li>{{ $cult->name }} at {{ $cult->territory->name }} · {{ $cult->revealed ? 'revealed' : 'hidden' }} · strength {{ $cult->strength }}</li>@empty<li class="muted">None.</li>@endforelse</ul>
+<h3>Incursions</h3>
+@if(isset($incursions) && $incursions->isNotEmpty())
+<ul>
+    @foreach($incursions as $incursion)
+        <li>{{ optional($incursion->territory)->name }}: {{ str_replace('_', ' ', $incursion->state) }}, manifestation {{ $incursion->local_manifestation }}</li>
+    @endforeach
+</ul>
+@else
+<p class="muted">No incursion has been recorded.</p>
+@endif
+<h3>Rites against the pit</h3>
+@if(isset($rites) && $rites->isNotEmpty())
+<ul>
+    @foreach($rites as $rite)
+        <li>{{ optional($rite->attempted_on)->toDateString() }} {{ $rite->kind }} at {{ optional($rite->territory)->name }} by {{ optional($rite->actor)->displayName() ?? 'unknown' }}: {{ $rite->result }}</li>
+    @endforeach
+</ul>
+@else
+<p class="muted">No exorcism or cleansing has been attempted.</p>
+@endif
 <h3>Rumors of named pressures</h3>
 <p class="muted">True names, ranks, and wounds stay hidden until clergy, books, confessions, relics, visions, or a broken cell teach them.</p>
 <ul>
