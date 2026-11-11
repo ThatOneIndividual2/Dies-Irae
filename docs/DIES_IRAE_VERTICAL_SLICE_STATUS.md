@@ -7,6 +7,33 @@
 
 The first complete playable loop is in. The player is Raimond Adhémar, Count of Salon. Ten campaign beats, a human battle, a demonic manifestation, Church and plague decisions, and an apocalypse stage change all run in one world.
 
+## Finish pass, 2026-11-11
+
+This pass closed the four loops the August note named as next, inside the same county. It did not add a new map, a war-doctrine screen, or a second campaign.
+
+Complete in the Salon loop:
+
+* Succession can fire. Hugues Adhémar is the living heir under male-preference primogeniture. On day 16 the event `count_stricken` (not one of the ten beats) offers anointing, concealment, or yielding the county. Yielding kills Raimond, writes title history with acquisition `succession`, moves vassals and the player account onto Hugues. Anointing and concealment leave him alive.
+* The Aix plague choice creates settlement censuses and infection batches. Later calendar days tick that settlement plague and move the territory population by the net death and flight, so the plague page and the map stay on the same wave.
+* The abbey grant and the prayer option record a mass for the dead through `ConferSacrament`, after one historical baptism. The count's fever can be anointed the same way. The bishop's exorcism is a hell countermeasure with a stored result, not a flat corruption spend.
+* After the veil thins, each advanced day runs one hell pulse. Aix keeps the haunted overlay, gains an incursion row, and the overlay intensity can rise. A rift waits for the engine's own breach threshold.
+* The aftermath writes one chronicle row. Reusable notes are in `docs/transferable-innovations.md`.
+
+Still open:
+
+* Named characters do not die when a settlement cohort collapses. The count dies only if the player yields the county.
+* The thinning-veil pulse does not open a rift by itself. The full hell world is not stored, only the incursion, the deltas, the overlay intensity, and the daily pulse log.
+* NUTS-scale geography is not the playable county. `europa-1347` remains the separate campaign seed.
+* Playable war goals are not done. The army page stays on `armies` and `battles`. `warfare_*` stays off that page.
+* DiplomacyService, FaithService, and SinVirtueService are still one-method stubs. Virtue and sin stay on the spiritual engine.
+* Sacraments beyond requiem, anointing, and one exorcism are not in the slice. Inquisition beyond the cult choices is not in the slice.
+* Trade, buildings, guilds, Redis, formable nations, and an NPC daily schedule are not in the slice.
+* Settlement food is not the lord's granary. Territory `food_stores` stays the scripted granary.
+
+The August sections below are the original slice inventory. Where they disagree with this section, this section is the later one.
+
+Test run on 2026-11-11, PHP 8.3.6, PHPUnit 9.6.36, MySQL database `dies_irae_game_testing`: `php artisan test` reported 294 passed and 7 failed. The 7 failures were `Tests\Feature\Events\DynamicEventEngineTest`, which creates `dies_irae_events_testing` and was denied that privilege on this machine. After that local database privilege was granted, the same class passed 7 tests. No test was skipped. Browser play was not opened; the play pages were exercised by `VerticalSliceUiTest` and the yield path in `CountyContinuationTest`.
+
 ## How to play the loop
 
 1. Sign in as the demo lord.
@@ -55,15 +82,15 @@ Kernel already present and used or aligned by the slice:
 
 * **Apocalypse:** coarse playable stages work. Full meter/signal/milestone catalog ticks in the background and is not the player-facing clock for this slice.
 * **Church:** inspect and one resource grant work. Excommunication, investiture, papal vacancy, and appointment policy exist as kernel actions and tests, not as slice events.
-* **Plague:** territory intensity and deaths work. Settlement-cohort plague (`settlements`, `settlement_populations`, host ticks) is schema-ready and not driven by the ten beats.
-* **Hell:** one haunted overlay, one demonic influence row, one demonic host-as-army. Named demons, breaches, and incursion pulses are not in the player loop.
+* **Plague:** the Aix choice seeds settlement cohorts and infection batches, and later days tick them. Cohort collapse still does not kill named characters.
+* **Hell:** one haunted overlay, one demonic influence row, one demonic host-as-army, a stored exorcism, and a daily pulse after thinning of the veil. Named demons are not in the player loop. A rift is not opened by the thinning-veil pulse.
 * **Warfare:** human and supernatural fights use the simple playable combat table. Doctrine kernel (`warfare_*`, WarDirector) is in-repo and tested, not wired to the army page.
 * **Geography:** six named places and adjacency, not a NUTS Europe import.
 * **Fixture world `lys-1348`:** still seedable for kernel validation. It is not the playable login.
 
 ## Stubbed
 
-* Sacrament simulation and miracle economy
+* Sacrament simulation beyond requiem, anointing, and one exorcism, and the miracle economy
 * NPC daily AI
 * Trade, buildings, guilds
 * Formable nations / full war UI
@@ -72,15 +99,16 @@ Kernel already present and used or aligned by the slice:
 
 ## Missing
 
-* Succession play (laws exist; the slice does not kill the count)
+* Automatic death of the count during the ten beats (death is the day-16 yield, not a scripted beat)
 * Multi-realm diplomacy
 * Painted political map of Europe
 * Queue/Redis scale-up
 * Linking playable `armies` to `warfare_armies`
-* Driving settlement-grain plague from campaign beats
-* Player-facing chronicle writing beyond the aftermath option
+* A freeform chronicle. The aftermath writes one entry, and succession writes its own summaries.
 
 ## Tests
+
+The 2026-11-11 finish pass records its own run above. The counts in this section are the August run.
 
 Command: `php artisan test`
 
@@ -105,11 +133,11 @@ Earlier in this work, Church kernel tests failed because `000600` created skinny
 
 Do not start a new map or war doctrine UI until a second playable loop needs them. Recommended order:
 
-1. **Succession that can fire in this county** (death of Raimond, heir, title history). The slice currently assumes the count lives.
-2. **Wire settlement-grain plague** to the Aix wave so Package 8 population/host ticks match what the player already sees on the plague page.
-3. **One sacrament on the bishop/parish path** (mass for the dead, or a valid/invalid exorcism using the spiritual engine instead of a flat corruption delta).
-4. **Hell pulse on thinning veil** so the manifestation can deepen without a new campaign script.
-5. **NUTS-lite geography import** only after the Salon loop still passes. Keep Church and catastrophe in the same wave as new land.
-6. **Playable war goals** only after 1 to 4. Keep `armies`/`battles` as the player table; do not replace them with `warfare_*` in the UI.
+1. **Succession that can fire in this county.** Done as the day-16 `count_stricken` choice. The ten beats still assume the count lives.
+2. **Wire settlement-grain plague** to the Aix wave. Done. Named-character death from cohort collapse is still open.
+3. **One sacrament on the bishop/parish path.** Done: mass for the dead, anointing, and an exorcism countermeasure.
+4. **Hell pulse on thinning veil.** Done, without promoting Aix to rifted.
+5. **NUTS-lite geography import** only after the Salon loop still passes. Still open. Keep Church and catastrophe in the same wave as new land.
+6. **Playable war goals.** Still open. Keep `armies`/`battles` as the player table; do not replace them with `warfare_*` in the UI.
 
 Out of scope until the above: Feudalism Blade theme, community pages, Redis, formable nations.

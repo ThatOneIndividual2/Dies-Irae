@@ -14,22 +14,40 @@ final class AdjustTerritoryState
     public function addPopulation(Territory $territory, int $delta): Territory
     {
         return Transactional::run(function () use ($territory, $delta) {
-            $locked = Territory::query()->whereKey($territory->id)->lockForUpdate()->firstOrFail();
-            $next = (int) $locked->population + $delta;
-            if ($next < 0) {
-                $next = 0;
-            }
-            $locked->population = $next;
-            $locked->levy_available = (int) floor($next * (float) config('game.levy_ratio'));
-            if ($next < (int) config('game.ruin_population_threshold')) {
-                $locked->ruin_state = 'depopulated';
-            } elseif (($locked->ruin_state ?? 'intact') === 'depopulated') {
-                $locked->ruin_state = 'intact';
-            }
-            $locked->save();
+            $locked = $this->writePopulation($territory, $delta);
+            app(PersistedSettlementPlague::class)->applyDeltaIfPresent($locked, $delta);
 
             return $locked->fresh();
         });
+    }
+
+    /**
+     * Territory rollup only. Settlement cohorts were already written by the plague tick.
+     */
+    public function shiftPopulation(Territory $territory, int $delta): Territory
+    {
+        return Transactional::run(function () use ($territory, $delta) {
+            return $this->writePopulation($territory, $delta)->fresh();
+        });
+    }
+
+    private function writePopulation(Territory $territory, int $delta): Territory
+    {
+        $locked = Territory::query()->whereKey($territory->id)->lockForUpdate()->firstOrFail();
+        $next = (int) $locked->population + $delta;
+        if ($next < 0) {
+            $next = 0;
+        }
+        $locked->population = $next;
+        $locked->levy_available = (int) floor($next * (float) config('game.levy_ratio'));
+        if ($next < (int) config('game.ruin_population_threshold')) {
+            $locked->ruin_state = 'depopulated';
+        } elseif (($locked->ruin_state ?? 'intact') === 'depopulated') {
+            $locked->ruin_state = 'intact';
+        }
+        $locked->save();
+
+        return $locked;
     }
 
     public function addCorruption(string $subjectType, int $subjectId, int $worldId, int $delta, string $source): CorruptionState

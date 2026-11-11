@@ -36,7 +36,8 @@ final class SliceContext
         public See $see,
         public Monastery $monastery,
         public Papacy $papacy,
-        public Collection $territories
+        public Collection $territories,
+        public ?Character $heir = null
     ) {
     }
 

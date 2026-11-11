@@ -33,4 +33,21 @@
         <tr><td colspan="3" class="muted">No offices recorded.</td></tr>
     @endforelse
 </table>
+<h3>Rites recorded</h3>
+@if(isset($sacraments) && $sacraments->isNotEmpty())
+<table>
+    <tr><th>Date</th><th>Rite</th><th>Minister</th><th>Subject</th><th>Validity</th></tr>
+    @foreach($sacraments as $rite)
+        <tr>
+            <td>{{ optional($rite->occurred_date)->toDateString() }}</td>
+            <td>{{ ($rite->metadata['rite'] ?? null) === 'mass_for_the_dead' ? 'Mass for the dead' : (($rite->metadata['rite'] ?? null) === 'anointing_of_the_sick' ? 'Anointing of the sick' : $rite->sacrament_type) }}</td>
+            <td>{{ optional($rite->minister)->displayName() ?? 'unrecorded' }}</td>
+            <td>{{ optional($rite->subject)->displayName() }}</td>
+            <td>{{ str_replace('_', ' ', $rite->validity) }}</td>
+        </tr>
+    @endforeach
+</table>
+@else
+<p class="muted">No sacrament has been written down.</p>
+@endif
 @endsection

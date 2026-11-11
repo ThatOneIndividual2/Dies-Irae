@@ -21,6 +21,16 @@
 @else
     <p>The age has not been recorded.</p>
 @endif
+<h3>Veil</h3>
+@if(isset($pulses) && $pulses->isNotEmpty())
+<ul>
+    @foreach($pulses as $pulse)
+        <li>{{ optional($pulse->pulsed_on)->toDateString() }} {{ $pulse->notes['line'] ?? 'The veil stirred.' }}</li>
+    @endforeach
+</ul>
+@else
+<p class="muted">The veil has not been pulsed.</p>
+@endif
 <h3>Chronicle</h3>
 <ol>
 @forelse ($history as $row)

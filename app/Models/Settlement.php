@@ -35,4 +35,9 @@ class Settlement extends Model
     {
         return $this->belongsTo(World::class);
     }
+
+    public function territory(): BelongsTo
+    {
+        return $this->belongsTo(Territory::class);
+    }
 }
